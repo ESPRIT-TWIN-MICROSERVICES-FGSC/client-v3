@@ -5,8 +5,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ClientModule } from './modules/client/client.module';
 
 const routes: Routes = [
-  { path: 'auth', loadChildren: './modules/auth/auth.module#AuthModule' },
-  { path: 'client', loadChildren: './modules/client/client.module#ClientModule' },
+  { path: 'auth', loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule) },
+  { path: 'client', loadChildren: () => import('./modules/client/client.module').then(m => m.ClientModule) },
   { path: '', pathMatch: 'full', redirectTo: '/hr-dashboard' },
   { path: '**', redirectTo: '/hr-dashboard' },
 ];
