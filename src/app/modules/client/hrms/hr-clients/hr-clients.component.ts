@@ -8,9 +8,11 @@ import { Client } from "src/app/shared/models/Client";
 import "jspdf-autotable";
 
 declare var jsPDF: any;
+
 // Add these scripts in angular.json in order to export pdf 
 // "node_modules/jspdf/dist/jspdf.min.js",
 // "node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js"
+
 @Component({
   selector: "app-hr-clients",
   templateUrl: "./hr-clients.component.html",

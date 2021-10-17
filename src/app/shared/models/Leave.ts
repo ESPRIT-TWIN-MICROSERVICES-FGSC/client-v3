@@ -1,4 +1,4 @@
-export interface Holiday {
+export interface Leave {
   id: string;
   employeId: string;
   start_date: string;

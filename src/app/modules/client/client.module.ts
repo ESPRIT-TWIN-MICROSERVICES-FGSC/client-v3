@@ -113,6 +113,7 @@ import { InputTextModule } from "primeng/inputtext";
 import { ToolbarModule } from "primeng/toolbar";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { ConfirmationService, MessageService } from "primeng/api";
+import { HrLeavesComponent } from './hrms/hr-leaves/hr-leaves.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -237,6 +238,7 @@ FullCalendarModule.registerPlugins([
     ProfileComponent,
     FooterComponent,
     HrClientsComponent,
+    HrLeavesComponent,
   ],
   providers: [BsDatepickerModule, ConfirmationService, MessageService],
 })

@@ -873,6 +873,17 @@
           >
             <a
               class="submenu"
+              [routerLink]="['/hr-leaves']"
+              href="javascript:void(0)"
+              ><span>Leaves</span></a
+            >
+          </li>
+          <li
+            [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a
+              class="submenu"
               [routerLink]="['/hr-employee']"
               href="javascript:void(0)"
               ><span>Employee</span></a
