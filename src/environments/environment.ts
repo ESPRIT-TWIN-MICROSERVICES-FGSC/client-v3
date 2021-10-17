@@ -7,6 +7,8 @@ export const environment = {
   clientMicroservice: 'http://localhost:8086',
   congeMicroservice: 'http://localhost:8082',
   employeeMicroservice: 'http://localhost:8089',
+  JobMicroservice: 'http://localhost:8082',
+
 
 
 };
