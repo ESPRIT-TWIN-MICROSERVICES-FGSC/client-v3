@@ -6,6 +6,8 @@ export const environment = {
   production: false,
   clientMicroservice: 'http://localhost:8086',
   congeMicroservice: 'http://localhost:8082',
+  employeeMicroservice: 'http://localhost:8089',
+
 
 };
 
