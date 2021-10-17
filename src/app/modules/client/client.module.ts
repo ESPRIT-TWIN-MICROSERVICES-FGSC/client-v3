@@ -110,6 +110,9 @@ import { ButtonModule } from "primeng/button";
 import { DropdownModule } from "primeng/dropdown";
 import { ProgressBarModule } from "primeng/progressbar";
 import { InputTextModule } from "primeng/inputtext";
+import { ToolbarModule } from "primeng/toolbar";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
+import { ConfirmationService, MessageService } from "primeng/api";
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -159,6 +162,8 @@ FullCalendarModule.registerPlugins([
     SliderModule,
     ToastModule,
     TableModule,
+    ToolbarModule,
+    ConfirmDialogModule,
   ],
   declarations: [
     ClientRoutingModule.components,
@@ -233,6 +238,6 @@ FullCalendarModule.registerPlugins([
     FooterComponent,
     HrClientsComponent,
   ],
-  providers: [BsDatepickerModule],
+  providers: [BsDatepickerModule, ConfirmationService, MessageService],
 })
 export class ClientModule {}

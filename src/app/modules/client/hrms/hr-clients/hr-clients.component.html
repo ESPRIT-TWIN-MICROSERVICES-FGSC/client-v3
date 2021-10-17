@@ -2,258 +2,457 @@
 <!-- Main body part  -->
 <div class="page">
   <app-header></app-header>
-
+  <p-toast></p-toast>
   <div class="card">
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <button type="button" class="btn btn-primary mr-2" (click)="openNew()">
+          New
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="deleteSelectedItems()"
+          [disabled]="!selectedItems || !selectedItems.length"
+        >
+          Delete
+        </button>
+      </ng-template>
+      <ng-template pTemplate="right">
+        <button type="button" class="btn btn-secondary" (click)="exportPdf()">
+          Export
+        </button>
+      </ng-template>
+    </p-toolbar>
 
     <p-table
-      #dt1
-      [value]="customers"
-      dataKey="id"
+      #dt
+      [value]="items"
       [rows]="10"
-      [showCurrentPageReport]="true"
       [rowsPerPageOptions]="[10, 25, 50]"
-   
-      styleClass="p-datatable-gridlines"
       [paginator]="true"
+      [globalFilterFields]="['firsttName', 'lastName']"
+      [(selection)]="selectedItems"
+      [rowHover]="true"
+      dataKey="id"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      [globalFilterFields]="[
-        'name',
-        'country.name',
-        'representative.name',
-        'status'
-      ]"
+      [showCurrentPageReport]="true"
     >
       <ng-template pTemplate="caption">
-        <div class="p-d-flex">
-          <button
-            pButton
-            label="Clear"
-            class="p-button-outlined"
-            icon="pi pi-filter-slash"
-            (click)="clear(dt1)"
-          ></button>
-          <span class="p-input-icon-left p-ml-auto">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input
               pInputText
               type="text"
-              (input)="dt1.filterGlobal($event.target.value, 'contains')"
-              placeholder="Search keyword"
+              (input)="dt.filterGlobal($event.target.value, 'contains')"
+              placeholder="Search..."
             />
           </span>
         </div>
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th>
-            <div class="p-d-flex p-jc-between p-ai-center">
-              Name
-              <p-columnFilter
-                type="text"
-                field="name"
-                display="menu"
-              ></p-columnFilter>
-            </div>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           </th>
-          <th>
-            <div class="p-d-flex p-jc-between p-ai-center">
-              Country
-              <p-columnFilter
-                type="text"
-                field="country.name"
-                display="menu"
-              ></p-columnFilter>
-            </div>
+          <th pSortableColumn="firsttName">
+            First Name <p-sortIcon field="firsttName"></p-sortIcon>
           </th>
-          <th>
-            <div class="p-d-flex p-jc-between p-ai-center">
-              Agent
-              <p-columnFilter
-                field="representative"
-                matchMode="in"
-                display="menu"
-                [showMatchModes]="false"
-                [showOperator]="false"
-                [showAddButton]="false"
-              >
-                <ng-template pTemplate="header">
-                  <div class="p-px-3 p-pt-3 p-pb-0">
-                    <span class="p-text-bold">Agent Picker</span>
-                  </div>
-                </ng-template>
-                <ng-template
-                  pTemplate="filter"
-                  let-value
-                  let-filter="filterCallback"
-                >
-                  <p-multiSelect
-                    [ngModel]="value"
-                    [options]="representatives"
-                    placeholder="Any"
-                    (onChange)="filter($event.value)"
-                    optionLabel="name"
-                  >
-                    <ng-template let-option pTemplate="item">
-                      <div class="p-multiselect-representative-option">
-                        <img
-                          [alt]="option.label"
-                          src="assets/showcase/images/demo/avatar/{{
-                            option.image
-                          }}"
-                          width="32"
-                          style="vertical-align: middle"
-                        />
-                        <span class="p-ml-1">{{ option.name }}</span>
-                      </div>
-                    </ng-template>
-                  </p-multiSelect>
-                </ng-template>
-              </p-columnFilter>
-            </div>
+          <th pSortableColumn="lastName">
+            Last Name <p-sortIcon field="lastName"></p-sortIcon>
           </th>
-          <th>
-            <div class="p-d-flex p-jc-between p-ai-center">
-              Date
-              <p-columnFilter
-                type="date"
-                field="date"
-                display="menu"
-              ></p-columnFilter>
-            </div>
+          <th pSortableColumn="address">
+            Address <p-sortIcon field="address"></p-sortIcon>
           </th>
-          <th>
-            <div class="p-d-flex p-jc-between p-ai-center">
-              Balance
-              <p-columnFilter
-                type="numeric"
-                field="balance"
-                display="menu"
-                currency="USD"
-              ></p-columnFilter>
-            </div>
+          <th pSortableColumn="email">
+            Email <p-sortIcon field="email"></p-sortIcon>
           </th>
-          <th>
-            <div class="p-d-flex p-jc-between p-ai-center">
-              Status
-              <p-columnFilter field="status" matchMode="equals" display="menu">
-                <ng-template
-                  pTemplate="filter"
-                  let-value
-                  let-filter="filterCallback"
-                >
-                  <p-dropdown
-                    [ngModel]="value"
-                    [options]="statuses"
-                    (onChange)="filter($event.value)"
-                    placeholder="Any"
-                  >
-                    <ng-template let-option pTemplate="item">
-                      <span [class]="'customer-badge status-' + option.value">{{
-                        option.label
-                      }}</span>
-                    </ng-template>
-                  </p-dropdown>
-                </ng-template>
-              </p-columnFilter>
-            </div>
+          <th pSortableColumn="tel">
+            Phone <p-sortIcon field="tel"></p-sortIcon>
           </th>
-          <th>
-            <div class="p-d-flex p-jc-between p-ai-center">
-              Activity
-              <p-columnFilter
-                field="activity"
-                matchMode="between"
-                display="menu"
-                [showMatchModes]="false"
-                [showOperator]="false"
-                [showAddButton]="false"
-              >
-                <ng-template pTemplate="filter" let-filter="filterCallback">
-                  <p-slider
-                    [ngModel]="activityValues"
-                    [range]="true"
-                    (onSlideEnd)="filter($event.values)"
-                    styleClass="p-m-3"
-                  ></p-slider>
-                  <div class="p-d-flex p-ai-center p-jc-between p-px-2">
-                    <span>{{ activityValues[0] }}</span>
-                    <span>{{ activityValues[1] }}</span>
-                  </div>
-                </ng-template>
-              </p-columnFilter>
-            </div>
-          </th>
-          <th style="width: 8rem">
-            <div class="p-d-flex p-jc-between p-ai-center">
-              Verified
-              <p-columnFilter
-                type="boolean"
-                field="verified"
-                display="menu"
-              ></p-columnFilter>
-            </div>
-          </th>
+          <th></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-customer>
+      <ng-template pTemplate="body" let-item>
         <tr>
           <td>
-            {{ customer.name }}
+            <p-tableCheckbox [value]="item"></p-tableCheckbox>
           </td>
+          <td>{{ item.firsttName }}</td>
+          <td>{{ item.lastName }}</td>
+          <td>{{ item.address }}</td>
+          <td>{{ item.email }}</td>
+          <td>{{ item.tel }}</td>
           <td>
-            <img
-              src="assets/showcase/images/demo/flag/flag_placeholder.png"
-              [class]="'flag flag-' + customer.country.code"
-              width="30"
-            />
-            <span class="image-text">{{ customer.country.name }}</span>
-          </td>
-          <td>
-            <img
-              [alt]="customer.representative.name"
-              src="assets/showcase/images/demo/avatar/{{
-                customer.representative.image
-              }}"
-              width="32"
-              style="vertical-align: middle"
-            />
-            <span class="image-text">{{ customer.representative.name }}</span>
-          </td>
-          <td>
-            {{ customer.date | date: "MM/dd/yyyy" }}
-          </td>
-          <td>
-            {{ customer.balance | currency: "USD":"symbol" }}
-          </td>
-          <td>
-            <span [class]="'customer-badge status-' + customer.status">{{
-              customer.status
-            }}</span>
-          </td>
-          <td>
-            <p-progressBar
-              [value]="customer.activity"
-              [showValue]="false"
-            ></p-progressBar>
-          </td>
-          <td class="p-text-center">
-            <i
-              class="pi"
-              [ngClass]="{
-                'true-icon pi-check-circle': customer.verified,
-                'false-icon pi-times-circle': !customer.verified
-              }"
-            ></i>
+            <button
+              type="button"
+              class="btn btn-icon"
+              title="Edit"
+              (click)="deleteItem(item)"
+            >
+              <i class="fa fa-trash"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-icon"
+              title="Edit"
+              (click)="editItem(item)"
+            >
+              <i class="fa fa-edit"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-icon"
+              title="Edit"
+              (click)="viewItemDetailed(item)"
+            >
+              <i class="fa fa-eye"></i>
+            </button>
           </td>
         </tr>
       </ng-template>
-      <ng-template pTemplate="emptymessage">
-        <tr>
-          <td colspan="7">No customers found.</td>
-        </tr>
+      <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          In total there are {{ items ? items.length : 0 }} clients.
+        </div>
       </ng-template>
     </p-table>
   </div>
 
+  <p-dialog
+    [(visible)]="itemAddDialog"
+    [style]="{ width: '450px' }"
+    header="Add  a client"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <form [formGroup]="itemsFormGroup">
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="First name"
+              formControlName="firsttName"
+              [ngClass]="{
+                'is-invalid': checkFormValidationFirstName(),
+                'is-valid': itemsFormGroup.get('firsttName').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              First Name is required
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Last name"
+              formControlName="lastName"
+              [ngClass]="{
+                'is-invalid': checkFormValidationLastName(),
+                'is-valid': itemsFormGroup.get('lastName').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              Last Name is required
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Email"
+              formControlName="email"
+              [ngClass]="{
+                'is-invalid': checkFormValidationEmail(),
+                'is-valid': itemsFormGroup.get('email').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              Email is {{ getInvalidMessage() }}
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input type="text" class="form-control" placeholder="Client Id" />
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Designation"
+              formControlName="designation"
+              [ngClass]="{
+                'is-valid': itemsFormGroup.get('designation').valid
+              }"
+            />
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Telephone"
+              formControlName="tel"
+              [ngClass]="{
+                'is-valid': itemsFormGroup.get('tel').valid
+              }"
+            />
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Country"
+              formControlName="country"
+              [ngClass]="{
+                'is-valid': itemsFormGroup.get('country').valid
+              }"
+            />
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Website"
+              formControlName="webSite"
+              [ngClass]="{
+                'is-valid': itemsFormGroup.get('webSite').valid
+              }"
+            />
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Address"
+              formControlName="address"
+              [ngClass]="{
+                'is-valid': itemsFormGroup.get('address').valid
+              }"
+            />
+          </div>
+        </div>
+      </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        pRipple
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="hideDialog()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Save"
+        icon="pi pi-check"
+        class="p-button-text"
+        (click)="saveProduct()"
+      ></button>
+    </ng-template>
+  </p-dialog>
+  <p-dialog
+    [(visible)]="itemUpdateDialog"
+    [style]="{ width: '450px' }"
+    header="Update a client"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <form [formGroup]="itemsFormGroup">
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="First name"
+              formControlName="firsttName"
+              [ngClass]="{
+                'is-invalid': checkFormValidationFirstName(),
+                'is-valid': itemsFormGroup.get('firsttName').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              First Name is required
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Last name"
+              formControlName="lastName"
+              [ngClass]="{
+                'is-invalid': checkFormValidationLastName(),
+                'is-valid': itemsFormGroup.get('lastName').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              Last Name is required
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Email"
+              formControlName="email"
+              [ngClass]="{
+                'is-invalid': checkFormValidationEmail(),
+                'is-valid': itemsFormGroup.get('email').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              Email is {{ getInvalidMessage() }}
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input type="text" class="form-control" placeholder="Client Id" />
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Designation"
+              formControlName="designation"
+              [ngClass]="{
+                'is-valid': itemsFormGroup.get('designation').valid
+              }"
+            />
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Telephone"
+              formControlName="tel"
+              [ngClass]="{
+                'is-valid': itemsFormGroup.get('tel').valid
+              }"
+            />
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Country"
+              formControlName="country"
+              [ngClass]="{
+                'is-valid': itemsFormGroup.get('country').valid
+              }"
+            />
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Website"
+              formControlName="webSite"
+              [ngClass]="{
+                'is-valid': itemsFormGroup.get('webSite').valid
+              }"
+            />
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Address"
+              formControlName="address"
+              [ngClass]="{
+                'is-valid': itemsFormGroup.get('webSite').valid
+              }"
+            />
+          </div>
+        </div>
+      </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        pRipple
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="hideDialog()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Save"
+        icon="pi pi-check"
+        class="p-button-text"
+        (click)="updateProduct()"
+      ></button>
+    </ng-template>
+  </p-dialog>
+  <p-dialog
+    [(visible)]="itemViewDialog"
+    [style]="{ width: '450px' }"
+    header="Client in details"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <div class="card c_grid c_yellow">
+        <div class="card-body text-center">
+          <div class="circle">
+            <img
+              class="rounded-circle"
+              src="../assets/images/sm/avatar1.jpg"
+              alt=""
+            />
+          </div>
+          <h6 class="mt-3 mb-0">
+            {{ selectedItem?.firsttName }} {{ selectedItem?.lastName }}
+          </h6>
+          <span>{{ selectedItem?.tel }}</span>
+          <span>{{ selectedItem?.address }}</span>
+          <span>{{ selectedItem?.country }}</span>
+          <ul class="mt-3 list-unstyled d-flex justify-content-center">
+            <li>
+              <a class="p-3" target="_blank" href="#"
+                ><i class="fa fa-facebook"></i
+              ></a>
+            </li>
+            <li>
+              <a class="p-3" target="_blank" href="#"
+                ><i class="fa fa-slack"></i
+              ></a>
+            </li>
+            <li>
+              <a class="p-3" target="_blank" href="#"
+                ><i class="fa fa-linkedin"></i
+              ></a>
+            </li>
+          </ul>
+          <div class="row">
+            <div class="col-md-6">
+              Email :
+              <a
+                href="mailto:{{ selectedItem?.email }}"
+                class="text-muted mb-0"
+                >{{ selectedItem?.email }}</a
+              >
+            </div>
+            <div class="col-md-6">
+              Phone :
+              <p class="text-muted mb-0">
+                {{ selectedItem?.tel }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dialog>
+
+  <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
   <app-footer></app-footer>
 </div>
