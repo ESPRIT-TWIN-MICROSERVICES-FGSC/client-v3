@@ -4,10 +4,11 @@
 
 export const environment = {
   production: false,
-  clientMicroservice: 'http://localhost:8086',
-  congeMicroservice: 'http://localhost:8082',
-  employeeMicroservice: 'http://localhost:8089',
-  JobMicroservice: 'http://localhost:8082',
+  clientMicroservice: 'https://warm-falls-36309.herokuapp.com/',
+  congeMicroservice: 'https://conges-microservice.herokuapp.com/',
+  employeeMicroservice: 'https://employee-microservices.herokuapp.com/',
+  JobMicroservice: 'https://job-microservices.herokuapp.com/',
+  projectMicroservice: 'https://projet-microservice.herokuapp.com/',
 
 
 
