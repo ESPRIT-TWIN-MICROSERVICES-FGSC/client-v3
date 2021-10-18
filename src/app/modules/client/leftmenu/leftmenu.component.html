@@ -873,6 +873,17 @@
           >
             <a
               class="submenu"
+              [routerLink]="['/hr-projects']"
+              href="javascript:void(0)"
+              ><span>Projects</span></a
+            >
+          </li>
+          <li
+            [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a
+              class="submenu"
               [routerLink]="['/hr-jobs']"
               href="javascript:void(0)"
               ><span>Jobs</span></a

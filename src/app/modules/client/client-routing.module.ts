@@ -51,6 +51,7 @@ import { WOtherComponent } from "./widgets/w-other/w-other.component";
 import { HrClientsComponent } from "./hrms/hr-clients/hr-clients.component";
 import { HrLeavesComponent } from "./hrms/hr-leaves/hr-leaves.component";
 import { HrJobsComponent } from "./hrms/hr-jobs/hr-jobs.component";
+import { HrProjectsComponent } from "./hrms/hr-projects/hr-projects.component";
 
 const routes: Routes = [
   {
@@ -82,6 +83,11 @@ const routes: Routes = [
     path: "hr-clients",
     component: HrClientsComponent,
     data: { title: ":: Epic :: HR Clients" },
+  },
+  {
+    path: "hr-projects",
+    component: HrProjectsComponent,
+    data: { title: ":: Epic :: HR Projects" },
   },
   {
     path: "hr-jobs",
