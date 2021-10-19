@@ -1,0 +1,81 @@
+.socials-container {
+  box-sizing: border-box;
+  color: rgb(88, 89, 91);
+  column-rule-color: rgb(88, 89, 91);
+  perspective-origin: 110.5px 122px;
+  transform-origin: 110.5px 122px;
+  border: 0 none rgb(88, 89, 91);
+  font: normal normal normal normal 14px / 19.6px Roboto, sans-serif;
+  outline: rgb(88, 89, 91) none 0;
+  ul {
+    box-sizing: border-box;
+    color: rgb(88, 89, 91);
+    column-rule-color: rgb(88, 89, 91);
+    perspective-origin: 110.5px 112.5px;
+    transform-origin: 110.5px 112.5px;
+    border: 0 none rgb(88, 89, 91);
+    font: normal normal normal normal 14px / 22.4px Roboto, sans-serif;
+    list-style: disc inside none;
+    margin: 0 0 17.5px;
+    outline: rgb(88, 89, 91) none 0;
+    padding: 15px 0 0;
+    li {
+      box-sizing: border-box;
+      color: rgb(88, 89, 91);
+      display: inline-block;
+      vertical-align: middle;
+      column-rule-color: rgb(88, 89, 91);
+      perspective-origin: 35px 35px;
+      transform-origin: 35px 35px;
+      border: 0 none rgb(88, 89, 91);
+      font: normal normal normal normal 14px / 22.4px Roboto, sans-serif;
+      list-style: disc inside none;
+      outline: rgb(88, 89, 91) none 0;
+      img {
+        box-sizing: border-box;
+        color: rgb(0, 168, 255);
+        display: inline-block;
+        height: 50px;
+        max-width: 100%;
+        text-align: left;
+        vertical-align: middle;
+        width: 50px;
+        column-rule-color: rgb(0, 168, 255);
+        perspective-origin: 25px 25px;
+        transform-origin: 25px 25px;
+        border: 0 none rgb(0, 168, 255);
+        font: normal normal normal normal 14px / 22.4px Roboto, sans-serif;
+        list-style: disc inside none;
+        outline: rgb(0, 168, 255) none 0;
+      }
+      a {
+        box-sizing: border-box;
+        color: rgb(0, 168, 255);
+        text-align: left;
+        text-decoration: none;
+        column-rule-color: rgb(0, 168, 255);
+        background: rgba(0, 0, 0, 0) none repeat scroll 0 0 / auto padding-box border-box;
+        border: 0 none rgb(0, 168, 255);
+        font: normal normal normal normal 14px / 22.4px Roboto, sans-serif;
+        list-style: disc inside none;
+        outline: rgb(0, 168, 255) none 0;
+      }
+    }
+  }
+}
+.validation-message{
+  margin-top: 10px;
+  color: indianred;
+  font-size: 10px;
+  font-weight: lighter;
+}
+button{
+  box-shadow: 5px 10px #8CD4F5;
+  &:disabled{
+    box-shadow: 5px 10px deeppink;
+    background-color: #5a6268;
+    &:hover{
+      cursor: not-allowed;
+    }
+  }
+}

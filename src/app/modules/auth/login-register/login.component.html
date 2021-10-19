@@ -1,0 +1,208 @@
+<div class="auth">
+  <div class="auth_left" [@enterTrigger]="'fadeIn'">
+    <div class="card" *ngIf="isVisible" [@enterTrigger]="'fadeIn'">
+      <div class="text-center mb-2">
+        <i class="fe fe-command brand-logo header-brand"></i>
+        <div [ngSwitch]="toggleForms">
+          <div *ngSwitchCase="CCS.LOGIN" [@enterTrigger]="'fadeIn'" class="col">Login</div>
+          <div *ngSwitchCase="CCS.REGISTER" [@enterTrigger]="'fadeIn'" class="col">Register</div>
+        </div>
+      </div>
+      <div class="card-body row" [ngSwitch]="toggleForms">
+        <form class="col-6" *ngSwitchCase="CCS.LOGIN" [@enterTrigger]="'fadeIn'">
+          <div class="form-group">
+            <label class="form-label">
+              Email
+            </label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                   [formControl]="email" placeholder="Enter email" maxlength="255">
+            <div class="validation-message" *ngIf="(email.touched || email.dirty) && email.invalid">
+              <div *ngIf="email.errors.required">
+                Please provide an email address
+              </div>
+              <div *ngIf="email.errors.email">
+                Please provide a valid email
+              </div>
+              <div *ngIf="email.errors.minLength">
+                Email length should be > 10
+              </div>
+              <div *ngIf="email.errors.maxLength">
+                Email length should be < 255
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">
+              Password
+              <a (click)="toggleForms = CCS.GENERATE_PW_TOKEN" class="float-right small">
+                Forgot your password ?
+              </a>
+            </label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
+                   [formControl]="password">
+            <div class="validation-message" *ngIf="(password.touched || password.dirty) && password.invalid">
+              Please provide your password (length > 8)
+            </div>
+          </div>
+          <div class="validation-message mb-4" style="font-size: 30px;" [@enterTrigger]="'fadeIn'"
+               [@simpleFadeAnimation]="'out'" *ngIf="loginError !== undefined">
+            {{loginError}}
+          </div>
+          <div class="form-group">
+            <label class="custom-control custom-checkbox flex d-flex align-items-end">
+              <input type="checkbox" class="custom-control-input" (click)="rememberMe = !rememberMe"/>
+              <span class="custom-control-label">Remember me</span>
+            </label>
+          </div>
+          <div class="form-footer">
+          </div>
+        </form>
+        <!-- REGISTER-->
+        <form class="col-6 card-body" *ngSwitchCase="CCS.REGISTER" [@enterTrigger]="'fadeIn'">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" placeholder="Enter name" [formControl]="userName">
+            <div class="validation-message" *ngIf="(userName.touched || userName.dirty) && userName.invalid">
+              <div *ngIf="userName.errors.required">
+                Please provide a username
+              </div>
+              <div *ngIf="!userName.value.required && userName.value.length < 6">
+                Username length should be > 10
+              </div>
+              <div *ngIf="!userName.errors.required && userName.value.length >= 255">
+                Username length should be < 255
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email address</label>
+            <input type="email" class="form-control" placeholder="Enter email" [formControl]="email">
+            <div class="validation-message" *ngIf="(email.touched || email.dirty) && email.invalid">
+              <div *ngIf="email.errors.required">
+                Please provide an email address
+              </div>
+              <div *ngIf="email.errors.email">
+                Please provide a valid email
+              </div>
+              <div *ngIf="email.errors.minLength">
+                Email length should be > 10
+              </div>
+              <div *ngIf="email.errors.maxLength">
+                Email length should be < 255
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control" placeholder="Password" [formControl]="password">
+            <div class="validation-message" *ngIf="(password.touched || password.dirty) && password.invalid">
+              Please provide your password (length > 6)
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirm password</label>
+            <input type="password" class="form-control" placeholder="Confirm password" [formControl]="confirmPassword">
+            <div class="validation-message" *ngIf="(confirmPassword.dirty || confirmPassword.touched && password.valid) && password.value !== confirmPassword.value">
+              Passwords dont match
+            </div>
+          </div>
+          <div class="validation-message mb-4" style="font-size: 30px;" [@enterTrigger]="'fadeIn'"
+               [@simpleFadeAnimation]="'out'" *ngIf="registerError !== undefined">
+            {{registerError}}
+          </div>
+          <div class="form-group">
+            <label class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input"/>
+              <span class="custom-control-label">
+                Agree the
+                <a href="javascript:void(0)">
+                terms and policy
+                </a>
+              </span>
+            </label>
+          </div>
+        </form>
+        <app-forgot-password class="col-6" [email]="email" (goBack)="toggleForms = CCS.LOGIN"
+                             *ngSwitchCase="CCS.GENERATE_PW_TOKEN" [@enterTrigger]="'fadeIn'"></app-forgot-password>
+        <div class="col-6">
+          <div>
+            <h2>Demo login info</h2>
+            email: demo-user@esprit.fgsc<br>
+            password: 123456
+          </div>
+          <div class="socials-container">
+            <div class="text-muted mt-3">
+              Or log in with social account:
+            </div>
+            <ul class="d-flex justify-content-around align-items-center ml-sm-0 ml-2">
+              <li>
+                <a>
+                  <img src="assets/images/auth/github.svg" alt=''/>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <img src="assets/images/auth/google.svg" alt=''/>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <img src="assets/images/auth/facebook.svg" alt=''/>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <ng-container [ngSwitch]="toggleForms">
+          <ng-container *ngSwitchCase="CCS.LOGIN">
+            <button [disabled]="email.invalid || password.invalid" class="btn btn-primary btn-block row" title=""
+                    (click)="login()" [@enterTrigger]="'fadeIn'">
+              <ng-container *ngIf="!isLoading" class="col">
+                Sign in
+              </ng-container>
+              <mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="accent" class="col-12"></mat-progress-bar>
+            </button>
+          </ng-container>
+          <button *ngSwitchCase="CCS.REGISTER" [disabled]="userName.invalid || email.invalid || password.invalid || confirmPassword.invalid"
+                  class="btn btn-primary btn-block row" (click)="register()" title="" [@enterTrigger]="'fadeIn'">
+            <ng-container *ngIf="!isLoading" class="col">
+              Sign up
+            </ng-container>
+            <mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="accent" class="col-12"></mat-progress-bar>
+          </button>
+        </ng-container>
+      </div>
+      <div class="text-center text-muted" [ngSwitch]="toggleForms">
+        <div *ngSwitchCase="CCS.LOGIN" [@enterTrigger]="'fadeIn'">Don't have account yet? <a
+          (click)="toggleForms= CCS.REGISTER">Sign up</a></div>
+        <div *ngSwitchCase="CCS.REGISTER" [@enterTrigger]="'fadeIn'">Have an account? <a
+          (click)="toggleForms= CCS.LOGIN">Login</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="auth_right">
+    <carousel [isAnimated]="true">
+      <slide>
+        <img src="assets/images/slider1.svg" class="img-fluid" alt="first slide">
+        <div class="px-4 mt-4">
+          <h4>Vodoo</h4>
+          <p>Your HR Solution.</p>
+        </div>
+      </slide>
+      <slide>
+        <img src="assets/images/slider2.svg" class="img-fluid" alt="second slide">
+        <div class="px-4 mt-4">
+          <h4>Quality Code and Easy Customizable</h4>
+          <p>Let us take care of you HR needs.</p>
+        </div>
+      </slide>
+      <slide>
+        <img src="assets/images/slider3.svg" class="img-fluid" alt="third slide">
+        <div class="px-4 mt-4">
+          <h4>Free for life.</h4>
+          <p>No strings attached.</p>
+        </div>
+      </slide>
+    </carousel>
+  </div>
+</div>

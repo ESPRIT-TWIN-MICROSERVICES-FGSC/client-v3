@@ -1,0 +1,56 @@
+<div class="auth">
+  <div class="auth_left" [@enterTrigger]="'fadeIn'" >
+    <div class="card" [@enterTrigger]="'fadeIn'" *ngIf="visible">
+      <div class="text-center mb-2">
+        <i class="fe fe-command brand-logo header-brand"></i>
+        <div [ngSwitch]="status">
+          <div *ngSwitchCase="CS.LOADING" [@enterTrigger]="'fadeIn'" class="col">Processing</div>
+          <div *ngSwitchCase="CS.SUCCESS" [@enterTrigger]="'fadeIn'" class="col">Confirmed</div>
+          <div *ngSwitchCase="CS.ERROR" [@enterTrigger]="'fadeIn'" class="col">Error</div>
+        </div>
+      </div>
+      <div class="card-body row" [ngSwitch]="status">
+       <div class="col-12" [@enterTrigger]="'fadeIn'">
+          <mat-progress-spinner mode="indeterminate" *ngSwitchCase="CS.LOADING"></mat-progress-spinner>
+          <div *ngSwitchCase="CS.SUCCESS">
+            <div class="o-circle c-container__circle o-circle__sign--success" [@enterTrigger]="'fadeIn'">
+              <div class="o-circle__sign"></div>
+            </div>
+            {{ message }}, redirecting to login page
+          </div>
+          <div *ngSwitchCase="CS.ERROR">
+            <div class="o-circle c-container__circle o-circle__sign--failure" [@enterTrigger]="'fadeIn'">
+              <div class="o-circle__sign"></div>
+            </div>
+            {{ message }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="auth_right">
+    <carousel [isAnimated]="true">
+      <slide>
+        <img src="assets/images/slider1.svg" class="img-fluid" alt="first slide">
+        <div class="px-4 mt-4">
+          <h4>Vodoo</h4>
+          <p>Your HR Solution.</p>
+        </div>
+      </slide>
+      <slide>
+        <img src="assets/images/slider2.svg" class="img-fluid" alt="second slide">
+        <div class="px-4 mt-4">
+          <h4>Quality Code and Easy Customizable</h4>
+          <p>Let us take care of you HR needs.</p>
+        </div>
+      </slide>
+      <slide>
+        <img src="assets/images/slider3.svg" class="img-fluid" alt="third slide">
+        <div class="px-4 mt-4">
+          <h4>Free for life.</h4>
+          <p>No strings attached.</p>
+        </div>
+      </slide>
+    </carousel>
+  </div>
+</div>

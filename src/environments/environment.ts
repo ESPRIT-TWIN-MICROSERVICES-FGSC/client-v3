@@ -6,7 +6,10 @@ export const environment = {
   production: false,
   clientMicroservice: 'http://localhost:8086',
   congeMicroservice: 'http://localhost:8082',
-
+  authGateway: 'http://localhost:8070/',
+  clientUrl: 'http://localhost:4200',
+  gateway: 'https://fgsc-gateway.herokuapp.com/api/',
+  notificationsRSocketUrl: 'ws://localhost:7000/rs',
 };
 
 /*

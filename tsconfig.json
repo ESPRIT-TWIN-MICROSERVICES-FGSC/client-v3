@@ -14,10 +14,35 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@app/*": [
+        "src/app/*"
+      ],
+      "@environments/*": [
+        "src/environments/*"
+      ],
+      "@animations/*": [
+        "src/app/shared/_animations/*"
+      ],
+      "@models/*": [
+        "src/app/shared/_models/*"
+      ],
+      "@services/*": [
+        "src/app/shared/_services/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@assets/*": [
+        "src/assets/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   }
 }

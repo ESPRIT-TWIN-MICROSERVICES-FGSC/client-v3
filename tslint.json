@@ -4,7 +4,8 @@
     "align": {
       "options": [
         "parameters",
-        "statements"
+        "statements",
+        "members"
       ]
     },
     "array-type": false,

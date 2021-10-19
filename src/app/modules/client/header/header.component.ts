@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {AuthService} from '@app/modules/auth/shared/_services/auth.service';
+import {NotificationService} from '@services/notification.service';
 
 @Component({
   selector: 'app-header',
@@ -10,11 +12,11 @@ export class HeaderComponent implements OnInit {
   isFullScreen: boolean;
   contactTab: boolean;
   groupTab: boolean;
-  chatTab: boolean = true;
-  title: any
-  constructor(private route: Router) {
+  chatTab = true;
+  title: any;
+  constructor(private route: Router, private as: AuthService, public ns: NotificationService) {
     this.title = route.url;
-    debugger
+    // debugger
     this.title = this.title.replace(/\//g, '');
     this.title = this.title.toUpperCase();
   }
@@ -70,15 +72,18 @@ export class HeaderComponent implements OnInit {
     this.chatTab = false;
     this.groupTab = false;
     this.contactTab = false;
-    if (number == '1') {
+    if (number === '1') {
       this.chatTab = true;
     }
-    else if (number == '2') {
+    else if (number === '2') {
       this.groupTab = true;
     }
-    else if (number == '3') {
+    else if (number === '3') {
       this.contactTab = true;
     }
   }
 
+  async logout() {
+    await this.as.logout().then(() => undefined);
+  }
 }

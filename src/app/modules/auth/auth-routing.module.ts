@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './login-register/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { RegisterComponent } from './register/register.component';
-import { ErrorPageComponent } from './error-page/error-page.component';
-import { ErrorPage2Component } from './error-page2/error-page2.component';
+import { ErrorPageComponent } from '@shared/components/error-page/error-page.component';
+import { ErrorPage2Component } from '@shared/components/error-page2/error-page2.component';
+import { ConfirmEmailComponent } from '@app/modules/auth/confirm-email/confirm-email.component';
+import {ResetPasswordComponent} from '@app/modules/auth/reset-password/reset-password.component';
 
 const routes: Routes = [
   {
@@ -19,20 +20,18 @@ const routes: Routes = [
     data: { title: ':: Epic :: Forgot Password' }
   },
   {
-    path: 'register',
-    component: RegisterComponent,
-    data: { title: ':: Epic :: Register' }
+    path: 'confirm-email/:token',
+    component: ConfirmEmailComponent
   },
   {
-    path: 'error-404',
-    component: ErrorPageComponent,
-    data: { title: ':: Epic :: Error-404' }
+    path: 'reset-pw/:token/:email',
+    component: ResetPasswordComponent
   },
-  {
-    path: 'error-500',
-    component: ErrorPage2Component,
-    data: { title: ':: Epic :: Error-500' }
-  },
+  // {
+  //   path: '**',
+  //   component: ErrorPageComponent,
+  //   data: { title: 'Vodoo - 404' }
+  // }
 ];
 
 @NgModule({
@@ -42,7 +41,9 @@ const routes: Routes = [
 export class AuthRoutingModule {
   static components = [
     LoginComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ConfirmEmailComponent,
+    ResetPasswordComponent
   ];
 
 }

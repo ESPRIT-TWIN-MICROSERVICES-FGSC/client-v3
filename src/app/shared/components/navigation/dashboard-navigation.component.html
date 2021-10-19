@@ -1,0 +1,290 @@
+<!--	<ngx-loading-bar ref="router" color="lightblue" [includeBar]="true" [includeSpinner]="false"></ngx-loading-bar>-->
+<!--	<ngx-loading-bar ref="http" color="orange" [includeBar]="true" [includeSpinner]="false"></ngx-loading-bar>-->
+<!--	<mat-progress-bar color="warn" *ngIf="!gatewayService.connectionState.value" mode="indeterminate"-->
+<!--										matTooltip="Trying to reconnect to the API Gateway"></mat-progress-bar>-->
+<mat-toolbar color="primary">
+	<mat-icon aria-label="Toggle sidenav" (click)="leftDrawer.toggle()" matTooltip="Toggle right sidebar"
+						[ngStyle]="currentThemeColor">
+		menu
+	</mat-icon>
+	<form class="search-form mb-3 ml-4">
+		<mat-form-field [ngStyle]="currentThemeColor" class="search-form-width">
+			<input matInput [(ngModel)]="searchFieldValue">
+			<button *ngIf="searchFieldValue" matSuffix mat-icon-button aria-label="Clear" mat-flat-button
+							(click)="searchFieldValue=''">
+				<mat-icon>close</mat-icon>
+			</button>
+		</mat-form-field>
+	</form>
+	<span class="spacer"></span>
+	<!--	START NOTIFICATIONS	-->
+	<button mat-icon-button class="mr-2" aria-label="Notifications" matTooltip="Notifications"
+					[ngStyle]="currentThemeColor"
+					[matMenuTriggerFor]="notificationsMenu">
+		<mat-icon [matBadge]="notificationService.notificationCount | async" matBadgeColor="accent"
+							matBadgePosition="below after">
+			notifications
+		</mat-icon>
+		<span class="heartbeat"></span>
+		<ng-container *ngIf="notificationService.connectionStatus.kind === 'CONNECTING'">
+			<span class="connecting"></span>
+		</ng-container>
+		<ng-container *ngIf="notificationService.connectionStatus.kind === 'CONNECTED'">
+			<span class="notify"></span>
+		</ng-container>
+		<ng-container *ngIf="notificationService.connectionStatus.kind === 'ERROR'">
+			<span class="error"></span>
+		</ng-container>
+	</button>
+	<mat-menu #notificationsMenu="matMenu">
+		<ng-template matMenuContent>
+			<mat-card>
+				<mat-card-header>Notifications</mat-card-header>
+				<mat-card-subtitle>26 unread notifications</mat-card-subtitle>
+				<mat-card-content class="d-flex justify-content-center">
+					<mat-list *ngIf="notificationService.connectionStatus.kind === 'CONNECTED'">
+						<mat-list-item *ngFor="let m of notificationService.notifications$ | async; index as i"
+													 (click)="notificationService.setSeen(m)">
+							<mat-icon matListIcon>info</mat-icon>
+							<h3 matLine> from </h3>
+							<p matLine>
+								<span> {{m.message.slice(0, 14)}} </span>
+								<span class="demo-2"> -- {{m.sentAt | date : 'short'}} </span>
+							</p>
+						</mat-list-item>
+					</mat-list>
+					<mat-card-content
+						*ngIf="notificationService.connectionStatus.kind === 'ERROR' || notificationService.connectionStatus.kind === 'CLOSED' || notificationService.connectionStatus.kind === 'NOT_CONNECTED'">
+						Could not reach notification end point, make sure you are online 🤷‍♂️
+					</mat-card-content>
+				</mat-card-content>
+				<mat-card-actions>
+					<button mat-menu-item (click)="loadMore($event)"
+									*ngIf="notificationService.notifications$.value.length  >  (notificationFetchPage.getValue() * 5) - 1;">
+						<mat-icon>more</mat-icon>
+						<span>Load more</span>
+					</button>
+				</mat-card-actions>
+			</mat-card>
+		</ng-template>
+	</mat-menu>
+	<!-- END NOTIFICATIONS-->
+	<!-- START PROFILE MENU		-->
+	<img src="{{userImageUrl}}" matCardAvatar
+			 alt="user avatar fetched from dicebear avatar"
+			 [matMenuTriggerFor]="profileAndSettingsMenu">
+	<mat-menu #profileAndSettingsMenu="matMenu">
+		<ng-template matMenuContent>
+			<mat-card>
+				<mat-card-header class="d-flex justify-content-center">
+					<img src="{{userImageUrl}}"
+							 class="rounded-circle z-depth-2 mb-1 avatar-picture" alt="user avatar fetched from dicebear avatar"
+							 style="cursor: pointer; width: 50%;"
+							 routerLink="me">
+				</mat-card-header>
+				<mat-card-content class="d-flex justify-content-center">
+					<div style="cursor: pointer" routerLink="me">
+						{{ authService.currentUserValue?.name }}
+					</div>
+					<ng-container *ngFor="let role of authService.currentUserValue?.roles">
+						{{ authService.displayRole(role) }}
+					</ng-container>
+					<div>{{ authService.currentUserValue?.roles}}</div>
+				</mat-card-content>
+			</mat-card>
+			<button mat-menu-item>
+				<mat-icon>account_circle</mat-icon>
+				Profile
+			</button>
+			<button mat-menu-item>
+				<mat-icon>settings</mat-icon>
+				Settings
+			</button>
+			<button mat-menu-item>
+				<mat-icon>help_outline</mat-icon>
+				Help
+			</button>
+			<button mat-menu-item (click)="logout()">
+				<mat-icon>logout</mat-icon>
+				Logout
+			</button>
+		</ng-template>
+	</mat-menu>
+	<!-- END PROFILE MENU		-->
+	<!-- START PROFILE MENU		-->
+	<button mat-icon-button (click)="right.toggle()" [ngStyle]="currentThemeColor">
+		<mat-icon>{{ right.opened ? 'arrow_forward_ios_new' : 'arrow_back_ios_new' }}</mat-icon>
+	</button>
+</mat-toolbar>
+<mat-sidenav-container class="fill-height" hasBackdrop="false">
+	<mat-sidenav #leftDrawer mode="push" class="sidenav"
+							 [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+							 [mode]="(isHandset$ | async) ? 'over' : 'side'"
+							 [opened]="!(isHandset$ | async)">
+		<mat-card>
+			<mat-card-header>
+				<div mat-card-avatar>
+					<img src="{{userImageUrl}}" alt="User image" class="rounded">
+				</div>
+				<mat-card-title>Shiba Inu</mat-card-title>
+				<mat-card-subtitle>Dog Breed</mat-card-subtitle>
+			</mat-card-header>
+		</mat-card>
+		<mat-toolbar>Menu</mat-toolbar>
+		<!--			<app-tree-flat-overview></app-tree-flat-overview>-->
+		<mat-divider></mat-divider>
+
+		<button mat-button (click)="accordion?.closeAll()" class="col">
+			<mat-icon>expand_less</mat-icon>
+		</button>
+		<mat-accordion multi displayMode="flat" togglePosition="after">
+			<mat-expansion-panel>
+				<mat-expansion-panel-header>
+					<mat-panel-title>
+						<mat-icon>person</mat-icon>
+						Clients
+					</mat-panel-title>
+				</mat-expansion-panel-header>
+				<mat-list>
+					<mat-list-item>
+						<button mat-icon-button>
+							<mat-icon>person_search</mat-icon>
+							All clients
+						</button>
+					</mat-list-item>
+					<mat-list-item>
+						<button mat-icon-button>
+							<mat-icon>add</mat-icon>
+							Add a client
+						</button>
+					</mat-list-item>
+				</mat-list>
+			</mat-expansion-panel>
+			<mat-expansion-panel>
+				<mat-expansion-panel-header>
+					<mat-panel-title>
+						Leave Management
+					</mat-panel-title>
+				</mat-expansion-panel-header>
+				<mat-list>
+					<mat-list-item>
+						<button mat-icon-button>
+							<mat-icon>all</mat-icon>
+							All Leave Request
+						</button>
+					</mat-list-item>
+					<mat-list-item>
+						<button mat-icon-button>
+							<mat-icon></mat-icon>
+							Leave balance
+						</button>
+					</mat-list-item>
+				</mat-list>
+			</mat-expansion-panel>
+			<mat-expansion-panel>
+				<mat-expansion-panel-header>
+					<mat-panel-title>
+						Clients
+					</mat-panel-title>
+				</mat-expansion-panel-header>
+				<mat-list>
+					<mat-list-item>
+						<button mat-icon-button>All clients
+							<mat-icon>users</mat-icon>
+						</button>
+					</mat-list-item>
+				</mat-list>
+			</mat-expansion-panel>
+			<mat-expansion-panel>
+				<mat-expansion-panel-header>
+					<mat-panel-title>
+						Clients
+					</mat-panel-title>
+				</mat-expansion-panel-header>
+				<mat-list>
+					<mat-list-item>
+						<button mat-icon-button>All clients
+							<mat-icon>users</mat-icon>
+						</button>
+					</mat-list-item>
+				</mat-list>
+			</mat-expansion-panel>
+		</mat-accordion>
+		<button mat-button (click)="accordion?.openAll()" class="col">
+			<mat-icon>expand_more</mat-icon>
+		</button>
+	</mat-sidenav>
+	<mat-sidenav-content>
+		<div>
+			<section class="content-header">
+				<div class="container-fluid">
+					<app-breadcrumb></app-breadcrumb>
+					<router-outlet id="router"></router-outlet>
+					<app-chat (closeChatEvent)="toggleChat()" *ngIf="isChatOpen"></app-chat>
+					<button mat-icon-button id="sticky-bottom" *ngIf="!isChatOpen" color="primary" (click)="toggleChat()">
+						<mat-icon>
+							chat
+						</mat-icon>
+					</button>
+				</div>
+			</section>
+			<mat-toolbar>
+				<footer class="blockquote-footer">
+					<strong>Copyright &copy; <a href="https://github.com/orgs/ESPRIT-TWIN-MICROSERVICES-FGSC" target="_blank">Firas/Ghada/Sadek/Chihab
+						(FGSC) ESPRIT</a> </strong> All rights reserved.
+				</footer>
+			</mat-toolbar>
+		</div>
+	</mat-sidenav-content>
+	<mat-sidenav #right position="end" [mode]="(isHandset$ | async) ? 'over':'side'" class="sidenav"
+							 [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'">
+		<mat-list>
+			<mat-list-item>
+				Theme :
+				<mat-icon>light_mode</mat-icon>
+				<mat-slide-toggle [formControl]="toggleControl">
+				</mat-slide-toggle>
+				<mat-icon>dark_mode</mat-icon>
+			</mat-list-item>
+			<mat-list-item>
+				<button mat-menu-item>
+					<mat-icon>notifications_off</mat-icon>
+					<span>Disable notifications</span>
+				</button>
+			</mat-list-item>
+		</mat-list>
+	</mat-sidenav>
+</mat-sidenav-container>
+
+
+<!-- In the future  -->
+<!--<mat-drawer-container class="example-container mat-typography" autosize>-->
+<!--	<mat-drawer #drawer mode="side" disableClose="true" opened="true">-->
+<!--		<button mat-mini-fab color="warn" style="margin: 10px;">-->
+<!--			<mat-icon aria-label="Menu">menu</mat-icon>-->
+<!--		</button>-->
+<!--		<mat-nav-list>-->
+<!--			<mat-list-item>-->
+<!--				<mat-icon mat-list-icon>person</mat-icon>-->
+<!--				<h4 mat-line >Management A</h4>-->
+<!--			</mat-list-item>-->
+<!--			<mat-list-item>-->
+<!--				<mat-icon mat-list-icon>assignment</mat-icon>-->
+<!--				<h4 mat-line >Management B</h4>-->
+<!--			</mat-list-item>-->
+<!--			<mat-list-item>-->
+<!--				<mat-icon mat-list-icon>domain</mat-icon>-->
+<!--				<h4 mat-line >Management C</h4>-->
+<!--			</mat-list-item>-->
+<!--			<mat-list-item>-->
+<!--				<mat-icon mat-list-icon>folder_shared</mat-icon>-->
+<!--				<h4 mat-line >Management X</h4>-->
+<!--			</mat-list-item>-->
+<!--		</mat-nav-list>-->
+<!--	</mat-drawer>-->
+
+<!--	<div class="example-sidenav-content">-->
+<!--		You cards and screen Contents goes here..-->
+<!--		Will be pushed towards right on expanding side navbar.-->
+<!--	</div>-->
+<!--</mat-drawer-container>-->

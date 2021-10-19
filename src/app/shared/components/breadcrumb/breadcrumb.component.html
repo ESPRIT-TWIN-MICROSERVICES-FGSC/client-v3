@@ -1,0 +1,25 @@
+<div class="row mt-3 ml-1">
+	<mat-chip-list
+		class="flex d-flex" aria-label="Navigation breadcrumbs" style="background-color: transparent"  *ngFor="let breadcrumb of (breadcrumbService.breadcrumbs$ | async); index as i; last as last; first as first;" >
+		<mat-chip [color]="!first && !last ? 'primary' : last ?? 'accent'"
+							[disabled]="last"
+							[routerLink]="breadcrumb.url"
+							[selected]="!first && !last"
+							class="col"
+		>
+			{{ breadcrumb.label }}
+			<mat-icon>
+				<ng-container *ngIf="first; else hasIconBlock">
+					home
+				</ng-container>
+				<ng-template #hasIconBlock>
+					{{ breadcrumb.icon }}
+				</ng-template>
+			</mat-icon>
+		</mat-chip>
+	</mat-chip-list>
+	<div class="spacer"></div>
+	<div class="d-flex flex-row-reverse">
+		<button mat-icon-button routerLink="../dashboard"><mat-icon>home</mat-icon></button>
+	</div>
+</div>
