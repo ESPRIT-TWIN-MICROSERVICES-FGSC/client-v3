@@ -20,7 +20,6 @@ import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { FormElementComponent } from './form-element/form-element.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatSliderModule } from '@angular/material/slider';
-import { TablesComponent } from './UI-ELEMENTS/tables/tables.component';
 import { ChartsComponent } from './charts/charts.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { LineChartComponent } from './charts/line-chart/line-chart.component';
@@ -52,8 +51,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CkeditorComponent } from './ckeditor/ckeditor.component';
 import { MapsComponent } from './maps/maps.component';
 import { HRMSComponent } from './hrms/hrms.component';
-import { HrUsersComponent } from './HRMS/hr-users/hr-users.component';
-import { HrDashboardComponent } from './HRMS/hr-dashboard/hr-dashboard.component';
+
 import { HrDepartmentsComponent } from './hrms/hr-departments/hr-departments.component';
 import { HrEmployeeComponent } from './hrms/hr-employee/hr-employee.component';
 import { HrActivitiesComponent } from './hrms/hr-activities/hr-activities.component';
@@ -79,12 +77,6 @@ import { JobportalResumesComponent } from './job-portal/jobportal-resumes/jobpor
 import { JobportalSettingsComponent } from './job-portal/jobportal-settings/jobportal-settings.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { UIELEMENTSComponent } from './ui-elements/ui-elements.component';
-import { IconsComponent } from './UI-ELEMENTS/icons/icons.component';
-import { IconFontawesomeComponent } from './UI-ELEMENTS/icons/icon-fontawesome/icon-fontawesome.component';
-import { IconFeatherComponent } from './UI-ELEMENTS/icons/icon-feather/icon-feather.component';
-import { IconLinesComponent } from './UI-ELEMENTS/icons/icon-lines/icon-lines.component';
-import { IconFlagsComponent } from './UI-ELEMENTS/icons/icon-flags/icon-flags.component';
-import { IconPaymentsComponent } from './UI-ELEMENTS/icons/icon-payments/icon-payments.component';
 import { GalleryComponent } from './ui-elements/gallery/gallery.component';
 import { BasicradarChartComponent } from './charts/basicradar-chart/basicradar-chart.component';
 import { ColumnLineChartComponent } from './charts/column-line-chart/column-line-chart.component';
@@ -116,6 +108,15 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { HrLeavesComponent } from './hrms/hr-leaves/hr-leaves.component';
 import { HrJobsComponent } from './hrms/hr-jobs/hr-jobs.component';
 import { HrProjectsComponent } from './hrms/hr-projects/hr-projects.component';
+import {HrUsersComponent} from '@app/modules/client/hrms/hr-users/hr-users.component';
+import {HrDashboardComponent} from '@app/modules/client/hrms/hr-dashboard/hr-dashboard.component';
+import {IconFlagsComponent} from '@app/modules/client/ui-elements/icons/icon-flags/icon-flags.component';
+import {IconLinesComponent} from '@app/modules/client/ui-elements/icons/icon-lines/icon-lines.component';
+import {TablesComponent} from '@app/modules/client/ui-elements/tables/tables.component';
+import {IconsComponent} from '@app/modules/client/ui-elements/icons/icons.component';
+import {IconFeatherComponent} from '@app/modules/client/ui-elements/icons/icon-feather/icon-feather.component';
+import {IconFontawesomeComponent} from '@app/modules/client/ui-elements/icons/icon-fontawesome/icon-fontawesome.component';
+import {IconPaymentsComponent} from '@app/modules/client/ui-elements/icons/icon-payments/icon-payments.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
