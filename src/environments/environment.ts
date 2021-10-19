@@ -4,12 +4,15 @@
 
 export const environment = {
   production: false,
-  clientMicroservice: 'http://localhost:8086',
-  congeMicroservice: 'http://localhost:8082',
   authGateway: 'http://localhost:8070/',
   clientUrl: 'http://localhost:4200',
   gateway: 'https://fgsc-gateway.herokuapp.com/api/',
   notificationsRSocketUrl: 'ws://localhost:7000/rs',
+  clientMicroservice: 'https://warm-falls-36309.herokuapp.com/',
+  congeMicroservice: 'https://conges-microservice.herokuapp.com/',
+  employeeMicroservice: 'https://employee-microservices.herokuapp.com/',
+  JobMicroservice: 'https://job-microservices.herokuapp.com/',
+  projectMicroservice: 'https://projet-microservice.herokuapp.com/',
 };
 
 /*

@@ -1,0 +1,282 @@
+<app-leftmenu></app-leftmenu>
+<!-- Main body part  -->
+<div class="page">
+  <app-header></app-header>
+  <p-toast></p-toast>
+  <div class="card">
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <button type="button" class="btn btn-primary mr-2" (click)="openNew()">
+          New
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="deleteSelectedItems()"
+          [disabled]="!selectedItems || !selectedItems.length"
+        >
+          Delete
+        </button>
+      </ng-template>
+      <ng-template pTemplate="right">
+        <button type="button" class="btn btn-secondary" (click)="exportPdf()">
+          Export
+        </button>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table
+      #dt
+      [value]="items"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [paginator]="true"
+      [globalFilterFields]="['start_date', 'end_date', 'type']"
+      [(selection)]="selectedItems"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="dt.filterGlobal($event.target.value, 'contains')"
+              placeholder="Search..."
+            />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th pSortableColumn="start_date">
+            Start date <p-sortIcon field="start_date"></p-sortIcon>
+          </th>
+          <th pSortableColumn="end_date">
+            End date <p-sortIcon field="end_date"></p-sortIcon>
+          </th>
+          <th pSortableColumn="type">
+            Type <p-sortIcon field="type"></p-sortIcon>
+          </th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="item"></p-tableCheckbox>
+          </td>
+          <td>{{ item.start_date }}</td>
+          <td>{{ item.end_date }}</td>
+          <td>{{ item.type }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-icon"
+              title="Edit"
+              (click)="deleteItem(item)"
+            >
+              <i class="fa fa-trash"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-icon"
+              title="Edit"
+              (click)="editItem(item)"
+            >
+              <i class="fa fa-edit"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-icon"
+              title="Edit"
+              (click)="viewItemDetailed(item)"
+            >
+              <i class="fa fa-eye"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          In total there are {{ items ? items.length : 0 }} leaves.
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <p-dialog
+    [(visible)]="itemAddDialog"
+    [style]="{ width: '450px' }"
+    header="Add  a client"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <form [formGroup]="itemsFormGroup">
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Start Date"
+              formControlName="start_date"
+              [ngClass]="{
+                'is-invalid': checkFormValidationStartDate(),
+                'is-valid': itemsFormGroup.get('start_date').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              Start date is required
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="End date"
+              formControlName="end_date"
+              [ngClass]="{
+                'is-invalid': checkFormValidationEndDate(),
+                'is-valid': itemsFormGroup.get('end_date').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              End date is required
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Type"
+              formControlName="type"
+              [ngClass]="{
+                'is-invalid': checkFormValidationType(),
+                'is-valid': itemsFormGroup.get('type').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              Type is required
+            </div>
+          </div>
+        </div>
+      </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        pRipple
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="hideDialog()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Save"
+        icon="pi pi-check"
+        class="p-button-text"
+        (click)="saveLeave()"
+      ></button>
+    </ng-template>
+  </p-dialog>
+  <p-dialog
+    [(visible)]="itemUpdateDialog"
+    [style]="{ width: '450px' }"
+    header="Update a client"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <form [formGroup]="itemsFormGroup">
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Start date"
+              formControlName="start_date"
+              [ngClass]="{
+                'is-invalid': checkFormValidationStartDate(),
+                'is-valid': itemsFormGroup.get('start_date').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              Start date is required
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="End date"
+              formControlName="end_date"
+              [ngClass]="{
+                'is-invalid': checkFormValidationEndDate(),
+                'is-valid': itemsFormGroup.get('end_date').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              End date is required
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Type"
+              formControlName="type"
+              [ngClass]="{
+                'is-invalid': checkFormValidationType(),
+                'is-valid': itemsFormGroup.get('type').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              Type is required
+            </div>
+          </div>
+        </div>
+      </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        pRipple
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="hideDialog()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Save"
+        icon="pi pi-check"
+        class="p-button-text"
+        (click)="updateLeave()"
+      ></button>
+    </ng-template>
+  </p-dialog>
+  <p-dialog
+    [(visible)]="itemViewDialog"
+    [style]="{ width: '450px' }"
+    header="Client in details"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+  </p-dialog>
+
+  <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+  <app-footer></app-footer>
+</div>

@@ -61,7 +61,7 @@
           (click)="toggleUserMenu()"
           ><img
             class="avatar"
-            [src]="profileImageUrl"
+            src="../assets/images/user.png"
             alt=""
             data-toggle="tooltip"
             data-placement="right"
@@ -865,6 +865,39 @@
               [routerLink]="['/hr-clients']"
               href="javascript:void(0)"
               ><span>Clients</span></a
+            >
+          </li>
+          <li
+            [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a
+              class="submenu"
+              [routerLink]="['/hr-projects']"
+              href="javascript:void(0)"
+              ><span>Projects</span></a
+            >
+          </li>
+          <li
+            [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a
+              class="submenu"
+              [routerLink]="['/hr-jobs']"
+              href="javascript:void(0)"
+              ><span>Jobs</span></a
+            >
+          </li>
+          <li
+            [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a
+              class="submenu"
+              [routerLink]="['/hr-leaves']"
+              href="javascript:void(0)"
+              ><span>Leaves</span></a
             >
           </li>
           <li

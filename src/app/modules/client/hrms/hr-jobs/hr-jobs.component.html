@@ -31,7 +31,7 @@
       [rows]="10"
       [rowsPerPageOptions]="[10, 25, 50]"
       [paginator]="true"
-      [globalFilterFields]="['firsttName', 'lastName']"
+      [globalFilterFields]="['jobTitle', 'positionType', 'departement']"
       [(selection)]="selectedItems"
       [rowHover]="true"
       dataKey="id"
@@ -56,20 +56,20 @@
           <th style="width: 3rem">
             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           </th>
-          <th pSortableColumn="firsttName">
-            First Name <p-sortIcon field="firsttName"></p-sortIcon>
+          <th pSortableColumn="jobTitle">
+            Title <p-sortIcon field="jobTitle"></p-sortIcon>
           </th>
-          <th pSortableColumn="lastName">
-            Last Name <p-sortIcon field="lastName"></p-sortIcon>
+          <th pSortableColumn="positionType">
+            Position type <p-sortIcon field="positionType"></p-sortIcon>
           </th>
-          <th pSortableColumn="address">
-            Address <p-sortIcon field="address"></p-sortIcon>
+          <th pSortableColumn="departement">
+            Department <p-sortIcon field="departement"></p-sortIcon>
           </th>
-          <th pSortableColumn="email">
-            Email <p-sortIcon field="email"></p-sortIcon>
+          <th pSortableColumn="location">
+            Location <p-sortIcon field="location"></p-sortIcon>
           </th>
-          <th pSortableColumn="tel">
-            Phone <p-sortIcon field="tel"></p-sortIcon>
+          <th pSortableColumn="qualifications">
+            Qualifications <p-sortIcon field="qualifications"></p-sortIcon>
           </th>
           <th></th>
         </tr>
@@ -79,11 +79,11 @@
           <td>
             <p-tableCheckbox [value]="item"></p-tableCheckbox>
           </td>
-          <td>{{ item.firsttName }}</td>
-          <td>{{ item.lastName }}</td>
-          <td>{{ item.address }}</td>
-          <td>{{ item.email }}</td>
-          <td>{{ item.tel }}</td>
+          <td>{{ item.jobTitle }}</td>
+          <td>{{ item.positionType }}</td>
+          <td>{{ item.departement }}</td>
+          <td>{{ item.location }}</td>
+          <td>{{ item.qualifications }}</td>
           <td>
             <button
               type="button"
@@ -114,7 +114,7 @@
       </ng-template>
       <ng-template pTemplate="summary">
         <div class="p-d-flex p-ai-center p-jc-between">
-          In total there are {{ items ? items.length : 0 }} clients.
+          In total there are {{ items ? items.length : 0 }} Jobs.
         </div>
       </ng-template>
     </p-table>
@@ -123,7 +123,7 @@
   <p-dialog
     [(visible)]="itemAddDialog"
     [style]="{ width: '450px' }"
-    header="Add  a client"
+    header="Add  a Job"
     [modal]="true"
     styleClass="p-fluid"
   >
@@ -134,58 +134,63 @@
             <input
               type="text"
               class="form-control"
-              placeholder="First name"
-              formControlName="firsttName"
+              placeholder="Job title"
+              formControlName="jobTitle"
               [ngClass]="{
-                'is-invalid': checkFormValidationFirstName(),
-                'is-valid': itemsFormGroup.get('firsttName').valid
+                'is-invalid': checkFormValidationJobTitle(),
+                'is-valid': itemsFormGroup.get('jobTitle').valid
               }"
             />
             <div class="invalid-feedback invalid-feedback-position">
-              First Name is required
+              Job title is required
             </div>
           </div>
           <div class="col-md-6 mb-4">
             <input
               type="text"
               class="form-control"
-              placeholder="Last name"
-              formControlName="lastName"
+              placeholder="Position type"
+              formControlName="positionType"
               [ngClass]="{
-                'is-invalid': checkFormValidationLastName(),
-                'is-valid': itemsFormGroup.get('lastName').valid
+                'is-invalid': checkFormValidationpositionPositionType(),
+                'is-valid': itemsFormGroup.get('positionType').valid
               }"
             />
             <div class="invalid-feedback invalid-feedback-position">
-              Last Name is required
+              Position type is required
             </div>
           </div>
           <div class="col-md-6 mb-4">
             <input
               type="text"
               class="form-control"
-              placeholder="Email"
-              formControlName="email"
+              placeholder="Department"
+              formControlName="departement"
               [ngClass]="{
-                'is-invalid': checkFormValidationEmail(),
-                'is-valid': itemsFormGroup.get('email').valid
+                'is-invalid': checkFormValidationpositionDepartement(),
+                'is-valid': itemsFormGroup.get('departement').valid
               }"
             />
             <div class="invalid-feedback invalid-feedback-position">
-              Email is {{ getInvalidMessage() }}
+              Department required
             </div>
           </div>
           <div class="col-md-6 mb-4">
-            <input type="text" class="form-control" placeholder="Client Id" />
+            <textarea
+              type="text"
+              class="form-control"
+              formControlName="details"
+              placeholder="Description"
+            ></textarea>
           </div>
           <div class="col-md-6 mb-4">
             <input
               type="text"
               class="form-control"
-              placeholder="Designation"
-              formControlName="designation"
+              placeholder="Location"
+              formControlName="location"
               [ngClass]="{
-                'is-valid': itemsFormGroup.get('designation').valid
+                'is-valid': itemsFormGroup.get('location').valid
               }"
             />
           </div>
@@ -193,43 +198,10 @@
             <input
               type="text"
               class="form-control"
-              placeholder="Telephone"
-              formControlName="tel"
+              placeholder="Qualifications"
+              formControlName="qualifications"
               [ngClass]="{
-                'is-valid': itemsFormGroup.get('tel').valid
-              }"
-            />
-          </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Country"
-              formControlName="country"
-              [ngClass]="{
-                'is-valid': itemsFormGroup.get('country').valid
-              }"
-            />
-          </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Website"
-              formControlName="webSite"
-              [ngClass]="{
-                'is-valid': itemsFormGroup.get('webSite').valid
-              }"
-            />
-          </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Address"
-              formControlName="address"
-              [ngClass]="{
-                'is-valid': itemsFormGroup.get('address').valid
+                'is-valid': itemsFormGroup.get('qualifications').valid
               }"
             />
           </div>
@@ -270,58 +242,63 @@
             <input
               type="text"
               class="form-control"
-              placeholder="First name"
-              formControlName="firsttName"
+              placeholder="Job title"
+              formControlName="jobTitle"
               [ngClass]="{
-                'is-invalid': checkFormValidationFirstName(),
-                'is-valid': itemsFormGroup.get('firsttName').valid
+                'is-invalid': checkFormValidationJobTitle(),
+                'is-valid': itemsFormGroup.get('jobTitle').valid
               }"
             />
             <div class="invalid-feedback invalid-feedback-position">
-              First Name is required
+              Job title is required
             </div>
           </div>
           <div class="col-md-6 mb-4">
             <input
               type="text"
               class="form-control"
-              placeholder="Last name"
-              formControlName="lastName"
+              placeholder="Position type"
+              formControlName="positionType"
               [ngClass]="{
-                'is-invalid': checkFormValidationLastName(),
-                'is-valid': itemsFormGroup.get('lastName').valid
+                'is-invalid': checkFormValidationpositionPositionType(),
+                'is-valid': itemsFormGroup.get('positionType').valid
               }"
             />
             <div class="invalid-feedback invalid-feedback-position">
-              Last Name is required
+              Position type is required
             </div>
           </div>
           <div class="col-md-6 mb-4">
             <input
               type="text"
               class="form-control"
-              placeholder="Email"
-              formControlName="email"
+              placeholder="Department"
+              formControlName="departement"
               [ngClass]="{
-                'is-invalid': checkFormValidationEmail(),
-                'is-valid': itemsFormGroup.get('email').valid
+                'is-invalid': checkFormValidationpositionDepartement(),
+                'is-valid': itemsFormGroup.get('departement').valid
               }"
             />
             <div class="invalid-feedback invalid-feedback-position">
-              Email is {{ getInvalidMessage() }}
+              Department required
             </div>
           </div>
           <div class="col-md-6 mb-4">
-            <input type="text" class="form-control" placeholder="Client Id" />
+            <textarea
+              type="text"
+              class="form-control"
+              formControlName="details"
+              placeholder="Description"
+            ></textarea>
           </div>
           <div class="col-md-6 mb-4">
             <input
               type="text"
               class="form-control"
-              placeholder="Designation"
-              formControlName="designation"
+              placeholder="Location"
+              formControlName="location"
               [ngClass]="{
-                'is-valid': itemsFormGroup.get('designation').valid
+                'is-valid': itemsFormGroup.get('location').valid
               }"
             />
           </div>
@@ -329,43 +306,10 @@
             <input
               type="text"
               class="form-control"
-              placeholder="Telephone"
-              formControlName="tel"
+              placeholder="Qualifications"
+              formControlName="qualifications"
               [ngClass]="{
-                'is-valid': itemsFormGroup.get('tel').valid
-              }"
-            />
-          </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Country"
-              formControlName="country"
-              [ngClass]="{
-                'is-valid': itemsFormGroup.get('country').valid
-              }"
-            />
-          </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Website"
-              formControlName="webSite"
-              [ngClass]="{
-                'is-valid': itemsFormGroup.get('webSite').valid
-              }"
-            />
-          </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Address"
-              formControlName="address"
-              [ngClass]="{
-                'is-valid': itemsFormGroup.get('webSite').valid
+                'is-valid': itemsFormGroup.get('qualifications').valid
               }"
             />
           </div>
@@ -402,49 +346,41 @@
     <ng-template pTemplate="content">
       <div class="card c_grid c_yellow">
         <div class="card-body text-center">
-          <div class="circle">
-            <img
-              class="rounded-circle"
-              src="../assets/images/sm/avatar1.jpg"
-              alt=""
-            />
-          </div>
-          <h6 class="mt-3 mb-0">
-            {{ selectedItem?.firsttName }} {{ selectedItem?.lastName }}
-          </h6>
-          <span>{{ selectedItem?.tel }}</span>
-          <span>{{ selectedItem?.address }}</span>
-          <span>{{ selectedItem?.country }}</span>
-          <ul class="mt-3 list-unstyled d-flex justify-content-center">
-            <li>
-              <a class="p-3" target="_blank" href="#"
-                ><i class="fa fa-facebook"></i
-              ></a>
-            </li>
-            <li>
-              <a class="p-3" target="_blank" href="#"
-                ><i class="fa fa-slack"></i
-              ></a>
-            </li>
-            <li>
-              <a class="p-3" target="_blank" href="#"
-                ><i class="fa fa-linkedin"></i
-              ></a>
-            </li>
-          </ul>
           <div class="row">
             <div class="col-md-6">
-              Email :
-              <a
-                href="mailto:{{ selectedItem?.email }}"
-                class="text-muted mb-0"
-                >{{ selectedItem?.email }}</a
-              >
+              Job Title :
+              <p class="text-muted mb-4">
+                {{ selectedItem?.jobTitle }}
+              </p>
             </div>
             <div class="col-md-6">
-              Phone :
-              <p class="text-muted mb-0">
-                {{ selectedItem?.tel }}
+              Position type :
+              <p class="text-muted mb-4">
+                {{ selectedItem?.positionType }}
+              </p>
+            </div>
+            <div class="col-md-6">
+              Department :
+              <p class="text-muted mb-4">
+                {{ selectedItem?.departement }}
+              </p>
+            </div>
+            <div class="col-md-6">
+              Location :
+              <p class="text-muted mb-4">
+                {{ selectedItem?.location }}
+              </p>
+            </div>
+            <div class="col-md-6">
+              Qualifications :
+              <p class="text-muted mb-4">
+                {{ selectedItem?.qualifications }}
+              </p>
+            </div>
+            <div class="col-md-12">
+              Details :
+              <p class="text-muted mb-4">
+                {{ selectedItem?.details }}
               </p>
             </div>
           </div>
