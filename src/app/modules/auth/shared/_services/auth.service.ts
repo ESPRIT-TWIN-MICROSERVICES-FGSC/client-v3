@@ -34,13 +34,13 @@ export class AuthService {
     return this.http.post(`${environment.gateway}auth/signup`, signupRequest);
   }
   attemptToConfirmEmail(token: string){
-    return this.http.patch(`${environment.gateway}auth/confirm-email?token=${token}`, {}, { responseType: 'text'});
+    return this.http.post(`${environment.gateway}auth/confirm-email?token=${token}`, {}, { responseType: 'text'});
   }
   attemptToSendResetToken(attempt: ResetPasswordAttemptRequest) {
-    return this.http.patch(`${environment.gateway}auth/generate-pw-token`, attempt, {responseType: 'text'});
+    return this.http.post(`${environment.gateway}auth/generate-pw-token`, attempt, {responseType: 'text'});
   }
   attemptToResetPassword(attempt: ResetPasswordRequest){
-    return this.http.patch(`${environment.gateway}auth/reset-pw`, attempt, {responseType: 'text'}).pipe(
+    return this.http.post(`${environment.gateway}auth/reset-pw`, attempt, {responseType: 'text'}).pipe(
       catchError(err => throwError(err)),
       switchMap(() => this.attemptToLogin(new LoginRequest(attempt.email, attempt.newPassword)))
     );
@@ -68,7 +68,7 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('bearer');
     this.currentUserSubject.next(undefined);
-    this.http.patch(`${environment.gateway}auth/logout`, {}).subscribe();
+    this.http.post(`${environment.gateway}auth/logout`, {}).subscribe();
     await this.router.navigate(['../login']);
   }
   public get currentUserValue(): User { return this.currentUserSubject.value; }
