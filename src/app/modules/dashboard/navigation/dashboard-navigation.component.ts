@@ -9,11 +9,16 @@ import {OverlayContainer} from '@angular/cdk/overlay';
 import {GatewayService} from '@services/gateway.service';
 import {Title} from '@angular/platform-browser';
 import {MatAccordion} from '@angular/material/expansion';
+import {RouterOutlet} from '@angular/router';
+import {SlideAnimation} from '@animations/animations';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './dashboard-navigation.component.html',
-  styleUrls: ['./dashboard-navigation.component.scss']
+  styleUrls: ['./dashboard-navigation.component.scss'],
+  animations: [
+    SlideAnimation
+  ]
 })
 export class DashboardNavigationComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
@@ -38,7 +43,9 @@ export class DashboardNavigationComponent implements OnInit, AfterViewInit, OnDe
   async ngAfterViewInit(): Promise<void> {
     // await this.gatewayService.ping();
   }
-
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet?.activatedRouteData?.animation;
+  }
   async ngOnInit() {
     await this.notificationService.countUnreadNotifications();
     await this.notificationService.fetchNotifications(0);

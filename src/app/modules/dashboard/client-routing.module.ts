@@ -57,15 +57,18 @@ import {ErrorPageComponent} from '@shared/components/error-page/error-page.compo
 import {DashboardNavigationComponent} from '@dashboard/navigation/dashboard-navigation.component';
 
 const routes: Routes = [
+  { path: '' , redirectTo: 'hr', pathMatch: 'full'},
   {
     path: 'hr', component: DashboardNavigationComponent, children: [
       {
         path: '',
         component: HrDashboardComponent,
+        data: { animation: 'isLeft' }
       },
       {
         path: 'users',
         component: HrUsersComponent,
+        data: { animation: 'isRight' }
       },
       {
         path: 'departments',
