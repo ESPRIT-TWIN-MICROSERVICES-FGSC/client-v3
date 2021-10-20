@@ -36,6 +36,12 @@
       ],
       "@assets/*": [
         "src/assets/*"
+      ],
+      "@dashboard/*": [
+        "src/app/modules/dashboard/*"
+      ],
+      "@auth/*": [
+        "src/app/modules/auth/*"
       ]
     }
   },

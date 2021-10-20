@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { ClientRoutingModule } from './client-routing.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './navigation/header/header.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
-import { LeftmenuComponent } from './leftmenu/leftmenu.component';
-import { ChatComponent } from './chat/chat.component';
+import { LeftmenuComponent } from './navigation/leftmenu/leftmenu.component';
+import { ChatComponent } from './components/chat/chat.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -17,39 +17,39 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
-import { FormElementComponent } from './form-element/form-element.component';
+import { FormElementComponent } from './components/form-element/form-element.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatSliderModule } from '@angular/material/slider';
-import { ChartsComponent } from './charts/charts.component';
+import { ChartsComponent } from './components/charts/charts.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { LineChartComponent } from './charts/line-chart/line-chart.component';
-import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
-import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
-import { ColumnChartComponent } from './charts/column-chart/column-chart.component';
-import { AreaChartComponent } from './charts/area-chart/area-chart.component';
-import { RadarChartComponent } from './charts/radar-chart/radar-chart.component';
-import { RadialbarChartComponent } from './charts/radialbar-chart/radialbar-chart.component';
-import { HeatmapChartComponent } from './charts/heatmap-chart/heatmap-chart.component';
-import { CandlestickChartComponent } from './charts/candlestick-chart/candlestick-chart.component';
-import { WidgetsComponent } from './widgets/widgets.component';
-import { CalenderComponent } from './calender/calender.component';
+import { LineChartComponent } from './components/charts/line-chart/line-chart.component';
+import { BarChartComponent } from './components/charts/bar-chart/bar-chart.component';
+import { PieChartComponent } from './components/charts/pie-chart/pie-chart.component';
+import { ColumnChartComponent } from './components/charts/column-chart/column-chart.component';
+import { AreaChartComponent } from './components/charts/area-chart/area-chart.component';
+import { RadarChartComponent } from './components/charts/radar-chart/radar-chart.component';
+import { RadialbarChartComponent } from './components/charts/radialbar-chart/radialbar-chart.component';
+import { HeatmapChartComponent } from './components/charts/heatmap-chart/heatmap-chart.component';
+import { CandlestickChartComponent } from './components/charts/candlestick-chart/candlestick-chart.component';
+import { WidgetsComponent } from './components/widgets/widgets.component';
+import { CalenderComponent } from './components/calender/calender.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { ContactsComponent } from './contacts/contacts.component';
-import { FilemanagerComponent } from './filemanager/filemanager.component';
-import { SparklinesComponent } from './charts/sparklines/sparklines.component';
-import { SettingsComponent } from './settings/settings.component';
-import { MinbarchartComponent } from './charts/minbarchart/minbarchart.component';
-import { FullcalenderComponent } from './fullcalender/fullcalender.component';
+import { ContactsComponent } from './components/contacts/contacts.component';
+import { FilemanagerComponent } from './components/filemanager/filemanager.component';
+import { SparklinesComponent } from './components/charts/sparklines/sparklines.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { MinbarchartComponent } from './components/charts/minbarchart/minbarchart.component';
+import { FullcalenderComponent } from './components/fullcalender/fullcalender.component';
 import { FullCalendarModule } from '@fullcalendar/angular'; // the main connector. must go first
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin
 import interactionPlugin from '@fullcalendar/interaction'; // a plugin
 import timeGridPlugin from '@fullcalendar/timegrid';
-import { WorldmapComponent } from './worldmap/worldmap.component';
+import { WorldmapComponent } from './components/worldmap/worldmap.component';
 import { AgmCoreModule } from '@agm/core';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { CkeditorComponent } from './ckeditor/ckeditor.component';
-import { MapsComponent } from './maps/maps.component';
+import { CkeditorComponent } from './components/ckeditor/ckeditor.component';
+import { MapsComponent } from './components/maps/maps.component';
 
 import { HrDepartmentsComponent } from './hrms/hr-departments/hr-departments.component';
 import { HrEmployeeComponent } from './hrms/hr-employee/hr-employee.component';
@@ -59,35 +59,35 @@ import { HrEventsComponent } from './hrms/hr-events/hr-events.component';
 import { HrPayrollComponent } from './hrms/hr-payroll/hr-payroll.component';
 import { HrAccountsComponent } from './hrms/hr-accounts/hr-accounts.component';
 import { HrReportComponent } from './hrms/hr-report/hr-report.component';
-import { SearchComponent } from './search/search.component';
-import { ProjectComponent } from './project/project.component';
-import { PrDashboardComponent } from './project/pr-dashboard/pr-dashboard.component';
-import { PrProjectlistComponent } from './project/pr-projectlist/pr-projectlist.component';
-import { PrTaskboardComponent } from './project/pr-taskboard/pr-taskboard.component';
-import { PrTicketdetailsComponent } from './project/pr-ticketdetails/pr-ticketdetails.component';
-import { PrTicketlistComponent } from './project/pr-ticketlist/pr-ticketlist.component';
-import { PrClientsComponent } from './project/pr-clients/pr-clients.component';
-import { PrTodolistComponent } from './project/pr-todolist/pr-todolist.component';
-import { JobPortalComponent } from './job-portal/job-portal.component';
-import { JobportalDashboardComponent } from './job-portal/jobportal-dashboard/jobportal-dashboard.component';
-import { JobportalPositionsComponent } from './job-portal/jobportal-positions/jobportal-positions.component';
-import { JobportalApplicantsComponent } from './job-portal/jobportal-applicants/jobportal-applicants.component';
-import { JobportalResumesComponent } from './job-portal/jobportal-resumes/jobportal-resumes.component';
-import { JobportalSettingsComponent } from './job-portal/jobportal-settings/jobportal-settings.component';
+import { SearchComponent } from './components/search/search.component';
+import { ProjectComponent } from './components/project/project.component';
+import { PrDashboardComponent } from './components/project/pr-dashboard/pr-dashboard.component';
+import { PrProjectlistComponent } from './components/project/pr-projectlist/pr-projectlist.component';
+import { PrTaskboardComponent } from './components/project/pr-taskboard/pr-taskboard.component';
+import { PrTicketdetailsComponent } from './components/project/pr-ticketdetails/pr-ticketdetails.component';
+import { PrTicketlistComponent } from './components/project/pr-ticketlist/pr-ticketlist.component';
+import { PrClientsComponent } from './components/project/pr-clients/pr-clients.component';
+import { PrTodolistComponent } from './components/project/pr-todolist/pr-todolist.component';
+import { JobPortalComponent } from './components/job-portal/job-portal.component';
+import { JobportalDashboardComponent } from './components/job-portal/jobportal-dashboard/jobportal-dashboard.component';
+import { JobportalPositionsComponent } from './components/job-portal/jobportal-positions/jobportal-positions.component';
+import { JobportalApplicantsComponent } from './components/job-portal/jobportal-applicants/jobportal-applicants.component';
+import { JobportalResumesComponent } from './components/job-portal/jobportal-resumes/jobportal-resumes.component';
+import { JobportalSettingsComponent } from './components/job-portal/jobportal-settings/jobportal-settings.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
-import { UIELEMENTSComponent } from './ui-elements/ui-elements.component';
-import { GalleryComponent } from './ui-elements/gallery/gallery.component';
-import { BasicradarChartComponent } from './charts/basicradar-chart/basicradar-chart.component';
-import { ColumnLineChartComponent } from './charts/column-line-chart/column-line-chart.component';
-import { WCardComponent } from './widgets/w-card/w-card.component';
-import { WStaticsComponent } from './widgets/w-statics/w-statics.component';
-import { WDataComponent } from './widgets/w-data/w-data.component';
-import { WSocialComponent } from './widgets/w-social/w-social.component';
-import { WOtherComponent } from './widgets/w-other/w-other.component';
-import { ProfileComponent } from './profile/profile.component';
+import { UIELEMENTSComponent } from './components/ui-elements/ui-elements.component';
+import { GalleryComponent } from './components/ui-elements/gallery/gallery.component';
+import { BasicradarChartComponent } from './components/charts/basicradar-chart/basicradar-chart.component';
+import { ColumnLineChartComponent } from './components/charts/column-line-chart/column-line-chart.component';
+import { WCardComponent } from './components/widgets/w-card/w-card.component';
+import { WStaticsComponent } from './components/widgets/w-statics/w-statics.component';
+import { WDataComponent } from './components/widgets/w-data/w-data.component';
+import { WSocialComponent } from './components/widgets/w-social/w-social.component';
+import { WOtherComponent } from './components/widgets/w-other/w-other.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { CountToModule } from 'angular-count-to';
-import { FooterComponent } from './footer/footer.component';
+import { FooterComponent } from './components/footer/footer.component';
 import { HrClientsComponent } from './hrms/hr-clients/hr-clients.component';
 
 // primeng
@@ -107,22 +107,23 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { HrLeavesComponent } from './hrms/hr-leaves/hr-leaves.component';
 import { HrJobsComponent } from './hrms/hr-jobs/hr-jobs.component';
 import { HrProjectsComponent } from './hrms/hr-projects/hr-projects.component';
-import {HrUsersComponent} from '@app/modules/client/hrms/hr-users/hr-users.component';
-import {HrDashboardComponent} from '@app/modules/client/hrms/hr-dashboard/hr-dashboard.component';
-import {IconFlagsComponent} from '@app/modules/client/ui-elements/icons/icon-flags/icon-flags.component';
-import {IconLinesComponent} from '@app/modules/client/ui-elements/icons/icon-lines/icon-lines.component';
-import {TablesComponent} from '@app/modules/client/ui-elements/tables/tables.component';
-import {IconsComponent} from '@app/modules/client/ui-elements/icons/icons.component';
-import {IconFeatherComponent} from '@app/modules/client/ui-elements/icons/icon-feather/icon-feather.component';
-import {IconFontawesomeComponent} from '@app/modules/client/ui-elements/icons/icon-fontawesome/icon-fontawesome.component';
-import {IconPaymentsComponent} from '@app/modules/client/ui-elements/icons/icon-payments/icon-payments.component';
+import {HrUsersComponent} from '@app/modules/dashboard/hrms/hr-users/hr-users.component';
+import {HrDashboardComponent} from '@app/modules/dashboard/hrms/hr-dashboard/hr-dashboard.component';
+import {IconFlagsComponent} from '@app/modules/dashboard/components/ui-elements/icons/icon-flags/icon-flags.component';
+import {IconLinesComponent} from '@app/modules/dashboard/components/ui-elements/icons/icon-lines/icon-lines.component';
+import {TablesComponent} from '@app/modules/dashboard/components/ui-elements/tables/tables.component';
+import {IconsComponent} from '@app/modules/dashboard/components/ui-elements/icons/icons.component';
+import {IconFeatherComponent} from '@app/modules/dashboard/components/ui-elements/icons/icon-feather/icon-feather.component';
+import {IconFontawesomeComponent} from '@app/modules/dashboard/components/ui-elements/icons/icon-fontawesome/icon-fontawesome.component';
+import {IconPaymentsComponent} from '@app/modules/dashboard/components/ui-elements/icons/icon-payments/icon-payments.component';
 import {RSocketRxjsModule, RSocketService} from 'ng-rsocket-rxjs';
 import {NotificationService} from '@services/notification.service';
 import {environment} from '@environments/environment';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import {DashboardNavigationComponent} from '@shared/components/navigation/dashboard-navigation.component';
+import {ErrorPageComponent} from '@shared/components/error-page/error-page.component';
+import {DashboardNavigationComponent} from '@dashboard/navigation/dashboard-navigation.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -236,6 +237,7 @@ FullCalendarModule.registerPlugins([
     JobportalDashboardComponent,
     JobportalPositionsComponent,
     JobportalApplicantsComponent,
+    ErrorPageComponent,
     JobportalResumesComponent,
     JobportalSettingsComponent,
     UIELEMENTSComponent,

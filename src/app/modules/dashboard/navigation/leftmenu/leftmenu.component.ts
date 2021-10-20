@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppComponent } from 'src/app/app.component';
+import { AppComponent } from '@app/app.component';
 @Component({
   selector: 'app-leftmenu',
   templateUrl: './leftmenu.component.html',

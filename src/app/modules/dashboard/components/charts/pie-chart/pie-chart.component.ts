@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ChartComponent } from "ng-apexcharts";
+import { ChartComponent } from 'ng-apexcharts';
 
 import {
   ApexNonAxisChartSeries,
@@ -8,7 +8,7 @@ import {
   ApexFill,
   ApexDataLabels,
   ApexLegend
-} from "ng-apexcharts";
+} from 'ng-apexcharts';
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -25,7 +25,7 @@ export type ChartOptions = {
   styleUrls: ['./pie-chart.component.scss']
 })
 export class PieChartComponent implements OnInit {
-  @ViewChild("chart") chart: ChartComponent;
+  @ViewChild('chart') chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
 
   constructor() {
@@ -33,18 +33,18 @@ export class PieChartComponent implements OnInit {
       series: [20, 50, 30],
       chart: {
         width: 230,
-        type: "donut"
+        type: 'donut'
       },
       dataLabels: {
         enabled: true
       },
       fill: {
-        type: "fill",
-        colors: ["#2C83B6", "#9367B4", "#E8769F"],
+        type: 'fill',
+        colors: ['#2C83B6', '#9367B4', '#E8769F'],
       },
       legend: {
-        formatter: function (val, opts) {
-          return val + " - " + opts.w.globals.series[opts.seriesIndex];
+        formatter(val, opts) {
+          return val + ' - ' + opts.w.globals.series[opts.seriesIndex];
         }
       },
       responsive: [

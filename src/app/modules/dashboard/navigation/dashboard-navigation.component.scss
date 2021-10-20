@@ -179,3 +179,7 @@ span.error {
 .search-form-width {
 	width: 100%;
 }
+
+.icon-menu::before{
+  content: none !important;
+}

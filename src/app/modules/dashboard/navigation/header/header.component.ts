@@ -5,7 +5,7 @@ import {NotificationService} from '@services/notification.service';
 import {BehaviorSubject} from 'rxjs';
 import {Title} from '@angular/platform-browser';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {DashboardNavigationComponent} from '@shared/components/navigation/dashboard-navigation.component';
+import {DashboardNavigationComponent} from '@app/modules/dashboard/navigation/dashboard-navigation.component';
 
 @Component({
   selector: 'app-header',
@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private s: MatSnackBar
   ) {
     HeaderComponent.activeTitle$.next(this.titleService.getTitle());
+    HeaderComponent.activeTitle$.subscribe(title => this.title = title);
   }
   public static activeTitle$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   notificationFetchPage$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
@@ -29,7 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   groupTab: boolean;
   chatTab = true;
   fetching = false;
-
+  title: string;
   async ngOnInit(): Promise<void> {
     await this.ns.countUnreadNotifications();
     await this.ns.fetchNotifications(0);
