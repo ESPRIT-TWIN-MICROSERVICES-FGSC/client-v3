@@ -50,7 +50,6 @@ import { AgmCoreModule } from '@agm/core';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CkeditorComponent } from './ckeditor/ckeditor.component';
 import { MapsComponent } from './maps/maps.component';
-import { HRMSComponent } from './hrms/hrms.component';
 
 import { HrDepartmentsComponent } from './hrms/hr-departments/hr-departments.component';
 import { HrEmployeeComponent } from './hrms/hr-employee/hr-employee.component';
@@ -117,6 +116,13 @@ import {IconsComponent} from '@app/modules/client/ui-elements/icons/icons.compon
 import {IconFeatherComponent} from '@app/modules/client/ui-elements/icons/icon-feather/icon-feather.component';
 import {IconFontawesomeComponent} from '@app/modules/client/ui-elements/icons/icon-fontawesome/icon-fontawesome.component';
 import {IconPaymentsComponent} from '@app/modules/client/ui-elements/icons/icon-payments/icon-payments.component';
+import {RSocketRxjsModule, RSocketService} from 'ng-rsocket-rxjs';
+import {NotificationService} from '@services/notification.service';
+import {environment} from '@environments/environment';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {DashboardNavigationComponent} from '@shared/components/navigation/dashboard-navigation.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -154,6 +160,13 @@ FullCalendarModule.registerPlugins([
     AgmCoreModule.forRoot({
       apiKey: 'GOOGLE_API_KEY',
     }),
+    RSocketRxjsModule.forRoot({
+      url: environment.rsocket,
+      connectMappingData: JSON.parse(localStorage.getItem('currentUser')).id,
+      builderCustomizer: builder => {
+        builder.automaticReconnect(4000);
+      }
+    }),
     FullCalendarModule,
     CKEditorModule,
     InputTextModule,
@@ -168,6 +181,9 @@ FullCalendarModule.registerPlugins([
     TableModule,
     ToolbarModule,
     ConfirmDialogModule,
+    MatSnackBarModule,
+    MatIconModule,
+    MatButtonModule
   ],
   declarations: [
     ClientRoutingModule.components,
@@ -197,7 +213,6 @@ FullCalendarModule.registerPlugins([
     WorldmapComponent,
     CkeditorComponent,
     MapsComponent,
-    HRMSComponent,
     HrUsersComponent,
     HrDashboardComponent,
     HrDepartmentsComponent,
@@ -244,7 +259,9 @@ FullCalendarModule.registerPlugins([
     HrLeavesComponent,
     HrJobsComponent,
     HrProjectsComponent,
+    DashboardNavigationComponent,
   ],
-  providers: [BsDatepickerModule, ConfirmationService, MessageService],
+  providers: [BsDatepickerModule, ConfirmationService, MessageService, NotificationService, RSocketService],
+  bootstrap: [DashboardNavigationComponent]
 })
 export class ClientModule {}

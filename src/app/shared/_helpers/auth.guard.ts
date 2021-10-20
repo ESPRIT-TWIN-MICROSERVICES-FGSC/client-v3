@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import { Observable } from 'rxjs';
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {AuthService} from "@app/modules/auth/shared/_services/auth.service";
-import {Role} from "@app/modules/auth/shared/_models/User";
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {AuthService} from '@app/modules/auth/shared/_services/auth.service';
+import {Role} from '@app/modules/auth/shared/_models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     if (currentUser) {
       if (route.data.roles) {
         if (!route.data.roles.some((ai: Role) => currentUser.roles.includes(ai))) {
-          this.snackBar.open('Not authorised');
+          this.snackBar.open('Not authorised')._dismissAfter(6000);
           this.router.navigate(['/login']).then();
           return false;
         }
@@ -26,7 +26,7 @@ export class AuthGuard implements CanActivate {
       return true;
     }
     // TODO : Check if return url works
-    this.snackBar.open('Please log in 🙌');
+    this.snackBar.open('Please log in 🙌')._dismissAfter(6000);
     this.router.navigate(['/login'], {queryParams: {returnUrl: state.url}}).then();
     return false;
   }

@@ -49,272 +49,220 @@ import {HrProjectsComponent} from '@app/modules/client/hrms/hr-projects/hr-proje
 import {HrDepartmentsComponent} from '@app/modules/client/hrms/hr-departments/hr-departments.component';
 import {JobportalResumesComponent} from '@app/modules/client/job-portal/jobportal-resumes/jobportal-resumes.component';
 import {JobPortalComponent} from '@app/modules/client/job-portal/job-portal.component';
-import {HRMSComponent} from '@app/modules/client/hrms/hrms.component';
 import {WOtherComponent} from '@app/modules/client/widgets/w-other/w-other.component';
 import {IconFontawesomeComponent} from '@app/modules/client/ui-elements/icons/icon-fontawesome/icon-fontawesome.component';
 import {GalleryComponent} from '@app/modules/client/ui-elements/gallery/gallery.component';
+import {DashboardNavigationComponent} from '@shared/components/navigation/dashboard-navigation.component';
 
 const routes: Routes = [
   {
-    path: 'hr',
-    component: HRMSComponent,
-    data: { title: ':: Epic :: Home' },
-  },
-  {
-    path: 'hr-dashboard',
-    component: HrDashboardComponent,
-    data: { title: ':: Epic :: Home' },
-  },
-  {
-    path: 'hr-users',
-    component: HrUsersComponent,
-    data: { title: ':: Epic :: HR Users' },
-  },
-  {
-    path: 'hr-departments',
-    component: HrDepartmentsComponent,
-    data: { title: ':: Epic :: HR Departments' },
-  },
-  {
-    path: 'hr-employee',
-    component: HrEmployeeComponent,
-    data: { title: ':: Epic :: HR Employee' },
-  },
-  {
-    path: 'hr-clients',
-    component: HrClientsComponent,
-    data: { title: ':: Epic :: HR Clients' },
-  },
-  {
-    path: 'hr-projects',
-    component: HrProjectsComponent,
-    data: { title: ':: Epic :: HR Projects' },
-  },
-  {
-    path: 'hr-jobs',
-    component: HrJobsComponent,
-    data: { title: ':: Epic :: HR Jobs' },
-  },
-  {
-    path: 'hr-leaves',
-    component: HrLeavesComponent,
-    data: { title: ':: Epic :: HR Leaves' },
-  },
-  {
-    path: 'hr-activities',
-    component: HrActivitiesComponent,
-    data: { title: ':: Epic :: HR Activities' },
-  },
-  {
-    path: 'hr-holidays',
-    component: HrHolidaysComponent,
-    data: { title: ':: Epic :: HR Holidays' },
-  },
-  {
-    path: 'hr-events',
-    component: HrEventsComponent,
-    data: { title: ':: Epic :: HR Events' },
-  },
-  {
-    path: 'hr-payroll',
-    component: HrPayrollComponent,
-    data: { title: ':: Epic :: HR Payroll' },
-  },
-  {
-    path: 'hr-accounts',
-    component: HrAccountsComponent,
-    data: { title: ':: Epic :: HR Accounts' },
-  },
-  {
-    path: 'hr-reports',
-    component: HrReportComponent,
-    data: { title: ':: Epic :: HR Report' },
-  },
-  {
-    path: 'search',
-    component: SearchComponent,
-    data: { title: ':: Epic :: Search' },
-  },
-  {
-    path: 'calender',
-    component: CalenderComponent,
-    data: { title: ':: Epic :: Calender' },
-  },
-  {
-    path: 'contacts',
-    component: ContactsComponent,
-    data: { title: ':: Epic :: Contacts' },
-  },
-  {
-    path: 'chat',
-    component: ChatComponent,
-    data: { title: ':: Epic ::  Chat' },
-  },
-  {
-    path: 'filemanager',
-    component: FilemanagerComponent,
-    data: { title: ':: Epic ::  Filemanager' },
-  },
-  {
-    path: 'project',
-    component: ProjectComponent,
-    data: { title: ':: Epic :: Project' },
-  },
-  {
-    path: 'project-deashboard',
-    component: PrDashboardComponent,
-    data: { title: ':: Epic :: Project Dashboard' },
-  },
-  {
-    path: 'project-list',
-    component: PrProjectlistComponent,
-    data: { title: ':: Epic :: Project List' },
-  },
-  {
-    path: 'project-taskboard',
-    component: PrTaskboardComponent,
-    data: { title: ':: Epic :: Project Taskboard' },
-  },
-  {
-    path: 'project-ticketlist',
-    component: PrTicketlistComponent,
-    data: { title: ':: Epic :: Project Ticketlist' },
-  },
-  {
-    path: 'project-ticketdetails',
-    component: PrTicketdetailsComponent,
-    data: { title: ':: Epic :: Project Ticketdetails' },
-  },
-  {
-    path: 'project-clients',
-    component: PrClientsComponent,
-    data: { title: ':: Epic :: Project Clients' },
-  },
-  {
-    path: 'project-todo-list',
-    component: PrTodolistComponent,
-    data: { title: ':: Epic :: Project Todolist' },
-  },
-  {
-    path: 'jobportal',
-    component: JobPortalComponent,
-    data: { title: ':: Epic :: JobPortal' },
-  },
-  {
-    path: 'jobportal-job-dashboard',
-    component: JobportalDashboardComponent,
-    data: { title: ':: Epic :: JobPortal Dashboard' },
-  },
-  {
-    path: 'jobportal-positions',
-    component: JobportalPositionsComponent,
-    data: { title: ':: Epic :: JobPortal Positions' },
-  },
-  {
-    path: 'jobportal-applicants',
-    component: JobportalApplicantsComponent,
-    data: { title: ':: Epic :: JobPortal Applicants' },
-  },
-  {
-    path: 'jobportal-resumes',
-    component: JobportalResumesComponent,
-    data: { title: ':: Epic :: JobPortal Resumes' },
-  },
-  {
-    path: 'jobportal-settings',
-    component: JobportalSettingsComponent,
-    data: { title: ':: Epic :: JobPortal Settings' },
-  },
-  {
-    path: 'icon-fontawesome',
-    component: IconFontawesomeComponent,
-    data: { title: ':: Epic :: Icon Fontawesome' },
-  },
-  {
-    path: 'icon-feather',
-    component: IconFeatherComponent,
-    data: { title: ':: Epic :: Icon Feather' },
-  },
-  {
-    path: 'icon-lines',
-    component: IconLinesComponent,
-    data: { title: ':: Epic :: Icon Lines' },
-  },
-  {
-    path: 'icon-flags',
-    component: IconFlagsComponent,
-    data: { title: ':: Epic :: Icon Flags' },
-  },
-  {
-    path: 'icon-payments',
-    component: IconPaymentsComponent,
-    data: { title: ':: Epic :: Icon Payments' },
-  },
-  {
-    path: 'table',
-    component: TablesComponent,
-    data: { title: ':: Epic :: Tables' },
-  },
-  {
-    path: 'map',
-    component: MapsComponent,
-    data: { title: ':: Epic :: Maps' },
-  },
-  {
-    path: 'gallery',
-    component: GalleryComponent,
-    data: { title: ':: Epic :: Gallery' },
-  },
-  {
-    path: 'charts',
-    component: ChartsComponent,
-    data: { title: ':: Epic :: Charts' },
-  },
-  {
-    path: 'formelement',
-    component: FormElementComponent,
-    data: { title: ':: Epic :: Forms' },
-  },
-  {
-    path: 'settings',
-    component: SettingsComponent,
-    data: { title: ':: Epic :: Settings' },
-  },
-  {
-    path: 'profile',
-    component: ProfileComponent,
-    data: { title: ':: Epic :: Profile' },
-  },
-  {
-    path: 'widgets',
-    component: WidgetsComponent,
-    data: { title: ':: Epic :: Widgets' },
-  },
-  {
-    path: 'widgets-card',
-    component: WCardComponent,
-    data: { title: ':: Epic :: Widgets' },
-  },
-  {
-    path: 'widgets-statistics',
-    component: WStaticsComponent,
-    data: { title: ':: Epic :: Widgets' },
-  },
-  {
-    path: 'widgets-data',
-    component: WDataComponent,
-    data: { title: ':: Epic :: Widgets' },
-  },
-  {
-    path: 'widgets-social',
-    component: WSocialComponent,
-    data: { title: ':: Epic :: Widgets' },
-  },
-  {
-    path: 'widgets-other',
-    component: WOtherComponent,
-    data: { title: ':: Epic :: Widgets' },
-  },
+    path: 'hr', component: DashboardNavigationComponent, children: [
+      {
+        path: '',
+        component: HrDashboardComponent,
+      },
+      {
+        path: 'users',
+        component: HrUsersComponent,
+      },
+      {
+        path: 'hr-departments',
+        component: HrDepartmentsComponent,
+      },
+      {
+        path: 'hr-employee',
+        component: HrEmployeeComponent,
+      },
+      {
+        path: 'clients',
+        component: HrClientsComponent,
+      },
+      {
+        path: 'hr-projects',
+        component: HrProjectsComponent,
+      },
+      {
+        path: 'hr-jobs',
+        component: HrJobsComponent,
+      },
+      {
+        path: 'hr-leaves',
+        component: HrLeavesComponent,
+      },
+      {
+        path: 'hr-activities',
+        component: HrActivitiesComponent,
+      },
+      {
+        path: 'hr-holidays',
+        component: HrHolidaysComponent,
+      },
+      {
+        path: 'hr-events',
+        component: HrEventsComponent,
+      },
+      {
+        path: 'hr-payroll',
+        component: HrPayrollComponent,
+      },
+      {
+        path: 'hr-accounts',
+        component: HrAccountsComponent,
+      },
+      {
+        path: 'hr-reports',
+        component: HrReportComponent,
+      },
+      {
+        path: 'search',
+        component: SearchComponent,
+      },
+      {
+        path: 'calender',
+        component: CalenderComponent,
+      },
+      {
+        path: 'contacts',
+        component: ContactsComponent,
+      },
+      {
+        path: 'chat',
+        component: ChatComponent,
+      },
+      {
+        path: 'filemanager',
+        component: FilemanagerComponent,
+      },
+      {
+        path: 'project',
+        component: ProjectComponent,
+      },
+      {
+        path: 'project-deashboard',
+        component: PrDashboardComponent,
+      },
+      {
+        path: 'project-list',
+        component: PrProjectlistComponent,
+      },
+      {
+        path: 'project-taskboard',
+        component: PrTaskboardComponent,
+      },
+      {
+        path: 'project-ticketlist',
+        component: PrTicketlistComponent,
+      },
+      {
+        path: 'project-ticketdetails',
+        component: PrTicketdetailsComponent,
+      },
+      {
+        path: 'project-clients',
+        component: PrClientsComponent,
+      },
+      {
+        path: 'project-todo-list',
+        component: PrTodolistComponent,
+      },
+      {
+        path: 'jobportal',
+        component: JobPortalComponent,
+      },
+      {
+        path: 'jobportal-job-dashboard',
+        component: JobportalDashboardComponent,
+      },
+      {
+        path: 'jobportal-positions',
+        component: JobportalPositionsComponent,
+      },
+      {
+        path: 'jobportal-applicants',
+        component: JobportalApplicantsComponent,
+      },
+      {
+        path: 'jobportal-resumes',
+        component: JobportalResumesComponent,
+      },
+      {
+        path: 'jobportal-settings',
+        component: JobportalSettingsComponent,
+      },
+      {
+        path: 'icon-fontawesome',
+        component: IconFontawesomeComponent,
+      },
+      {
+        path: 'icon-feather',
+        component: IconFeatherComponent,
+      },
+      {
+        path: 'icon-lines',
+        component: IconLinesComponent,
+      },
+      {
+        path: 'icon-flags',
+        component: IconFlagsComponent,
+      },
+      {
+        path: 'icon-payments',
+        component: IconPaymentsComponent,
+      },
+      {
+        path: 'table',
+        component: TablesComponent,
+      },
+      {
+        path: 'map',
+        component: MapsComponent,
+      },
+      {
+        path: 'gallery',
+        component: GalleryComponent,
+      },
+      {
+        path: 'charts',
+        component: ChartsComponent,
+      },
+      {
+        path: 'formelement',
+        component: FormElementComponent,
+      },
+      {
+        path: 'settings',
+        component: SettingsComponent,
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+      },
+      {
+        path: 'widgets',
+        component: WidgetsComponent,
+      },
+      {
+        path: 'widgets-card',
+        component: WCardComponent,
+      },
+      {
+        path: 'widgets-statistics',
+        component: WStaticsComponent,
+      },
+      {
+        path: 'widgets-data',
+        component: WDataComponent,
+      },
+      {
+        path: 'widgets-social',
+        component: WSocialComponent,
+      },
+      {
+        path: 'widgets-other',
+        component: WOtherComponent,
+      },
+    ]
+  }
 ];
 
 @NgModule({

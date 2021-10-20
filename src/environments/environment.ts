@@ -7,7 +7,7 @@ export const environment = {
   authGateway: 'http://localhost:8070/',
   clientUrl: 'http://localhost:4200',
   gateway: 'https://fgsc-gateway.herokuapp.com/api/',
-  notificationsRSocketUrl: 'ws://localhost:7000/rs',
+  rsocket: 'wss://fgsc-rsocket-broker.herokuapp.com/rs',
   clientMicroservice: 'https://warm-falls-36309.herokuapp.com/',
   congeMicroservice: 'https://conges-microservice.herokuapp.com/',
   employeeMicroservice: 'https://employee-microservices.herokuapp.com/',

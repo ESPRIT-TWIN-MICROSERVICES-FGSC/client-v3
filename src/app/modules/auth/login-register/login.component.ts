@@ -5,7 +5,7 @@ import {EnterTriggerAnimation, SimpleFadeAnimation} from '@animations/animations
 import {FormControl, Validators} from '@angular/forms';
 import {LoginRequest, SignUpRequest} from '@app/modules/auth/shared/_models/requests/auth-requests';
 import Swal from 'sweetalert2';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -55,28 +55,28 @@ export class LoginComponent implements OnInit {
   err: any;
   isVisible = true;
   isLoading = false;
+  returnUrl?: string;
+  constructor(private as: AuthService, private router: Router, private ar: ActivatedRoute) {
+  }
 
-  constructor(private as: AuthService, private router: Router) {
+  ngOnInit(): void {
+    this.ar.queryParams.subscribe(params => this.returnUrl = params.returnUrl);
     document.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         if (this.toggleForms === CurrentComponentState.LOGIN && this.email.valid && this.password.valid){
           this.login();
         } else if (this.toggleForms === CurrentComponentState.REGISTER &&
-            this.userName.valid && this.email.valid && this.password.valid && this.confirmPassword.valid){
+          this.userName.valid && this.email.valid && this.password.valid && this.confirmPassword.valid){
           this.register();
         }
       }
     });
-    if (localStorage.getItem('token') && as.currentUserValue) {
+    if (localStorage.getItem('token') && this.as.currentUserValue) {
       this.isVisible = false;
       Swal.fire('Already logged in, redirecting to dashboard').then(() => null);
       Swal.getActions().remove();
-      setTimeout(() => this.router.navigate(['../dashboard']).then(() => Swal.close()), 2000);
+      setTimeout(() => this.router.navigate([ this.returnUrl ?? '../dashboard']).then(() => Swal.close()), 2000);
     }
-  }
-
-  ngOnInit(): void {
-
   }
 
 
@@ -87,6 +87,11 @@ export class LoginComponent implements OnInit {
         async isLogged => {
           isLogged.subscribe(() => {
             this.isVisible = false;
+            setTimeout(() => this.router.navigate([this.returnUrl ?? '../dashboard']).then(() => {
+              if (Swal.isVisible()){
+                Swal.close();
+              }
+            }), 2000);
             Swal.fire('Logged in, redirecting.').then(result => {
               if (result.isDismissed){
                 this.isVisible = true;

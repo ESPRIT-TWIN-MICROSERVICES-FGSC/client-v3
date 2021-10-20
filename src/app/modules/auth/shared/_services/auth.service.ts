@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   async attemptToLogin(loginRequest: LoginRequest) {
-    return this.http.post<any>(`${environment.gateway}auth/login`, loginRequest, {reportProgress: true}).pipe(
+    return this.http.post<any>(`${environment.gateway}auth/login`, loginRequest).pipe(
       catchError(() => throwError('Invalid credentials')),
       switchMap(async jwtInfo => {
         localStorage.setItem('bearer', jwtInfo.tokenType);
@@ -47,19 +47,15 @@ export class AuthService {
   }
   async getCurrentUserInfo() {
     return this.http.get<User>(`${environment.gateway}auth/me`).pipe(
-      catchError(() => {
+      catchError(err => {
         this.logout();
-        return throwError('Internal server error');
+        return throwError(err);
       }),
-      map(user => {
+      map(async user => {
         user.imageUrl = user.imageUrl ?? `https://avatars.dicebear.com/api/bottts/${user.name}.svg`;
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
-        setTimeout(() => this.router.navigate(['../dashboard']).then(() => {
-          if (Swal.isVisible()){
-            Swal.close();
-          }
-        }), 2000);
+        return true;
       })
     );
   }

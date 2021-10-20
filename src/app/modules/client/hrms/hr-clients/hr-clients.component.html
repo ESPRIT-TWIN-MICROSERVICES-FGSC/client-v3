@@ -1,45 +1,41 @@
-<app-leftmenu></app-leftmenu>
-<!-- Main body part  -->
-<div class="page">
-  <app-header></app-header>
-  <p-toast></p-toast>
-  <div class="card">
-    <p-toolbar styleClass="p-mb-4">
-      <ng-template pTemplate="left">
-        <button type="button" class="btn btn-primary mr-2" (click)="openNew()">
-          New
-        </button>
-        <button
-          type="button"
-          class="btn btn-danger"
-          (click)="deleteSelectedItems()"
-          [disabled]="!selectedItems || !selectedItems.length"
-        >
-          Delete
-        </button>
-      </ng-template>
-      <ng-template pTemplate="right">
-        <button type="button" class="btn btn-secondary" (click)="exportPdf()">
-          Export
-        </button>
-      </ng-template>
-    </p-toolbar>
+<p-toast></p-toast>
+<div class="card">
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+      <button type="button" class="btn btn-primary mr-2" (click)="openNew()">
+        New
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="deleteSelectedItems()"
+        [disabled]="!selectedItems || !selectedItems.length"
+      >
+        Delete
+      </button>
+    </ng-template>
+    <ng-template pTemplate="right">
+      <button type="button" class="btn btn-secondary" (click)="exportPdf()">
+        Export
+      </button>
+    </ng-template>
+  </p-toolbar>
 
-    <p-table
-      #dt
-      [value]="items"
-      [rows]="10"
-      [rowsPerPageOptions]="[10, 25, 50]"
-      [paginator]="true"
-      [globalFilterFields]="['firsttName', 'lastName']"
-      [(selection)]="selectedItems"
-      [rowHover]="true"
-      dataKey="id"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      [showCurrentPageReport]="true"
-    >
-      <ng-template pTemplate="caption">
-        <div class="p-d-flex p-ai-center p-jc-between">
+  <p-table
+    #dt
+    [value]="items"
+    [rows]="10"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [paginator]="true"
+    [globalFilterFields]="['firsttName', 'lastName']"
+    [(selection)]="selectedItems"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true"
+  >
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input
@@ -49,410 +45,414 @@
               placeholder="Search..."
             />
           </span>
-        </div>
-      </ng-template>
-      <ng-template pTemplate="header">
-        <tr>
-          <th style="width: 3rem">
-            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-          </th>
-          <th pSortableColumn="firsttName">
-            First Name <p-sortIcon field="firsttName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="lastName">
-            Last Name <p-sortIcon field="lastName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="address">
-            Address <p-sortIcon field="address"></p-sortIcon>
-          </th>
-          <th pSortableColumn="email">
-            Email <p-sortIcon field="email"></p-sortIcon>
-          </th>
-          <th pSortableColumn="tel">
-            Phone <p-sortIcon field="tel"></p-sortIcon>
-          </th>
-          <th></th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-item>
-        <tr>
-          <td>
-            <p-tableCheckbox [value]="item"></p-tableCheckbox>
-          </td>
-          <td>{{ item.firsttName }}</td>
-          <td>{{ item.lastName }}</td>
-          <td>{{ item.address }}</td>
-          <td>{{ item.email }}</td>
-          <td>{{ item.tel }}</td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-icon"
-              title="Edit"
-              (click)="deleteItem(item)"
-            >
-              <i class="fa fa-trash"></i>
-            </button>
-            <button
-              type="button"
-              class="btn btn-icon"
-              title="Edit"
-              (click)="editItem(item)"
-            >
-              <i class="fa fa-edit"></i>
-            </button>
-            <button
-              type="button"
-              class="btn btn-icon"
-              title="Edit"
-              (click)="viewItemDetailed(item)"
-            >
-              <i class="fa fa-eye"></i>
-            </button>
-          </td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="summary">
-        <div class="p-d-flex p-ai-center p-jc-between">
-          In total there are {{ items ? items.length : 0 }} clients.
-        </div>
-      </ng-template>
-    </p-table>
-  </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="firsttName">
+          First Name
+          <p-sortIcon field="firsttName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="lastName">
+          Last Name
+          <p-sortIcon field="lastName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="address">
+          Address
+          <p-sortIcon field="address"></p-sortIcon>
+        </th>
+        <th pSortableColumn="email">
+          Email
+          <p-sortIcon field="email"></p-sortIcon>
+        </th>
+        <th pSortableColumn="tel">
+          Phone
+          <p-sortIcon field="tel"></p-sortIcon>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="item"></p-tableCheckbox>
+        </td>
+        <td>{{ item.firsttName }}</td>
+        <td>{{ item.lastName }}</td>
+        <td>{{ item.address }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.tel }}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-icon"
+            title="Edit"
+            (click)="deleteItem(item)"
+          >
+            <i class="fa fa-trash"></i>
+          </button>
+          <button
+            type="button"
+            class="btn btn-icon"
+            title="Edit"
+            (click)="editItem(item)"
+          >
+            <i class="fa fa-edit"></i>
+          </button>
+          <button
+            type="button"
+            class="btn btn-icon"
+            title="Edit"
+            (click)="viewItemDetailed(item)"
+          >
+            <i class="fa fa-eye"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        In total there are {{ items ? items.length : 0 }} clients.
+      </div>
+    </ng-template>
+  </p-table>
+</div>
 
-  <p-dialog
-    [(visible)]="itemAddDialog"
-    [style]="{ width: '450px' }"
-    header="Add  a client"
-    [modal]="true"
-    styleClass="p-fluid"
-  >
-    <ng-template pTemplate="content">
-      <form [formGroup]="itemsFormGroup">
-        <div class="row">
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="First name"
-              formControlName="firsttName"
-              [ngClass]="{
+<p-dialog
+  [(visible)]="itemAddDialog"
+  [style]="{ width: '450px' }"
+  header="Add  a client"
+  [modal]="true"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <form [formGroup]="itemsFormGroup">
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="First name"
+            formControlName="firsttName"
+            [ngClass]="{
                 'is-invalid': checkFormValidationFirstName(),
                 'is-valid': itemsFormGroup.get('firsttName').valid
               }"
-            />
-            <div class="invalid-feedback invalid-feedback-position">
-              First Name is required
-            </div>
+          />
+          <div class="invalid-feedback invalid-feedback-position">
+            First Name is required
           </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Last name"
-              formControlName="lastName"
-              [ngClass]="{
+        </div>
+        <div class="col-md-6 mb-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Last name"
+            formControlName="lastName"
+            [ngClass]="{
                 'is-invalid': checkFormValidationLastName(),
                 'is-valid': itemsFormGroup.get('lastName').valid
               }"
-            />
-            <div class="invalid-feedback invalid-feedback-position">
-              Last Name is required
-            </div>
+          />
+          <div class="invalid-feedback invalid-feedback-position">
+            Last Name is required
           </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Email"
-              formControlName="email"
-              [ngClass]="{
+        </div>
+        <div class="col-md-6 mb-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Email"
+            formControlName="email"
+            [ngClass]="{
                 'is-invalid': checkFormValidationEmail(),
                 'is-valid': itemsFormGroup.get('email').valid
               }"
-            />
-            <div class="invalid-feedback invalid-feedback-position">
-              Email is {{ getInvalidMessage() }}
-            </div>
+          />
+          <div class="invalid-feedback invalid-feedback-position">
+            Email is {{ getInvalidMessage() }}
           </div>
-          <div class="col-md-6 mb-4">
-            <input type="text" class="form-control" placeholder="Client Id" />
-          </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Designation"
-              formControlName="designation"
-              [ngClass]="{
+        </div>
+        <div class="col-md-6 mb-4">
+          <input type="text" class="form-control" placeholder="Client Id"/>
+        </div>
+        <div class="col-md-6 mb-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Designation"
+            formControlName="designation"
+            [ngClass]="{
                 'is-valid': itemsFormGroup.get('designation').valid
               }"
-            />
-          </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Telephone"
-              formControlName="tel"
-              [ngClass]="{
+          />
+        </div>
+        <div class="col-md-6 mb-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Telephone"
+            formControlName="tel"
+            [ngClass]="{
                 'is-valid': itemsFormGroup.get('tel').valid
               }"
-            />
-          </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Country"
-              formControlName="country"
-              [ngClass]="{
+          />
+        </div>
+        <div class="col-md-6 mb-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Country"
+            formControlName="country"
+            [ngClass]="{
                 'is-valid': itemsFormGroup.get('country').valid
               }"
-            />
-          </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Website"
-              formControlName="webSite"
-              [ngClass]="{
+          />
+        </div>
+        <div class="col-md-6 mb-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Website"
+            formControlName="webSite"
+            [ngClass]="{
                 'is-valid': itemsFormGroup.get('webSite').valid
               }"
-            />
-          </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Address"
-              formControlName="address"
-              [ngClass]="{
+          />
+        </div>
+        <div class="col-md-6 mb-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Address"
+            formControlName="address"
+            [ngClass]="{
                 'is-valid': itemsFormGroup.get('address').valid
               }"
-            />
-          </div>
+          />
         </div>
-      </form>
-    </ng-template>
+      </div>
+    </form>
+  </ng-template>
 
-    <ng-template pTemplate="footer">
-      <button
-        pButton
-        pRipple
-        label="Cancel"
-        icon="pi pi-times"
-        class="p-button-text"
-        (click)="hideDialog()"
-      ></button>
-      <button
-        pButton
-        pRipple
-        label="Save"
-        icon="pi pi-check"
-        class="p-button-text"
-        (click)="saveProduct()"
-      ></button>
-    </ng-template>
-  </p-dialog>
-  <p-dialog
-    [(visible)]="itemUpdateDialog"
-    [style]="{ width: '450px' }"
-    header="Update a client"
-    [modal]="true"
-    styleClass="p-fluid"
-  >
-    <ng-template pTemplate="content">
-      <form [formGroup]="itemsFormGroup">
-        <div class="row">
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="First name"
-              formControlName="firsttName"
-              [ngClass]="{
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancel"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Save"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="saveProduct()"
+    ></button>
+  </ng-template>
+</p-dialog>
+<p-dialog
+  [(visible)]="itemUpdateDialog"
+  [style]="{ width: '450px' }"
+  header="Update a client"
+  [modal]="true"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <form [formGroup]="itemsFormGroup">
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="First name"
+            formControlName="firsttName"
+            [ngClass]="{
                 'is-invalid': checkFormValidationFirstName(),
                 'is-valid': itemsFormGroup.get('firsttName').valid
               }"
-            />
-            <div class="invalid-feedback invalid-feedback-position">
-              First Name is required
-            </div>
+          />
+          <div class="invalid-feedback invalid-feedback-position">
+            First Name is required
           </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Last name"
-              formControlName="lastName"
-              [ngClass]="{
+        </div>
+        <div class="col-md-6 mb-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Last name"
+            formControlName="lastName"
+            [ngClass]="{
                 'is-invalid': checkFormValidationLastName(),
                 'is-valid': itemsFormGroup.get('lastName').valid
               }"
-            />
-            <div class="invalid-feedback invalid-feedback-position">
-              Last Name is required
-            </div>
+          />
+          <div class="invalid-feedback invalid-feedback-position">
+            Last Name is required
           </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Email"
-              formControlName="email"
-              [ngClass]="{
+        </div>
+        <div class="col-md-6 mb-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Email"
+            formControlName="email"
+            [ngClass]="{
                 'is-invalid': checkFormValidationEmail(),
                 'is-valid': itemsFormGroup.get('email').valid
               }"
-            />
-            <div class="invalid-feedback invalid-feedback-position">
-              Email is {{ getInvalidMessage() }}
-            </div>
-          </div>
-          <div class="col-md-6 mb-4">
-            <input type="text" class="form-control" placeholder="Client Id" />
-          </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Designation"
-              formControlName="designation"
-              [ngClass]="{
-                'is-valid': itemsFormGroup.get('designation').valid
-              }"
-            />
-          </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Telephone"
-              formControlName="tel"
-              [ngClass]="{
-                'is-valid': itemsFormGroup.get('tel').valid
-              }"
-            />
-          </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Country"
-              formControlName="country"
-              [ngClass]="{
-                'is-valid': itemsFormGroup.get('country').valid
-              }"
-            />
-          </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Website"
-              formControlName="webSite"
-              [ngClass]="{
-                'is-valid': itemsFormGroup.get('webSite').valid
-              }"
-            />
-          </div>
-          <div class="col-md-6 mb-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Address"
-              formControlName="address"
-              [ngClass]="{
-                'is-valid': itemsFormGroup.get('webSite').valid
-              }"
-            />
+          />
+          <div class="invalid-feedback invalid-feedback-position">
+            Email is {{ getInvalidMessage() }}
           </div>
         </div>
-      </form>
-    </ng-template>
+        <div class="col-md-6 mb-4">
+          <input type="text" class="form-control" placeholder="Client Id"/>
+        </div>
+        <div class="col-md-6 mb-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Designation"
+            formControlName="designation"
+            [ngClass]="{
+                'is-valid': itemsFormGroup.get('designation').valid
+              }"
+          />
+        </div>
+        <div class="col-md-6 mb-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Telephone"
+            formControlName="tel"
+            [ngClass]="{
+                'is-valid': itemsFormGroup.get('tel').valid
+              }"
+          />
+        </div>
+        <div class="col-md-6 mb-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Country"
+            formControlName="country"
+            [ngClass]="{
+                'is-valid': itemsFormGroup.get('country').valid
+              }"
+          />
+        </div>
+        <div class="col-md-6 mb-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Website"
+            formControlName="webSite"
+            [ngClass]="{
+                'is-valid': itemsFormGroup.get('webSite').valid
+              }"
+          />
+        </div>
+        <div class="col-md-6 mb-4">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Address"
+            formControlName="address"
+            [ngClass]="{
+                'is-valid': itemsFormGroup.get('webSite').valid
+              }"
+          />
+        </div>
+      </div>
+    </form>
+  </ng-template>
 
-    <ng-template pTemplate="footer">
-      <button
-        pButton
-        pRipple
-        label="Cancel"
-        icon="pi pi-times"
-        class="p-button-text"
-        (click)="hideDialog()"
-      ></button>
-      <button
-        pButton
-        pRipple
-        label="Save"
-        icon="pi pi-check"
-        class="p-button-text"
-        (click)="updateProduct()"
-      ></button>
-    </ng-template>
-  </p-dialog>
-  <p-dialog
-    [(visible)]="itemViewDialog"
-    [style]="{ width: '450px' }"
-    header="Client in details"
-    [modal]="true"
-    styleClass="p-fluid"
-  >
-    <ng-template pTemplate="content">
-      <div class="card c_grid c_yellow">
-        <div class="card-body text-center">
-          <div class="circle">
-            <img
-              class="rounded-circle"
-              src="../assets/images/sm/avatar1.jpg"
-              alt=""
-            />
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancel"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Save"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="updateProduct()"
+    ></button>
+  </ng-template>
+</p-dialog>
+<p-dialog
+  [(visible)]="itemViewDialog"
+  [style]="{ width: '450px' }"
+  header="Client in details"
+  [modal]="true"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <div class="card c_grid c_yellow">
+      <div class="card-body text-center">
+        <div class="circle">
+          <img
+            class="rounded-circle"
+            src="../assets/images/sm/avatar1.jpg"
+            alt=""
+          />
+        </div>
+        <h6 class="mt-3 mb-0">
+          {{ selectedItem?.firsttName }} {{ selectedItem?.lastName }}
+        </h6>
+        <span>{{ selectedItem?.tel }}</span>
+        <span>{{ selectedItem?.address }}</span>
+        <span>{{ selectedItem?.country }}</span>
+        <ul class="mt-3 list-unstyled d-flex justify-content-center">
+          <li>
+            <a class="p-3" target="_blank" href="#"
+            ><i class="fa fa-facebook"></i
+            ></a>
+          </li>
+          <li>
+            <a class="p-3" target="_blank" href="#"
+            ><i class="fa fa-slack"></i
+            ></a>
+          </li>
+          <li>
+            <a class="p-3" target="_blank" href="#"
+            ><i class="fa fa-linkedin"></i
+            ></a>
+          </li>
+        </ul>
+        <div class="row">
+          <div class="col-md-6">
+            Email :
+            <a
+              href="mailto:{{ selectedItem?.email }}"
+              class="text-muted mb-0"
+            >{{ selectedItem?.email }}</a
+            >
           </div>
-          <h6 class="mt-3 mb-0">
-            {{ selectedItem?.firsttName }} {{ selectedItem?.lastName }}
-          </h6>
-          <span>{{ selectedItem?.tel }}</span>
-          <span>{{ selectedItem?.address }}</span>
-          <span>{{ selectedItem?.country }}</span>
-          <ul class="mt-3 list-unstyled d-flex justify-content-center">
-            <li>
-              <a class="p-3" target="_blank" href="#"
-                ><i class="fa fa-facebook"></i
-              ></a>
-            </li>
-            <li>
-              <a class="p-3" target="_blank" href="#"
-                ><i class="fa fa-slack"></i
-              ></a>
-            </li>
-            <li>
-              <a class="p-3" target="_blank" href="#"
-                ><i class="fa fa-linkedin"></i
-              ></a>
-            </li>
-          </ul>
-          <div class="row">
-            <div class="col-md-6">
-              Email :
-              <a
-                href="mailto:{{ selectedItem?.email }}"
-                class="text-muted mb-0"
-                >{{ selectedItem?.email }}</a
-              >
-            </div>
-            <div class="col-md-6">
-              Phone :
-              <p class="text-muted mb-0">
-                {{ selectedItem?.tel }}
-              </p>
-            </div>
+          <div class="col-md-6">
+            Phone :
+            <p class="text-muted mb-0">
+              {{ selectedItem?.tel }}
+            </p>
           </div>
         </div>
       </div>
-    </ng-template>
-  </p-dialog>
+    </div>
+  </ng-template>
+</p-dialog>
 
-  <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
-  <app-footer></app-footer>
-</div>
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+

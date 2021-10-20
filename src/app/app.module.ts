@@ -8,11 +8,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { DatepickerModule, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import {ErrorPageComponent} from '@shared/components/error-page/error-page.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,
@@ -21,6 +24,7 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
+    MatSnackBarModule,
     BsDatepickerModule.forRoot(),
     CarouselModule.forRoot(),
     ToastrModule.forRoot({
