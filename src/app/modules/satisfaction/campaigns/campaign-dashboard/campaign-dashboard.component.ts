@@ -4,8 +4,9 @@ import {CompagneService} from '@satisfaction/shared/_service/compagne.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {ChartDataSets, ChartOptions} from 'chart.js';
-import {Label} from 'ng2-charts';
 import {Campaign} from '@satisfaction/shared/_models/Campaign';
+import {Label} from 'ng2-charts';
+
 @Component({
   selector: 'app-campaign-dashboard',
   templateUrl: './campaign-dashboard.component.html',
@@ -17,7 +18,6 @@ export class CampaignDashboardComponent implements OnInit, AfterViewInit {
               public dialog: MatDialog) {
   }
 
-  private invitedClientsEmails: string[];
   campaign: Campaign;
   invitedClientsCount = 0;
   answeredClientsCount = 0;
@@ -59,18 +59,59 @@ export class CampaignDashboardComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.campaignService.getCompagneById(this.route.snapshot.params.id).subscribe(c => {
       this.campaign = c;
+      if (this.isIterable(this.campaign.form.components)) {
+        for (const component of this.campaign.form.components) {
+          const labels: Label[] = [];
+          const barChartData: ChartDataSets[] = [];
+          component.data = [];
+          if (component.type === 'survey') {
+            Object.values(component.questions).map( (question: any) => question.label).forEach(answerKey => labels.push(answerKey));
+            Object.values(component.values).forEach((value: any) => {
+              const dataSet: { label: string; data: number[] } = { data : [] , label : '' };
+              dataSet.label = value.label;
+              barChartData.push(dataSet);
+            });
+            for (const key of barChartData){
+              const holderArray: number[] = [];
+              Object.values(component.answers).map((answer: any) => answer[key.label]).forEach((value => {
+                holderArray.push(value);
+              }));
+              key.data = holderArray;
+            }
+            component.labels = labels;
+            component.data = barChartData;
+            this.stats.push(component);
+          } else if (component.type === 'select') {
+            const values: number[] = [];
+            const keys: string[] = [];
+            Object.values(component.values).map((v: any) => v.label)
+              .forEach(componentValue => labels.push(componentValue));
+            Object.values(component.values).map((v: any) => v.value)
+              .forEach(componentValue => keys.push(componentValue));
+            keys.forEach( key => {
+              values.push(Object.entries(component.answers).filter((value: any) => {
+                return value[1] === key;
+              }).length);
+            });
+            component.labels = labels;
+            component.data.push(values);
+            this.stats.push(component);
+          } else if (component.type === null) {
+            console.log('HAAAAHAAAAA');
+          }
+        }
+      }
     }, err => {
       this.hasErrors = true;
       this.error = err;
     });
-    this.campaignService.getEmailOfClientsThatAnswereCampaign(this.route.snapshot.params.id).subscribe(
+    this.campaignService.countResponsesByCampaign(this.route.snapshot.params.id).subscribe(
       val => {
-        this.invitedClientsEmails = val;
         // this.campaignService.invitedClientsEmails = val;
         const interval = setInterval(() => {
-          if (this.answeredClientsCount === 200 && val.length > 400 || this.answeredClientsCount === val.length) {
+          if (this.answeredClientsCount === 200 && val > 400 || this.answeredClientsCount === val) {
             clearInterval(interval);
-            this.answeredClientsCount = val.length;
+            this.answeredClientsCount = val;
             this.answeredClientsCount--;
           }
           this.answeredClientsCount++;
@@ -91,53 +132,8 @@ export class CampaignDashboardComponent implements OnInit, AfterViewInit {
         this.hasErrors = true;
         this.error = err;
       });
-    this.campaignService.getCampaignStats(this.route.snapshot.params.id).subscribe(formAndResponses => {
-      // TODO : CHECK YOUR JET BRO, CHECK YOUR JET
-      // DONT ASK ME HOW I DID THIS, ONLY GOD AND THE COMPUTER COMPILING THIS KNOW
-      // I ADVISE THIS BE CONVERTED TO THE BACKEND, ITS TOO MUCH OF A HASSLE FOR ME CUZ I HAVE TO RECOMPILE ON EVERY TRY
-      if (this.isIterable(formAndResponses)) {
-        for (const component of Object.values(formAndResponses)) {
-          const labels: Label[] = [];
-          const barChartData: ChartDataSets[] = [];
-          component.data = [];
-          if (component.type === 'survey') {
-            Object.values(component.questions).map( (question: any) => question.label).forEach(answerKey => labels.push(answerKey));
-            Object.values(component.values).forEach((value: any) => {
-              const dataSet: { label: string; data: number[] } = { data : [] , label : '' };
-              dataSet.label = value.label;
-              barChartData.push(dataSet);
-            });
-            for (const key of barChartData){
-              const holderArray: number[] = [];
-              Object.values(component.answers).map((answer: any) => answer[key.label]).forEach((value => {
-                holderArray.push(value);
-              }));
-              key.data = holderArray;
-            }
-            component.labels = labels;
-            component.data = barChartData;
-          } else if (component.type === 'select') {
-            const values: number[] = [];
-            const keys: string[] = [];
-            Object.values(component.values).map((v: any) => v.label)
-              .forEach(componentValue => labels.push(componentValue));
-            Object.values(component.values).map((v: any) => v.value)
-              .forEach(componentValue => keys.push(componentValue));
-            keys.forEach( key => {
-              values.push(Object.entries(component.answers).filter((value: any) => {
-                return value[1] === key;
-              }).length);
-            });
-            component.labels = labels;
-            component.data.push(values);
-          } else if (component.type === null) {
-            console.log('HAAAAHAAAAA');
-          }
-        }
-      }
-      this.stats = formAndResponses;
-      this.loading = false;
-    });
+    // console.log()
+    this.loading = false;
   }
 
   isIterable(obj: any): boolean {

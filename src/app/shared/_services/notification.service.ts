@@ -2,7 +2,7 @@ import {Injectable, OnInit} from '@angular/core';
 
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {RSocketRxjsModuleConfig, RSocketService} from 'ng-rsocket-rxjs';
-import {HttpClient, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Notification} from '@models/Notification';
 import {environment} from '@environments/environment';
 import RSocketWebSocketClient from 'rsocket-websocket-client';

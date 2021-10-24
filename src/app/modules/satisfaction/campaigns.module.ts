@@ -23,6 +23,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatNativeDateModule} from '@angular/material/core';
 
 
 @NgModule({
@@ -47,6 +49,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     ReactiveFormsModule,
     MatDialogModule,
     FormsModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
     MatDatepickerModule
   ],
   providers: [

@@ -6,15 +6,15 @@
     <div class="mb-3">
       <label for="nomCompagne" class="form-label">Nom</label>
       <input type="text" class="form-control" name="nomCompagne" id="nomCompagne"
-        [(ngModel)]="compagne.nom">
+        [(ngModel)]="compagne.name">
     </div>
     <div class="mb-3">
-      <label for="descCompagne" class="form-label">Description brève</label>
+      <label for="descCompagne" class="form-label">Description breve</label>
       <textarea class="form-control" name="descCompagne" [(ngModel)]="compagne.description"
         id="descCompagne"></textarea>
     </div>
     <div class="mb-3">
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" color="warn">
         <mat-label>Range</mat-label>
         <mat-date-range-input [formGroup]="dateForm" [rangePicker]="picker">
           <input matStartDate formControlName="start" placeholder="Date début" [value]="start.value">

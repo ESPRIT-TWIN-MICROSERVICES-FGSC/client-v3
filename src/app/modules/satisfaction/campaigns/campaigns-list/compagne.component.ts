@@ -7,7 +7,6 @@ import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {Campaign} from '@satisfaction/shared/_models/Campaign';
 import {CompagneService} from '@satisfaction/shared/_service/compagne.service';
-import {NotificationService} from '@services/notification.service';
 import {debounceTime} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
 
@@ -25,10 +24,10 @@ export class CompagneComponent implements OnInit, AfterViewInit {
   currentDate = new Date();
   pagedCampaigns = [];
   searchControl: FormControl = new FormControl('');
+
   constructor(private campaignService: CompagneService,
               private snackBar: MatSnackBar,
               public dialog: MatDialog,
-              private notificationService: NotificationService,
               private router: Router) {
     this.dataSource = new MatTableDataSource(this.pagedCampaigns);
     this.searchControl.valueChanges.pipe(debounceTime(300)).subscribe(() => {
@@ -40,6 +39,7 @@ export class CompagneComponent implements OnInit, AfterViewInit {
         this.page();
       }
     });
+
   }
 
   ngOnInit(): void {
@@ -50,18 +50,17 @@ export class CompagneComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
     this.dataSource.sort = this.sort;
+    this.page();
   }
 
   page(): void {
-    this.campaignService.getCompagneList(this.paginator.pageIndex, this.paginator.pageSize, this.searchControl.value).subscribe(res => {
-      this.pagedCampaigns = res;
-    }, () => {
-
-    });
+    this.campaignService.getCompagneList(this.paginator.pageIndex, this.paginator.pageSize, this.searchControl.value)
+      .subscribe(res => {
+        this.pagedCampaigns = res;
+      });
   }
 
-  handlePagination(event: PageEvent): void {
-
+  handlePagination($event: PageEvent): void {
     this.page();
   }
 
@@ -76,7 +75,7 @@ export class CompagneComponent implements OnInit, AfterViewInit {
     }
   }
 
-  openDeleteDialog(row: any): void {
+  openDeleteDialog($row: any): void {
 
   }
 

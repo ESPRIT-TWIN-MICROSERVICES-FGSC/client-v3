@@ -13,10 +13,6 @@ const routes: Routes = [
     loadChildren: () => import('./modules/dashboard/client.module').then(m => m.ClientModule),
     canActivate: [AuthGuard]
   },
-  {
-    path: 'campaigns',
-    loadChildren: () => import('./modules/satisfaction/campaigns.module').then(m => m.CampaignsModule),
-  },
   {path: 'campaign/:u', component: EnqueteComponent},
   {path: 'thank-you', component: ThankYouComponent},
   { path: '**', redirectTo: '/dashboard/hr' },

@@ -6,6 +6,7 @@ import { CompagneService } from '../../shared/_service/compagne.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {AbstractControl, FormControl, FormGroup} from '@angular/forms';
 import {Campaign} from '@satisfaction/shared/_models/Campaign';
+import {AuthService} from '@auth/shared/_services/auth.service';
 
 @Component({
   selector: 'app-survey-builder',
@@ -27,7 +28,8 @@ export class SurveyBuilderComponent implements  OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private campaignService: CompagneService,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private authService: AuthService) {
     this.options = options;
   }
   get start(): AbstractControl { return this.dateForm.get('start'); }
@@ -61,25 +63,25 @@ export class SurveyBuilderComponent implements  OnInit {
     } else {
       this.compagne.startDateTime = this.start.value;
       this.compagne.endDateTime = this.end.value;
+      this.compagne.creatorEmployeeId = this.authService.currentUserValue.id;
       console.log(this.compagne);
       if (!this.compagne.id){
         this.campaignService.addCompagne(this.compagne).subscribe(data => {
           this.compagne = data;
           setTimeout(() =>
-            this.router.navigate([`/dashboard/campaigns/${this.compagne.id}/details`]), 5000);
+            this.router.navigate([`/dashboard/hr/campaigns/${this.compagne.id}/details`]), 5000);
         }, err => {
           console.log(err.message);
         });
       } else {
         this.campaignService.updateCompagne(this.compagne).subscribe(data => {
           setTimeout(() =>
-            this.router.navigate([`/dashboard/campaigns/${this.compagne.id}/details`]), 5000);
+            this.router.navigate([`/dashboard/hr/campaigns/${this.compagne.id}/details`]), 5000);
         });
       }
     }
   }
   onChange(event: any): void {
-    console.log(this.compagne.form);
     if (event.component.action === 'submit') {
       event.component.theme = 'warning';
       event.component.customClass = 'd-flex justify-content-center';

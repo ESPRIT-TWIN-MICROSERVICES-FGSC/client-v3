@@ -267,6 +267,10 @@ const routes: Routes = [
         component: WOtherComponent,
       },
       {
+        path: 'campaigns',
+        loadChildren: () => import('@satisfaction/campaigns.module').then(m => m.CampaignsModule),
+      },
+      {
         path: '**', component: ErrorPageComponent
       }
     ]

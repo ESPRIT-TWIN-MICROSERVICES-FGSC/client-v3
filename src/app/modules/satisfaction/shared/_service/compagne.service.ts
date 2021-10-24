@@ -38,8 +38,9 @@ export class CompagneService {
     return this.http.get<number>(`${this.holder}responses/count/all`);
   }
   countInvitedClients(campaignId: number): Observable<number> {
-    return this.http.get<number>(`${this.holder}invites/count/campaign?campaignId=${campaignId}`);
+    return this.http.get<number>(`${this.holder}count/invites?campaignId=${campaignId}`);
   }
+  // END COUNT
   getEmailsOfInvitedClients(campaignId: number): Observable<string[]> {
     return this.http.get<string[]>(`${this.holder}clients/invited?campaignId=${campaignId}`);
   }
@@ -59,11 +60,15 @@ export class CompagneService {
   // TODO : UPDATE FORM
 
   // Stats
-  getEmailOfClientsThatAnswereCampaign(campaignId: number): Observable<string[]> {
-    return this.http.get<string[]>(`${this.holder}responses/campaign/clients?campaignId=${campaignId}`);
+  getInvitedClientsEmails(campaignId: number): Observable<string[]> {
+    return this.http.get<string[]>(`${this.holder}clients/invited?campaignId=${campaignId}`);
   }
 
   getCampaignStats(campaignId: number): Observable<any[]>{
     return this.http.get<any[]>(`${this.holder}responses/campaign/stats?campaignId=${campaignId}`);
+  }
+
+  countResponsesByCampaign(campaignId: any) {
+    return this.http.get<number>(`${this.holder}count/responses?campaignId=${campaignId}`);
   }
 }
