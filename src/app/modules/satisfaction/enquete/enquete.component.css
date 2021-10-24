@@ -1,0 +1,30 @@
+/* -----Structures------ */
+
+.container{
+  padding-left:15%;
+  padding-right:15%;
+}
+.titre{
+  font-size: 36px;
+  font-weight:bolder;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  color:rgb(240, 115, 42);
+  text-align: center;
+}
+.salutations{
+  font-size:20px;
+  font-weight: bold;
+  color:black;
+  text-align:center;
+}
+
+.card-client{
+  text-align: center;
+  border-radius: 20px;
+  border-color: #fc7e35;
+  border-width: 1px;
+  border-style: solid;
+  margin-top:12px;
+  margin-bottom:6px;
+}
+

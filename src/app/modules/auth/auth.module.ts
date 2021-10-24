@@ -28,8 +28,7 @@ import {LoginComponent} from '@app/modules/auth/login-register/login.component';
     MatProgressSpinnerModule,
   ],
   providers: [
-    AuthService,
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+
   ],
   bootstrap: [
     LoginComponent

@@ -6,7 +6,6 @@ import {environment} from '@environments/environment';
 import {displayRole, Role, User} from '@app/modules/auth/shared/_models/User';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {LoginRequest, SignUpRequest, ResetPasswordRequest, ResetPasswordAttemptRequest} from '@app/modules/auth/shared/_models/requests/auth-requests';
-import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +20,11 @@ export class AuthService {
   }
 
   async attemptToLogin(loginRequest: LoginRequest) {
-    return this.http.post<any>(`${environment.gateway}auth/login`, loginRequest).pipe(
-      catchError(() => throwError('Invalid credentials')),
+    return this.http.post<any>(`${environment.gateway}auth/account/login`, loginRequest).pipe(
+      catchError(err => {
+        console.log(err);
+        return throwError('Invalid credentials');
+      }),
       switchMap(async jwtInfo => {
         localStorage.setItem('bearer', jwtInfo.tokenType);
         localStorage.setItem('token', jwtInfo.accessToken);
@@ -31,22 +33,22 @@ export class AuthService {
     );
   }
   attemptToRegister(signupRequest: SignUpRequest){
-    return this.http.post(`${environment.gateway}auth/signup`, signupRequest);
+    return this.http.post(`${environment.gateway}auth/account/signup`, signupRequest);
   }
   attemptToConfirmEmail(token: string){
-    return this.http.post(`${environment.gateway}auth/confirm-email?token=${token}`, {}, { responseType: 'text'});
+    return this.http.post(`${environment.gateway}auth/account/confirm-email?token=${token}`, {}, { responseType: 'text'});
   }
   attemptToSendResetToken(attempt: ResetPasswordAttemptRequest) {
-    return this.http.post(`${environment.gateway}auth/generate-pw-token`, attempt, {responseType: 'text'});
+    return this.http.post(`${environment.gateway}auth/account/generate-pw-token`, attempt, {responseType: 'text'});
   }
   attemptToResetPassword(attempt: ResetPasswordRequest){
-    return this.http.post(`${environment.gateway}auth/reset-pw`, attempt, {responseType: 'text'}).pipe(
+    return this.http.post(`${environment.gateway}auth/account/reset-pw`, attempt, {responseType: 'text'}).pipe(
       catchError(err => throwError(err)),
       switchMap(() => this.attemptToLogin(new LoginRequest(attempt.email, attempt.newPassword)))
     );
   }
   async getCurrentUserInfo() {
-    return this.http.get<User>(`${environment.gateway}auth/me`).pipe(
+    return this.http.get<User>(`${environment.gateway}auth/account/me`).pipe(
       catchError(err => {
         this.logout();
         return throwError(err);
@@ -64,7 +66,7 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('bearer');
     this.currentUserSubject.next(undefined);
-    this.http.post(`${environment.gateway}auth/logout`, {}).subscribe();
+    this.http.post(`${environment.gateway}auth/account/logout`, {}).subscribe();
     await this.router.navigate(['../login']);
   }
   public get currentUserValue(): User { return this.currentUserSubject.value; }

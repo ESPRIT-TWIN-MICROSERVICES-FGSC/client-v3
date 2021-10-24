@@ -1,0 +1,52 @@
+<div class="row">
+  <mat-form-field appearance="standard" class="col-8">
+    <mat-label>Email & user name filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Agent1@tld.dn"  #input>
+  </mat-form-field>
+  <div class="col-4 flex d-flex justify-content-end">
+    <button mat-fab color="primary" aria-label="Ajouter un Agent">
+      <a [routerLink]="['add-edit']"><mat-icon>add</mat-icon> </a>
+    </button>
+  </div>
+</div>
+<div class="mat-elevation-z8">
+  <table mat-table class="full-width-table" aria-label="Agents" [dataSource]="pagedCampaigns" matSort>
+    <!-- Campaign name Column -->
+    <ng-container matColumnDef="nom">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom :</th>
+      <td mat-cell *matCellDef="let row">{{row.Nom}}</td>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status :</th>
+      <td mat-cell *matCellDef="let row">
+        <mat-icon *ngIf="currentDate > row.EndDateTime ">lock</mat-icon>
+        <mat-icon *ngIf="currentDate < row.EndDateTime ">lock-open</mat-icon>
+      </td>
+    </ng-container>
+    <!-- Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions :</th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-fab (click)="openDeleteDialog(row)" color="warn" aria-label="Supprimer compagne" matTooltip="Supprimer la compagne">
+            <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-fab color="primary" aria-label="Details" (click)="redirectToDetails(row.Id)" matTooltip="Details">
+            <mat-icon>link</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    // TODO : YOU CAN ADD (click)="selection.toggle(row)" or something similar here to show profile or idk
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="redirectToEdit(row.Id)" ></tr>
+  </table>
+  <ng-container *ngIf="pagedCampaigns.length == 0">
+    <div class="d-flex justify-content-center">
+      Aucune compagne trouvé 🤐
+    </div>
+  </ng-container>
+<!--  <mat-paginator #paginator [length]="pagedCampaigns.TotalRecords" [pageIndex]="pagedCampaigns.PageNumber"-->
+<!--                 [pageSize]="pagedCampaigns.PageSize" [pageSizeOptions]="[5, 10, 20, 60]" aria-label="Select page"-->
+<!--                 (page)="handlePagination($event)" showFirstLastButtons>-->
+<!--  </mat-paginator>-->
+</div>

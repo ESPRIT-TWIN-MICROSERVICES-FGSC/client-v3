@@ -3,7 +3,7 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/com
 import {Observable} from 'rxjs';
 import {environment} from '@environments/environment';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class JwtInterceptor implements HttpInterceptor {
   constructor() {
   }
