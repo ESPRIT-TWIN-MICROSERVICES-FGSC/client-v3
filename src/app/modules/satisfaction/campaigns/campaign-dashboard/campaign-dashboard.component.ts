@@ -173,7 +173,7 @@ export class ConfirmDeleteCampaignDialogComponent {
   }
 
   onConfirmClick(): void {
-    this.compagneService.deleteCompagne(this.campaign.Id).subscribe(val => {
+    this.compagneService.deleteCompagne(this.campaign.id).subscribe(val => {
       this.snackBar.open('Compagne supprimé')._dismissAfter(5000);
       this.dialogRef.close();
     }, error => {

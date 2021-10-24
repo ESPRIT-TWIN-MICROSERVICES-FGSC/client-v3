@@ -8,6 +8,8 @@ import {Router} from '@angular/router';
 import {Campaign} from '@satisfaction/shared/_models/Campaign';
 import {CompagneService} from '@satisfaction/shared/_service/compagne.service';
 import {NotificationService} from '@services/notification.service';
+import {debounceTime} from 'rxjs/operators';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-compagne',
@@ -22,12 +24,22 @@ export class CompagneComponent implements OnInit, AfterViewInit {
   displayedColumns = ['nom', 'status', 'actions'];
   currentDate = new Date();
   pagedCampaigns = [];
+  searchControl: FormControl = new FormControl('');
   constructor(private campaignService: CompagneService,
               private snackBar: MatSnackBar,
               public dialog: MatDialog,
               private notificationService: NotificationService,
               private router: Router) {
     this.dataSource = new MatTableDataSource(this.pagedCampaigns);
+    this.searchControl.valueChanges.pipe(debounceTime(300)).subscribe(() => {
+      this.dataSource._filterData(this.searchControl.value);
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
+      if (this.dataSource.filteredData.length < 3) {
+        this.page();
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -41,9 +53,9 @@ export class CompagneComponent implements OnInit, AfterViewInit {
   }
 
   page(): void {
-    this.campaignService.getCompagneList(undefined).subscribe(res => {
+    this.campaignService.getCompagneList(this.paginator.pageIndex, this.paginator.pageSize, this.searchControl.value).subscribe(res => {
       this.pagedCampaigns = res;
-    }, err => {
+    }, () => {
 
     });
   }
@@ -65,6 +77,7 @@ export class CompagneComponent implements OnInit, AfterViewInit {
   }
 
   openDeleteDialog(row: any): void {
+
   }
 
   redirectToEdit(campaignId: number): void {

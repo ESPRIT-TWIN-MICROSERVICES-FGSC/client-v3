@@ -32,7 +32,16 @@ export class CompagneService {
     return this.http.get<any>(`${this.holder}count`);
   }
   countAllCampaignsByCreatorId(creatorId: string): Observable<number> {
-    return this.http.get<any>(`${this.holder}countbycreator?creatorId=${creatorId}`);
+    return this.http.get<any>(`${this.holder}count/creator?id=${creatorId}`);
+  }
+  countAllResponses(): Observable<number>{
+    return this.http.get<number>(`${this.holder}responses/count/all`);
+  }
+  countInvitedClients(campaignId: number): Observable<number> {
+    return this.http.get<number>(`${this.holder}invites/count/campaign?campaignId=${campaignId}`);
+  }
+  getEmailsOfInvitedClients(campaignId: number): Observable<string[]> {
+    return this.http.get<string[]>(`${this.holder}clients/invited?campaignId=${campaignId}`);
   }
   // Functionalities
   sendMail(val: any): Observable<any> {
@@ -47,19 +56,13 @@ export class CompagneService {
   unassignClient(campaignId: number, clientEmail: string): Observable<any>{
     return this.http.patch<any>(`${this.holder}campaigns/unassign/client?c=${campaignId}&m=${clientEmail}`, {});
   }
-  countAllResponses(): Observable<number>{
-    return this.http.get<number>(`${this.holder}responses/count/all`);
-  }
-  countInvitedClients(campaignId: number): Observable<number> {
-    return this.http.get<number>(`${this.holder}invites/count/campaign?campaignId=${campaignId}`);
-  }
+  // TODO : UPDATE FORM
+
   // Stats
   getEmailOfClientsThatAnswereCampaign(campaignId: number): Observable<string[]> {
     return this.http.get<string[]>(`${this.holder}responses/campaign/clients?campaignId=${campaignId}`);
   }
-  getEmailsOfInvitedClients(campaignId: number): Observable<string[]> {
-    return this.http.get<string[]>(`${this.holder}invites/campaign/clients?campaignId=${campaignId}`);
-  }
+
   getCampaignStats(campaignId: number): Observable<any[]>{
     return this.http.get<any[]>(`${this.holder}responses/campaign/stats?campaignId=${campaignId}`);
   }

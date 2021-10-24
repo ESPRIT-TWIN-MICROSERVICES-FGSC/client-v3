@@ -38,8 +38,8 @@ export class SurveyBuilderComponent implements  OnInit {
       if (this.id) {
           this.campaignService.getCompagneById(this.id).subscribe(c => {
             this.compagne = c;
-            this.start.setValue(c.StartDateTime);
-            this.end.setValue(c.EndDateTime);
+            this.start.setValue(c.startDateTime);
+            this.end.setValue(c.endDateTime);
           }, err => {
             console.log(err);
           });
@@ -56,34 +56,34 @@ export class SurveyBuilderComponent implements  OnInit {
       this.snackBar.open('Date fin non séléctionné')._dismissAfter(5000);
     } else if (this.end.value < this.start.value){
       this.snackBar.open('Date fin supérieure a date début')._dismissAfter(5000);
-    } else if (this.compagne.Form.components.length <= 0) {
+    } else if (this.compagne.form.components.length <= 0) {
       this.snackBar.open('Seulement 1 composant présent')._dismissAfter(3000);
     } else {
-      this.compagne.StartDateTime = this.start.value;
-      this.compagne.EndDateTime = this.end.value;
+      this.compagne.startDateTime = this.start.value;
+      this.compagne.endDateTime = this.end.value;
       console.log(this.compagne);
-      if (!this.compagne.Id){
+      if (!this.compagne.id){
         this.campaignService.addCompagne(this.compagne).subscribe(data => {
-          this.compagne.Id = data;
+          this.compagne = data;
           setTimeout(() =>
-            this.router.navigate([`/dashboard/campaigns/${this.compagne.Id}/details`]), 5000);
+            this.router.navigate([`/dashboard/campaigns/${this.compagne.id}/details`]), 5000);
         }, err => {
           console.log(err.message);
         });
       } else {
         this.campaignService.updateCompagne(this.compagne).subscribe(data => {
           setTimeout(() =>
-            this.router.navigate([`/dashboard/campaigns/${this.compagne.Id}/details`]), 5000);
+            this.router.navigate([`/dashboard/campaigns/${this.compagne.id}/details`]), 5000);
         });
       }
     }
   }
   onChange(event: any): void {
-    console.log(this.compagne.Form);
+    console.log(this.compagne.form);
     if (event.component.action === 'submit') {
       event.component.theme = 'warning';
       event.component.customClass = 'd-flex justify-content-center';
-      const submitCount = this.compagne.Form.components.filter(c => c.action === 'submit').length;
+      const submitCount = this.compagne.form.components.filter(c => c.action === 'submit').length;
       if (submitCount > 1) {
         alert('Cannot add more than one submit button');
       }

@@ -17,7 +17,7 @@
           <div class="small-box bg-success">
             <div class="inner">
               <p>Questions</p>
-              <h3>{{campaign.Form.components.length - 1}}</h3>
+              <h3>{{campaign.form.components.length - 1}}</h3>
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
@@ -104,13 +104,13 @@
         <div class="col-12">
           <div class="d-flex pt-1">
             <button type="button"
-                    [routerLink]=" ['/dashboard/campaigns/add-edit/'+campaign.Id] "
+                    [routerLink]=" ['/dashboard/campaigns/add-edit/'+campaign.id] "
                     routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}"
                     class="btn btn-info me-1 flex-grow-1">Modifier
               l'enquete</button>
           </div>
           <div class="d-flex pt-1">
-            <button [routerLink]=" ['/dashboard/campaigns/'+campaign.Id+'/clients/import-clients'] "
+            <button [routerLink]=" ['/dashboard/campaigns/'+campaign.id+'/clients/import-clients'] "
                     routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}"
                     type="button" class="btn btn-outline-warning me-1 flex-grow-1">
               Assigner des clients
@@ -171,22 +171,22 @@
               <b>Details de compagne</b>
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">Compagne : {{campaign.Nom}}</li>
-              <li class="list-group-item">Description : {{campaign.Description}}</li>
-              <li class="list-group-item">Date de création : {{campaign.CreationDateTime | date : 'shortDate'}}</li>
-              <li class="list-group-item">Date début : {{campaign.StartDateTime | date : 'shortDate'}}</li>
-              <li class="list-group-item">Date fin : {{campaign.EndDateTime | date : 'shortDate'}}</li>
+              <li class="list-group-item">Compagne : {{campaign.nom}}</li>
+              <li class="list-group-item">Description : {{campaign.description}}</li>
+              <li class="list-group-item">Date de création : {{campaign.creationDateTime | date : 'shortDate'}}</li>
+              <li class="list-group-item">Date début : {{campaign.startDateTime | date : 'shortDate'}}</li>
+              <li class="list-group-item">Date fin : {{campaign.endDateTime | date : 'shortDate'}}</li>
             </ul>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div *ngIf="campaign.Form.components.length > 1">
+  <div *ngIf="campaign.form.components.length > 1">
     <formio disabled="true" [readOnly]="true" [form]='{
-        "title": campaign.Nom,
+        "title": campaign.nom,
         "display":"disable",
-        "components": campaign.Form.components
+        "components": campaign.form.components
       }'></formio>
   </div>
 </section>

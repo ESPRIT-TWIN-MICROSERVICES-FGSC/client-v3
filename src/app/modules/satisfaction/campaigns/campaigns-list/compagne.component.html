@@ -1,7 +1,7 @@
 <div class="row">
   <mat-form-field appearance="standard" class="col-8">
     <mat-label>Email & user name filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Agent1@tld.dn"  #input>
+    <input matInput [formControl]="searchControl" placeholder="Ex. Agent1@tld.dn"  #input>
   </mat-form-field>
   <div class="col-4 flex d-flex justify-content-end">
     <button mat-fab color="primary" aria-label="Ajouter un Agent">
@@ -14,14 +14,14 @@
     <!-- Campaign name Column -->
     <ng-container matColumnDef="nom">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom :</th>
-      <td mat-cell *matCellDef="let row">{{row.Nom}}</td>
+      <td mat-cell *matCellDef="let row">{{row.nom}}</td>
     </ng-container>
     <!-- Name Column -->
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Status :</th>
       <td mat-cell *matCellDef="let row">
-        <mat-icon *ngIf="currentDate > row.EndDateTime ">lock</mat-icon>
-        <mat-icon *ngIf="currentDate < row.EndDateTime ">lock-open</mat-icon>
+        <mat-icon *ngIf="currentDate > row.endDateTime ">lock</mat-icon>
+        <mat-icon *ngIf="currentDate < row.endDateTime ">lock-open</mat-icon>
       </td>
     </ng-container>
     <!-- Actions -->
@@ -31,7 +31,7 @@
         <button mat-fab (click)="openDeleteDialog(row)" color="warn" aria-label="Supprimer compagne" matTooltip="Supprimer la compagne">
             <mat-icon>delete</mat-icon>
         </button>
-        <button mat-fab color="primary" aria-label="Details" (click)="redirectToDetails(row.Id)" matTooltip="Details">
+        <button mat-fab color="primary" aria-label="Details" (click)="redirectToDetails(row.id)" matTooltip="Details">
             <mat-icon>link</mat-icon>
         </button>
       </td>

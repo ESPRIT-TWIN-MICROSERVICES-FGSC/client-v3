@@ -9,13 +9,13 @@ import {InviteUrl} from '@satisfaction/shared/_models/InviteUrl';
 })
 export class EnqueteService {
   constructor(private http: HttpClient) {}
-  addReponse(invite: InviteUrl): Observable<any>{
-    return this.http.post(`${environment.gateway}invite?inviteUrl=${invite.Id}`, invite.Response);
+  addReponse(campaignId: string, clientEmail: string, response: Map<string, object>): Observable<any>{
+    return this.http.post(`${environment.gateway}responses?campaignId=${campaignId}&clientEmail=${clientEmail}`, response);
   }
-  updateReponse(invite: InviteUrl): Observable<any>{
-    return this.http.put(`${environment.gateway}invite?inviteUrl=${invite.Id}`, invite.Response);
+  updateReponse(campaignId: string, clientEmail: string, response: Map<string, object>): Observable<any>{
+    return this.http.put(`${environment.gateway}responses?campaignId=${campaignId}&clientEmail=${clientEmail}`, response);
   }
-  getSurveyByInviteUrl(inviteId: string): Observable<InviteUrl>{
-    return this.http.get<InviteUrl>(`${environment.gateway}invite?u=${inviteId}`);
+  getSurveyByInviteUrl(token: string, email: string, campaignId: string): Observable<InviteUrl>{
+    return this.http.get<InviteUrl>(`${environment.gateway}invites/form?token=${token}&email=${email}&campaignId=${campaignId}`);
   }
 }

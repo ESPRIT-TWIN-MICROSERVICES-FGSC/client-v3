@@ -7,10 +7,8 @@ import {CampaignDashboardComponent} from '@satisfaction/campaigns/campaign-dashb
 import {SurveyBuilderComponent} from '@satisfaction/campaigns/survey-builder/survey-builder.component';
 
 const routes: Routes = [
-  {path: 'enquete/:u', component: EnqueteComponent},
-  {path: 'thank-you', component: ThankYouComponent},
   {
-    path: 'campaigns',
+    path: '',
     children: [
       {
         path: '',

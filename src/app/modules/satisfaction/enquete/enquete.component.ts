@@ -25,10 +25,16 @@ export class EnqueteComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router
     ) { }
-
+  // u = token , e = email, c = campaignId
+  u: string;
+  e: string;
+  c: string;
   ngOnInit(): void {
     this.route.paramMap.subscribe(param => {
-      this.enqueteService.getSurveyByInviteUrl(param.get('u'))
+      this.u = param.get('u');
+      this.e = param.get('e');
+      this.c = param.get('c');
+      this.enqueteService.getSurveyByInviteUrl(this.u, this.e, this.c)
         .pipe(finalize(() => this.loading$.next(false)))
         .subscribe(invite => {
         if (invite){
@@ -36,7 +42,7 @@ export class EnqueteComponent implements OnInit {
         } else {
           this.error = true;
         }
-        if (invite.Response.data){
+        if (invite.responses){
           this.isUpdate = true;
         }
         this.loadComplete = true;
@@ -47,23 +53,22 @@ export class EnqueteComponent implements OnInit {
     });
   }
   ajouterReponse(event: any): void {
-    this.invite.Response = event;
-    console.log(this.invite.Response);
+    this.invite.responses = event;
     if (this.isUpdate){
       console.log('update');
-      this.enqueteService.updateReponse(this.invite).subscribe(() => {
+      this.enqueteService.updateReponse(this.u, this.e, event).subscribe(() => {
         this.snackBar.open('Reponse modifié')._dismissAfter(5000);
         setTimeout(() =>
           this.router.navigate([`/thank-you`]), 5000);
       }, () => this.snackBar.open('Erreur')._dismissAfter(5000));
     }else{
       console.log('add');
-      this.enqueteService.addReponse(this.invite).subscribe(() => {
+      this.enqueteService.addReponse(this.u, this.e, event).subscribe(() => {
         this.isUpdate = true;
         this.snackBar.open('Reponse ajouté')._dismissAfter(5000);
         setTimeout(() =>
           this.router.navigate([`/thank-you`]), 5000);
-      }, err => this.snackBar.open('Erreur')._dismissAfter(5000));
+      }, () => this.snackBar.open('Erreur')._dismissAfter(5000));
     }
   }
 }
