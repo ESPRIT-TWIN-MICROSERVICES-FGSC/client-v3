@@ -13,6 +13,8 @@ export const environment = {
   employeeMicroservice: 'https://employee-microservices.herokuapp.com/',
   JobMicroservice: 'https://job-microservices.herokuapp.com/',
   projectMicroservice: 'https://projet-microservice.herokuapp.com/',
+  departementMicroservice: '  https://depratement.herokuapp.com/departements',
+
 };
 
 /*
