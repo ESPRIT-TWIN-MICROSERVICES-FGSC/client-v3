@@ -3,7 +3,7 @@
     <div class="hleft">
       <a
         class="header-brand"
-        [routerLink]="['dashboard']"
+        [routerLink]="['/dashboard/hr']"
         href="javascript:void(0)"
         ><i class="fe fe-command brand-logo"></i
       ></a>
@@ -61,7 +61,7 @@
           (click)="toggleUserMenu()"
           ><img
             class="avatar"
-            src="../assets/images/user.png"
+            src="assets/images/user.png"
             alt=""
             data-toggle="tooltip"
             data-placement="right"
@@ -417,16 +417,16 @@
             <h4>Hangouts</h4>
             <ul class="list-unstyled team-info margin-0 p-t-5">
               <li>
-                <img src="../assets/images/xs/avatar1.jpg" alt="Avatar" />
+                <img src="assets/images/xs/avatar1.jpg" alt="Avatar" />
               </li>
               <li>
-                <img src="../assets/images/xs/avatar2.jpg" alt="Avatar" />
+                <img src="assets/images/xs/avatar2.jpg" alt="Avatar" />
               </li>
               <li>
-                <img src="../assets/images/xs/avatar3.jpg" alt="Avatar" />
+                <img src="assets/images/xs/avatar3.jpg" alt="Avatar" />
               </li>
               <li>
-                <img src="../assets/images/xs/avatar4.jpg" alt="Avatar" />
+                <img src="assets/images/xs/avatar4.jpg" alt="Avatar" />
               </li>
             </ul>
           </div>
@@ -466,45 +466,43 @@
         <li class="list-group-item mb-2">
           <p>Default Theme</p>
           <a href="../main/index.html"
-            ><img src="../assets/images/themes/default.png" class="img-fluid"
+            ><img src="assets/images/themes/default.png" class="img-fluid"
           /></a>
         </li>
         <li class="list-group-item mb-2">
           <p>Night Mode Theme</p>
           <a href="../dark/index.html"
-            ><img src="../assets/images/themes/dark.png" class="img-fluid"
+            ><img src="assets/images/themes/dark.png" class="img-fluid"
           /></a>
         </li>
         <li class="list-group-item mb-2">
           <p>RTL Version</p>
           <a href="../rtl/index.html"
-            ><img src="../assets/images/themes/rtl.png" class="img-fluid"
+            ><img src="assets/images/themes/rtl.png" class="img-fluid"
           /></a>
         </li>
         <li class="list-group-item mb-2">
           <p>Theme Version2</p>
           <a href="../theme2/index.html"
-            ><img src="../assets/images/themes/theme2.png" class="img-fluid"
+            ><img src="assets/images/themes/theme2.png" class="img-fluid"
           /></a>
         </li>
         <li class="list-group-item mb-2">
           <p>Theme Version3</p>
           <a href="../theme3/index.html"
-            ><img src="../assets/images/themes/theme3.png" class="img-fluid"
+            ><img src="assets/images/themes/theme3.png" class="img-fluid"
           /></a>
         </li>
         <li class="list-group-item mb-2">
           <p>Theme Version4</p>
           <a href="../theme4/index.html"
-            ><img src="../assets/images/themes/theme4.png" class="img-fluid"
+            ><img src="assets/images/themes/theme4.png" class="img-fluid"
           /></a>
         </li>
         <li class="list-group-item mb-2">
           <p>Horizontal Version</p>
           <a href="../horizontal/index.html"
-            ><img
-              src="../assets/images/themes/horizontal.png"
-              class="img-fluid"
+            ><img src="assets/images/themes/horizontal.png" class="img-fluid"
           /></a>
         </li>
       </ul>
@@ -526,7 +524,7 @@
       <div class="media">
         <img
           class="avatar avatar-xl mr-3"
-          src="../assets/images/sm/avatar1.jpg"
+          src="assets/images/sm/avatar1.jpg"
           alt="avatar"
         />
         <div class="media-body">
@@ -703,7 +701,7 @@
             <div class="media">
               <img
                 class="media-object"
-                src="../assets/images/xs/avatar4.jpg"
+                src="assets/images/xs/avatar4.jpg"
                 alt=""
               />
               <div class="media-body">
@@ -719,7 +717,7 @@
             <div class="media">
               <img
                 class="media-object"
-                src="../assets/images/xs/avatar5.jpg"
+                src="assets/images/xs/avatar5.jpg"
                 alt=""
               />
               <div class="media-body">
@@ -735,7 +733,7 @@
             <div class="media">
               <img
                 class="media-object"
-                src="../assets/images/xs/avatar2.jpg"
+                src="assets/images/xs/avatar2.jpg"
                 alt=""
               />
               <div class="media-body">
@@ -882,10 +880,7 @@
             [routerLinkActive]="['active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a
-              class="submenu"
-              [routerLink]="['jobs']"
-              href="javascript:void(0)"
+            <a class="submenu" [routerLink]="['jobs']" href="javascript:void(0)"
               ><span>Jobs</span></a
             >
           </li>
@@ -898,6 +893,17 @@
               [routerLink]="['leaves']"
               href="javascript:void(0)"
               ><span>Leaves</span></a
+            >
+          </li>
+          <li
+            [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a
+              class="submenu"
+              [routerLink]="['attendance']"
+              href="javascript:void(0)"
+              ><span>Attendance</span></a
             >
           </li>
           <li
@@ -1171,7 +1177,7 @@
           >
             <a
               class="submenu"
-              [routerLink]="['../../login']"
+              [routerLink]="['/login']"
               href="javascript:void(0)"
               >Login</a
             >
@@ -1182,7 +1188,7 @@
           >
             <a
               class="submenu"
-              [routerLink]="['../../forgot-password']"
+              [routerLink]="['/forgot-password']"
               href="javascript:void(0)"
               >Forgot password</a
             >

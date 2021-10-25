@@ -1,0 +1,43 @@
+.fas {
+  color: Tomato;
+  margin-left: 10px;    
+  font-size:18px;
+}
+.icon{
+  height: 50px;
+  width: 50px;
+}
+table {
+  width: 100%;
+}
+.sorting{
+  font-weight: bold;
+}
+.add{
+  float:right;
+}
+.idCol{
+  column-width: 20px;
+  font-weight: bold;
+}
+
+.actionCol{
+  white-space: nowrap;
+}
+
+.btn{
+  width:120px;
+  margin:2px;
+  margin-bottom:10px;
+  float:right;
+}
+.modal-header{
+  background-image: linear-gradient(to left, rgb(221, 113, 40), rgb(30, 20, 30));
+  z-index: 0;
+}
+
+select { 
+  height:1.5rem;
+  width:3rem;
+}
+

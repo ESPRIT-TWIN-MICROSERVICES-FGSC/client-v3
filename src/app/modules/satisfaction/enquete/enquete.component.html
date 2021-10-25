@@ -1,0 +1,25 @@
+<!-- TODO : IF ANSWERED LOAD DATA -->
+<div *ngIf="loadComplete && !error">
+  <div class="container" *ngIf="loadComplete">
+    <div class="titre">Enquete Mesure de <br>Satisfaction Client</div>
+    <div class="card-client">
+      <p class="salutations">Bonjour {{invite.Client.Nom}}&nbsp;{{invite.Client.Prenom}},</p>
+      <p >Nous voulons savoir votre avis sur quelque service nous offrons pour nos clients </p>
+    </div>
+    <div>
+      <p><b>Enquete :</b><br>{{invite.Campaign.Nom}}</p>
+    </div>
+    <div>
+      <p><b>Description de l'enquete :</b><br>{{invite.Campaign.Description}}</p>
+    </div>
+    <div>
+      <formio [form]="invite.Campaign.Form" (submit)="ajouterReponse($event)" [submission]="invite.Response"></formio>
+    </div>
+  </div>
+</div>
+<div *ngIf="!loadComplete && !error">
+  <ngx-spinner></ngx-spinner>
+</div>
+<div *ngIf="loadComplete && error">
+  <app-error [isDashboard]="false"></app-error>
+</div>

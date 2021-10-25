@@ -156,7 +156,7 @@ export class LeftmenuComponent implements OnInit {
       }
       else {
         document.getElementById('page_top').classList.remove('sticky-top');
-        document.getElementsByClassName('fixNavMargin')[0].classList.remove('marginTop');
+        document.getElementsByClassName('fixNavMargin')[0]?.classList.remove('marginTop');
       }
 
       const className = document.getElementsByClassName('card');

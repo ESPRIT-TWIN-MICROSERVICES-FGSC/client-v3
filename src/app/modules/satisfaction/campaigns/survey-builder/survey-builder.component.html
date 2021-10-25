@@ -1,0 +1,42 @@
+<div class="col-12">
+  <div *ngIf="id">
+    Il est déconséillé de modifier les elements de la compagne si des clients on déja repondus.
+  </div>
+  <form *ngIf="compagne">
+    <div class="mb-3">
+      <label for="nomCompagne" class="form-label">Nom</label>
+      <input type="text" class="form-control" name="nomCompagne" id="nomCompagne"
+        [(ngModel)]="compagne.name">
+    </div>
+    <div class="mb-3">
+      <label for="descCompagne" class="form-label">Description breve</label>
+      <textarea class="form-control" name="descCompagne" [(ngModel)]="compagne.description"
+        id="descCompagne"></textarea>
+    </div>
+    <div class="mb-3">
+      <mat-form-field appearance="fill" color="warn">
+        <mat-label>Range</mat-label>
+        <mat-date-range-input [formGroup]="dateForm" [rangePicker]="picker">
+          <input matStartDate formControlName="start" placeholder="Date début" [value]="start.value">
+          <input matEndDate formControlName="end" placeholder="Date fin" [value]="end.value">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+        <mat-error *ngIf="dateForm.controls.start.hasError('matStartDateInvalid')">Date début invalide</mat-error>
+        <mat-error *ngIf="dateForm.controls.end.hasError('matEndDateInvalid')">Date fin invalide</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div *ngIf="compagne">
+  <form-builder [form]="compagne.form" (change)="onChange($event)" [options]="options" [rebuild]="rebuildEmitter.asObservable()"
+    [(ngModel)]="compagne.form" ngDefaultControl></form-builder>
+</div>
+<div class="row flex d-flex justify-content-center">
+  <button class="btn btn-primary" mat-raised-button color="primary" (click)="submitCampaign()" *ngIf="id">
+    Mettre a jour
+  </button>
+  <button class="btn btn-primary" mat-raised-button color="primary" (click)="submitCampaign()" *ngIf="!id">
+    Ajouter
+  </button>
+</div>

@@ -1,0 +1,21 @@
+.validation-button:hover{
+    background-color: rgb(224, 105, 26);
+    transition-duration: 0.6s;
+  }
+  
+  .validation-button{
+    white-space: nowrap;
+    width:15%;
+    margin:10px;
+    float:right;
+    border-radius: 12px;
+    padding:12px 8px;
+    background-color: rgba(224, 106, 26, 0.74); /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }

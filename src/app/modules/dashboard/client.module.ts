@@ -124,6 +124,15 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {ErrorPageComponent} from '@shared/components/error-page/error-page.component';
 import {DashboardNavigationComponent} from '@dashboard/navigation/dashboard-navigation.component';
+import {UsersService} from '@services/users.service';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatSortModule} from '@angular/material/sort';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { HrAttendanceComponent } from './hrms/hr-attendance/hr-attendance.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -163,9 +172,11 @@ FullCalendarModule.registerPlugins([
     }),
     RSocketRxjsModule.forRoot({
       url: environment.rsocket,
-      connectMappingData: JSON.parse(localStorage.getItem('currentUser')).id,
+      connectMappingData: JSON.parse(localStorage.getItem('currentUser'))?.id,
       builderCustomizer: builder => {
-        builder.automaticReconnect(4000);
+        if (JSON.parse(localStorage.getItem('currentUser'))?.id) {
+          builder.automaticReconnect(4000);
+        }
       }
     }),
     FullCalendarModule,
@@ -184,7 +195,14 @@ FullCalendarModule.registerPlugins([
     ConfirmDialogModule,
     MatSnackBarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTooltipModule,
+    MatSortModule,
+    MatProgressSpinnerModule
   ],
   declarations: [
     ClientRoutingModule.components,
@@ -262,8 +280,10 @@ FullCalendarModule.registerPlugins([
     HrJobsComponent,
     HrProjectsComponent,
     DashboardNavigationComponent,
+    HrAttendanceComponent,
   ],
-  providers: [BsDatepickerModule, ConfirmationService, MessageService, NotificationService, RSocketService],
+  providers: [BsDatepickerModule, ConfirmationService, MessageService, NotificationService, RSocketService, UsersService
+  ],
   bootstrap: [DashboardNavigationComponent]
 })
 export class ClientModule {}

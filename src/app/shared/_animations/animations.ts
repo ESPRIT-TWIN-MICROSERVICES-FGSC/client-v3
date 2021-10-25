@@ -35,9 +35,9 @@ export const FadeOutAnimation = trigger('fadeOut', [
     'box-shadow': 'none'
   })),
   transition('void => *', sequence([
-    animate('.5s ease')
+    animate('.2s ease')
   ])),
-  transition('* => void', [animate('5s ease')])
+  transition('* => void', [animate('2s ease')])
 ]);
 
 export const SlideAnimation =
@@ -54,17 +54,17 @@ export const SlideAnimation =
       ]),
       query(':enter', [
         style({left: '-100%'})
-      ]),
-      query(':leave', animateChild()),
+      ], { optional: true }),
+      query(':leave', animateChild(), { optional: true }),
       group([
         query(':leave', [
           animate('300ms ease-out', style({left: '100%'}))
-        ]),
+        ], { optional: true }),
         query(':enter', [
           animate('300ms ease-out', style({left: '0%'}))
-        ])
+        ], { optional: true })
       ]),
-      query(':enter', animateChild()),
+      query(':enter', animateChild(), { optional: true }),
     ]),
     transition('* <=> *', [
       style({position: 'relative'}),
@@ -75,19 +75,19 @@ export const SlideAnimation =
           left: 0,
           width: '100%'
         })
-      ]),
+      ], { optional: true }),
       query(':enter', [
         style({left: '-100%'})
-      ]),
-      query(':leave', animateChild()),
+      ], { optional: true }),
+      query(':leave', animateChild(), { optional: true }),
       group([
         query(':leave', [
           animate('200ms ease-out', style({left: '100%'}))
-        ]),
+        ], { optional: true }),
         query(':enter', [
           animate('300ms ease-out', style({left: '0%'}))
-        ])
+        ], { optional: true })
       ]),
-      query(':enter', animateChild()),
+      query(':enter', animateChild(), { optional: true }),
     ])
   ]);

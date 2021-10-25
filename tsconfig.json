@@ -42,6 +42,9 @@
       ],
       "@auth/*": [
         "src/app/modules/auth/*"
+      ],
+      "@satisfaction/*": [
+        "src/app/modules/satisfaction/*"
       ]
     }
   },
@@ -49,6 +52,6 @@
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictTemplates": false
   }
 }

@@ -1,0 +1,195 @@
+<section *ngIf="campaign && !hasErrors">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">Monthly Recap Report</h5>
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+          <i class="fas fa-minus"></i>
+        </button>
+      </div>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+      <div class="row">
+        <!-- ./col -->
+        <div class="col-4">
+          <!-- small box -->
+          <div class="small-box bg-success">
+            <div class="inner">
+              <p>Questions</p>
+              <h3>{{campaign.form.components.length - 1}}</h3>
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+            <a routerLink="../template" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <!-- ./col -->
+        <div class="col-4">
+          <!-- small box -->
+          <div class="small-box bg-danger">
+            <div class="inner">
+              <p>Clients assignés :</p>
+              <h3>{{invitedClientsCount}}</h3>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+            <a routerLink="../compagne" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-4">
+          <!-- small box -->
+          <div class="small-box bg-info">
+            <div class="inner">
+              <p>Reponses</p>
+              <h3>{{answeredClientsCount}}</h3>
+            </div>
+            <div class="icon">
+              <i class="ion ion-bag"></i>
+            </div>
+            <a routerLink="../dashboard" class="small-box-footer">More info <i
+              class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">Statistiques de la compagne</h5>
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+          <i class="fas fa-minus"></i>
+        </button>
+      </div>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+      <div class="row">
+        <div class="chart-wrapper col-6" *ngFor="let stat of stats">
+          <canvas baseChart *ngIf="stat.type=='select'"
+                  [data]  ="stat.data"
+                  [labels]="stat.labels"
+                  [options]="pieChartOptions"
+                  [legend]="barChartLegend"
+                  chartType="pie">
+          </canvas>
+          <canvas baseChart *ngIf="stat.type=='survey'"
+                  [datasets]="stat.data"
+                  [labels]="stat.labels"
+                  [options]="barChartOptions"
+                  [plugins]="barChartPlugins"
+                  [legend]="barChartLegend"
+                  [chartType]="'bar'">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">Actions</h5>
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+          <i class="fas fa-minus"></i>
+        </button>
+      </div>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex pt-1">
+            <button type="button"
+                    [routerLink]=" ['/dashboard/campaigns/add-edit/'+campaign.id] "
+                    routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}"
+                    class="btn btn-info me-1 flex-grow-1">Modifier
+              l'enquete</button>
+          </div>
+          <div class="d-flex pt-1">
+            <button [routerLink]=" ['/dashboard/campaigns/'+campaign.id+'/clients/import-clients'] "
+                    routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}"
+                    type="button" class="btn btn-outline-warning me-1 flex-grow-1">
+              Assigner des clients
+            </button>
+          </div>
+          <div class="d-flex pt-1">
+            <button type="button" class="btn btn-outline-danger me-1 flex-grow-1" (click)="openDeleteDialog()">
+              Supprimer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container py-5 h-100 cfa-gradient rounded-3">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12">
+        <div class="card" style="border-radius: 15px;">
+          <div class="card-header">
+            <b>Agent responsable</b>
+          </div>
+          <div class="card-body p-4">
+            <div class="d-flex text-black">
+              <div class="flex-shrink-0">
+                <img [src]="'https://avatars.dicebear.com/api/bottts/user.svg'"
+                  alt="Generic placeholder image" class="img-fluid" style="width: 180px; border-radius: 10px;" />
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <!-- <h5 class="mb-1">Agent responsable :</h5> -->
+                <p class="mb-2 pb-1" style="color: #2b2a2a;">
+                </p>
+                <div class="d-flex justify-content-start rounded-3 p-2 mb-2" style="background-color: #efefef;">
+                  <div>
+                    <p class="small text-muted mb-1">
+                      Compagnes
+                    </p>
+                    <p class="mb-0">2</p>
+                  </div>
+                </div>
+                <div class="d-flex pt-1">
+                  <button type="button" class="btn btn-outline-warning me-1 flex-grow-1">
+                    Profile
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="container py-5 h-100 cfa-gradient rounded-3">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12">
+          <div class="card ">
+            <div class="card-header">
+              <b>Details de compagne</b>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Compagne : {{campaign.nom}}</li>
+              <li class="list-group-item">Description : {{campaign.description}}</li>
+              <li class="list-group-item">Date de création : {{campaign.creationDateTime | date : 'shortDate'}}</li>
+              <li class="list-group-item">Date début : {{campaign.startDateTime | date : 'shortDate'}}</li>
+              <li class="list-group-item">Date fin : {{campaign.endDateTime | date : 'shortDate'}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="campaign.form.components.length > 1">
+    <formio disabled="true" [readOnly]="true" [form]='{
+        "title": campaign.nom,
+        "display":"disable",
+        "components": campaign.form.components
+      }'></formio>
+  </div>
+</section>
+<section *ngIf="hasErrors">
+  {{ error}}
+</section>
