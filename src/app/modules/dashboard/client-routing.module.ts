@@ -55,6 +55,7 @@ import {GalleryComponent} from '@app/modules/dashboard/components/ui-elements/ga
 
 import {ErrorPageComponent} from '@shared/components/error-page/error-page.component';
 import {DashboardNavigationComponent} from '@dashboard/navigation/dashboard-navigation.component';
+import { HrAttendanceComponent } from './hrms/hr-attendance/hr-attendance.component';
 
 const routes: Routes = [
   { path: '' , redirectTo: 'hr', pathMatch: 'full'},
@@ -93,6 +94,10 @@ const routes: Routes = [
       {
         path: 'leaves',
         component: HrLeavesComponent,
+      },
+      {
+        path: 'attendance',
+        component: HrAttendanceComponent,
       },
       {
         path: 'activities',
