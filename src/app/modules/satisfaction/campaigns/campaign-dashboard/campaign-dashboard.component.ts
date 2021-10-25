@@ -1,22 +1,27 @@
-import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {CompagneService} from '@satisfaction/shared/_service/compagne.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {ChartDataSets, ChartOptions} from 'chart.js';
-import {Campaign} from '@satisfaction/shared/_models/Campaign';
-import {Label} from 'ng2-charts';
+import { AfterViewInit, Component, Inject, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { CompagneService } from "@satisfaction/shared/_service/compagne.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from "@angular/material/dialog";
+import { ChartDataSets, ChartOptions } from "chart.js";
+import { Campaign } from "@satisfaction/shared/_models/Campaign";
+import { Label } from "ng2-charts";
 
 @Component({
-  selector: 'app-campaign-dashboard',
-  templateUrl: './campaign-dashboard.component.html',
-  styleUrls: ['./campaign-dashboard.component.css']
+  selector: "app-campaign-dashboard",
+  templateUrl: "./campaign-dashboard.component.html",
+  styleUrls: ["./campaign-dashboard.component.css"],
 })
 export class CampaignDashboardComponent implements OnInit, AfterViewInit {
-  constructor(private route: ActivatedRoute,
-              private campaignService: CompagneService,
-              public dialog: MatDialog) {
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private campaignService: CompagneService,
+    public dialog: MatDialog
+  ) {}
 
   campaign: Campaign;
   invitedClientsCount = 0;
@@ -24,16 +29,16 @@ export class CampaignDashboardComponent implements OnInit, AfterViewInit {
   stats: any[];
   loading = true;
   hasErrors = false;
-  error = '';
+  error = "";
   barChartOptions: ChartOptions = {
     responsive: true,
-    scales: {xAxes: [{}], yAxes: [{}]},
+    scales: { xAxes: [{}], yAxes: [{}] },
     plugins: {
       datalabels: {
-        anchor: 'end',
-        align: 'end',
-      }
-    }
+        anchor: "end",
+        align: "end",
+      },
+    },
   };
   barChartLegend = true;
   barChartPlugins: any = [];
@@ -42,7 +47,7 @@ export class CampaignDashboardComponent implements OnInit, AfterViewInit {
   pieChartOptions: ChartOptions = {
     responsive: true,
     legend: {
-      position: 'top',
+      position: "top",
     },
     plugins: {
       datalabels: {
@@ -50,88 +55,116 @@ export class CampaignDashboardComponent implements OnInit, AfterViewInit {
           return ctx.chart.data.labels[ctx.dataIndex];
         },
       },
-    }
+    },
   };
 
-  ngAfterViewInit(): void {
-  }
+  ngAfterViewInit(): void {}
 
   ngOnInit(): void {
-    this.campaignService.getCompagneById(this.route.snapshot.params.id).subscribe(c => {
-      this.campaign = c;
-      if (this.isIterable(this.campaign.form.components)) {
-        for (const component of this.campaign.form.components) {
-          const labels: Label[] = [];
-          const barChartData: ChartDataSets[] = [];
-          component.data = [];
-          if (component.type === 'survey') {
-            Object.values(component.questions).map( (question: any) => question.label).forEach(answerKey => labels.push(answerKey));
-            Object.values(component.values).forEach((value: any) => {
-              const dataSet: { label: string; data: number[] } = { data : [] , label : '' };
-              dataSet.label = value.label;
-              barChartData.push(dataSet);
-            });
-            for (const key of barChartData){
-              const holderArray: number[] = [];
-              Object.values(component.answers).map((answer: any) => answer[key.label]).forEach((value => {
-                holderArray.push(value);
-              }));
-              key.data = holderArray;
+    this.campaignService
+      .getCompagneById(this.route.snapshot.params.id)
+      .subscribe(
+        (c) => {
+          this.campaign = c;
+          if (this.isIterable(this.campaign.form.components)) {
+            for (const component of this.campaign.form.components) {
+              const labels: Label[] = [];
+              const barChartData: ChartDataSets[] = [];
+              component.data = [];
+              if (component.type === "survey") {
+                Object.values(component.questions)
+                  .map((question: any) => question.label)
+                  .forEach((answerKey) => labels.push(answerKey));
+                Object.values(component.values).forEach((value: any) => {
+                  const dataSet: { label: string; data: number[] } = {
+                    data: [],
+                    label: "",
+                  };
+                  dataSet.label = value.label;
+                  barChartData.push(dataSet);
+                });
+                for (const key of barChartData) {
+                  const holderArray: number[] = [];
+                  Object.values(component.answers)
+                    .map((answer: any) => answer[key.label])
+                    .forEach((value) => {
+                      holderArray.push(value);
+                    });
+                  key.data = holderArray;
+                }
+                component.labels = labels;
+                component.data = barChartData;
+                this.stats.push(component);
+              } else if (component.type === "select") {
+                const values: number[] = [];
+                const keys: string[] = [];
+                Object.values(component.values)
+                  .map((v: any) => v.label)
+                  .forEach((componentValue) => labels.push(componentValue));
+                Object.values(component.values)
+                  .map((v: any) => v.value)
+                  .forEach((componentValue) => keys.push(componentValue));
+                keys.forEach((key) => {
+                  values.push(
+                    Object.entries(component.answers).filter((value: any) => {
+                      return value[1] === key;
+                    }).length
+                  );
+                });
+                component.labels = labels;
+                component.data.push(values);
+                this.stats.push(component);
+              } else if (component.type === null) {
+                console.log("HAAAAHAAAAA");
+              }
             }
-            component.labels = labels;
-            component.data = barChartData;
-            this.stats.push(component);
-          } else if (component.type === 'select') {
-            const values: number[] = [];
-            const keys: string[] = [];
-            Object.values(component.values).map((v: any) => v.label)
-              .forEach(componentValue => labels.push(componentValue));
-            Object.values(component.values).map((v: any) => v.value)
-              .forEach(componentValue => keys.push(componentValue));
-            keys.forEach( key => {
-              values.push(Object.entries(component.answers).filter((value: any) => {
-                return value[1] === key;
-              }).length);
-            });
-            component.labels = labels;
-            component.data.push(values);
-            this.stats.push(component);
-          } else if (component.type === null) {
-            console.log('HAAAAHAAAAA');
           }
+        },
+        (err) => {
+          this.hasErrors = true;
+          this.error = err;
         }
-      }
-    }, err => {
-      this.hasErrors = true;
-      this.error = err;
-    });
-    this.campaignService.countResponsesByCampaign(this.route.snapshot.params.id).subscribe(
-      val => {
-        // this.campaignService.invitedClientsEmails = val;
-        const interval = setInterval(() => {
-          if (this.answeredClientsCount === 200 && val > 400 || this.answeredClientsCount === val) {
-            clearInterval(interval);
-            this.answeredClientsCount = val;
-            this.answeredClientsCount--;
-          }
-          this.answeredClientsCount++;
-        }, 30);
-      }, err => console
-    );
-    this.campaignService.countInvitedClients(this.route.snapshot.params.id)
-      .subscribe(val => {
-        const interval = setInterval(() => {
-          if (this.invitedClientsCount === 200 && val > 400 || this.invitedClientsCount === val) {
-            clearInterval(interval);
-            this.invitedClientsCount = val;
-            this.invitedClientsCount--;
-          }
-          this.invitedClientsCount++;
-        }, 30);
-      }, err => {
-        this.hasErrors = true;
-        this.error = err;
-      });
+      );
+    this.campaignService
+      .countResponsesByCampaign(this.route.snapshot.params.id)
+      .subscribe(
+        (val) => {
+          // this.campaignService.invitedClientsEmails = val;
+          const interval = setInterval(() => {
+            if (
+              (this.answeredClientsCount === 200 && val > 400) ||
+              this.answeredClientsCount === val
+            ) {
+              clearInterval(interval);
+              this.answeredClientsCount = val;
+              this.answeredClientsCount--;
+            }
+            this.answeredClientsCount++;
+          }, 30);
+        },
+        (err) => console
+      );
+    this.campaignService
+      .countInvitedClients(this.route.snapshot.params.id)
+      .subscribe(
+        (val) => {
+          const interval = setInterval(() => {
+            if (
+              (this.invitedClientsCount === 200 && val > 400) ||
+              this.invitedClientsCount === val
+            ) {
+              clearInterval(interval);
+              this.invitedClientsCount = val;
+              this.invitedClientsCount--;
+            }
+            this.invitedClientsCount++;
+          }, 30);
+        },
+        (err) => {
+          this.hasErrors = true;
+          this.error = err;
+        }
+      );
     // console.log()
     this.loading = false;
   }
@@ -140,12 +173,12 @@ export class CampaignDashboardComponent implements OnInit, AfterViewInit {
     if (obj == null) {
       return false;
     }
-    return typeof obj[Symbol.iterator] === 'function';
+    return typeof obj[Symbol.iterator] === "function";
   }
 
   openDeleteDialog(): void {
     this.dialog.open(ConfirmDeleteCampaignDialogComponent, {
-      data: this.campaign
+      data: this.campaign,
     });
   }
 
@@ -156,24 +189,29 @@ export class CampaignDashboardComponent implements OnInit, AfterViewInit {
 }
 
 @Component({
-  selector: 'app-confirm-delete-campaign-dialog',
-  templateUrl: 'confirm-delete-campaign-dialog.html',
+  selector: "app-confirm-delete-campaign-dialog",
+  templateUrl: "confirm-delete-campaign-dialog.html",
 })
 export class ConfirmDeleteCampaignDialogComponent {
   campaign: Campaign;
 
   constructor(
     public dialogRef: MatDialogRef<ConfirmDeleteCampaignDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Campaign, private compagneService: CompagneService, private snackBar: MatSnackBar) {
+    @Inject(MAT_DIALOG_DATA) public data: Campaign,
+    private compagneService: CompagneService,
+    private snackBar: MatSnackBar
+  ) {
     this.campaign = data;
   }
 
   onConfirmClick(): void {
-    this.compagneService.deleteCompagne(this.campaign.id).subscribe(val => {
-      this.snackBar.open('Compagne supprimé')._dismissAfter(5000);
-      this.dialogRef.close();
-    }, error => {
-    });
+    this.compagneService.deleteCompagne(this.campaign.id).subscribe(
+      (val) => {
+        this.snackBar.open("Compagne supprimé")._dismissAfter(5000);
+        this.dialogRef.close();
+      },
+      (error) => {}
+    );
   }
 
   onNoClick(): void {
@@ -186,7 +224,6 @@ export class HolderDataSet {
   data: number[] = [];
 }
 
-
 //          if (stat.type === 'survey' || stat.type === 'select') {
 //             stat.labels = stat.type = Array.from(stat.values, (x: any) => x.label);
 //             stat.data = new BarChartData();
@@ -198,7 +235,6 @@ export class HolderDataSet {
 //               console.log(answer);
 //             });
 //           }
-
 
 //   Object.values(stat.answers).map(answer => {
 //     if ( stat.type === 'survey'){
