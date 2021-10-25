@@ -502,9 +502,7 @@
         <li class="list-group-item mb-2">
           <p>Horizontal Version</p>
           <a href="../horizontal/index.html"
-            ><img
-              src="assets/images/themes/horizontal.png"
-              class="img-fluid"
+            ><img src="assets/images/themes/horizontal.png" class="img-fluid"
           /></a>
         </li>
       </ul>
@@ -882,10 +880,7 @@
             [routerLinkActive]="['active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a
-              class="submenu"
-              [routerLink]="['jobs']"
-              href="javascript:void(0)"
+            <a class="submenu" [routerLink]="['jobs']" href="javascript:void(0)"
               ><span>Jobs</span></a
             >
           </li>
@@ -898,6 +893,17 @@
               [routerLink]="['leaves']"
               href="javascript:void(0)"
               ><span>Leaves</span></a
+            >
+          </li>
+          <li
+            [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a
+              class="submenu"
+              [routerLink]="['attendance']"
+              href="javascript:void(0)"
+              ><span>Attendance</span></a
             >
           </li>
           <li

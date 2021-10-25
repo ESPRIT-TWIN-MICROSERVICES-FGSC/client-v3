@@ -1,0 +1,427 @@
+
+  <div class="card">
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <button type="button" class="btn btn-primary mr-2" (click)="openNew()">
+          New
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="deleteSelectedItems()"
+          [disabled]="!selectedItems || !selectedItems.length"
+        >
+          Delete
+        </button>
+      </ng-template>
+      <ng-template pTemplate="right">
+        <button type="button" class="btn btn-secondary" (click)="exportPdf()">
+          Export
+        </button>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table
+      #dt
+      [value]="items"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [paginator]="true"
+      [globalFilterFields]="['firstName', 'lastName']"
+      [(selection)]="selectedItems"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="dt.filterGlobal($event.target.value, 'contains')"
+              placeholder="Search..."
+            />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th pSortableColumn="firstName">
+            First Name <p-sortIcon field="firstName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="lastName">
+            Last Name <p-sortIcon field="lastName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="departement">
+            Department <p-sortIcon field="departement"></p-sortIcon>
+          </th>
+          <th pSortableColumn="checkIn">
+            Check In <p-sortIcon field="checkIn"></p-sortIcon>
+          </th>
+          <th pSortableColumn="shift">
+            Shift <p-sortIcon field="shift"></p-sortIcon>
+          </th>
+          <th pSortableColumn="status">
+            Status <p-sortIcon field="status"></p-sortIcon>
+          </th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="item"></p-tableCheckbox>
+          </td>
+          <td>{{ item.firstName }}</td>
+          <td>{{ item.lastName }}</td>
+          <td>{{ item.departement }}</td>
+          <td>{{ item.checkIn }}</td>
+          <td>{{ item.shift }}</td>
+          <td>{{ item.status }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-icon"
+              title="Edit"
+              (click)="deleteItem(item)"
+            >
+              <i class="fa fa-trash"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-icon"
+              title="Edit"
+              (click)="editItem(item)"
+            >
+              <i class="fa fa-edit"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-icon"
+              title="Edit"
+              (click)="viewItemDetailed(item)"
+            >
+              <i class="fa fa-eye"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          In total there are {{ items ? items.length : 0 }} attendances.
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <p-dialog
+    [(visible)]="itemAddDialog"
+    [style]="{ width: '450px' }"
+    header="Add  a attendance"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <form [formGroup]="itemsFormGroup">
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="First name"
+              formControlName="firstName"
+              [ngClass]="{
+                'is-invalid': checkFormValidationFirstName(),
+                'is-valid': itemsFormGroup.get('firstName').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              First Name is required
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Last name"
+              formControlName="lastName"
+              [ngClass]="{
+                'is-invalid': checkFormValidationLastName(),
+                'is-valid': itemsFormGroup.get('lastName').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              Last Name is required
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Department"
+              formControlName="departement"
+              [ngClass]="{
+                'is-invalid': checkFormValidationDepartment(),
+                'is-valid': itemsFormGroup.get('departement').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              Department is required
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Check In"
+              formControlName="checkIn"
+              [ngClass]="{
+                'is-invalid': checkFormValidationCheckIn(),
+                'is-valid': itemsFormGroup.get('checkIn').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              Check In is required
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Shift"
+              formControlName="shift"
+              [ngClass]="{
+                'is-invalid': checkFormValidationShift(),
+                'is-valid': itemsFormGroup.get('shift').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              Shift is required
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Status"
+              formControlName="status"
+              [ngClass]="{
+                'is-invalid': checkFormValidationStatus(),
+                'is-valid': itemsFormGroup.get('status').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              Status is required
+            </div>
+          </div>
+        </div>
+      </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        pRipple
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="hideDialog()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Save"
+        icon="pi pi-check"
+        class="p-button-text"
+        (click)="saveProduct()"
+      ></button>
+    </ng-template>
+  </p-dialog>
+  <p-dialog
+    [(visible)]="itemUpdateDialog"
+    [style]="{ width: '450px' }"
+    header="Update a client"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <form [formGroup]="itemsFormGroup">
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="First name"
+              formControlName="firstName"
+              [ngClass]="{
+                'is-invalid': checkFormValidationFirstName(),
+                'is-valid': itemsFormGroup.get('firstName').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              First Name is required
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Last name"
+              formControlName="lastName"
+              [ngClass]="{
+                'is-invalid': checkFormValidationLastName(),
+                'is-valid': itemsFormGroup.get('lastName').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              Last Name is required
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Department"
+              formControlName="departement"
+              [ngClass]="{
+                'is-invalid': checkFormValidationDepartment(),
+                'is-valid': itemsFormGroup.get('departement').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              Department is required
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Check In"
+              formControlName="checkIn"
+              [ngClass]="{
+                'is-invalid': checkFormValidationCheckIn(),
+                'is-valid': itemsFormGroup.get('checkIn').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              Check In is required
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Shift"
+              formControlName="shift"
+              [ngClass]="{
+                'is-invalid': checkFormValidationShift(),
+                'is-valid': itemsFormGroup.get('shift').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              Shift is required
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Status"
+              formControlName="status"
+              [ngClass]="{
+                'is-invalid': checkFormValidationStatus(),
+                'is-valid': itemsFormGroup.get('status').valid
+              }"
+            />
+            <div class="invalid-feedback invalid-feedback-position">
+              Status is required
+            </div>
+          </div>
+        </div>
+      </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        pRipple
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="hideDialog()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Save"
+        icon="pi pi-check"
+        class="p-button-text"
+        (click)="updateProduct()"
+      ></button>
+    </ng-template>
+  </p-dialog>
+  <p-dialog
+    [(visible)]="itemViewDialog"
+    [style]="{ width: '450px' }"
+    header="Client in details"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <div class="card c_grid c_yellow">
+        <div class="card-body text-center">
+          <div class="circle">
+            <img
+              class="rounded-circle"
+              src="../assets/images/sm/avatar5.jpg"
+              alt=""
+            />
+          </div>
+          <h6 class="mt-3 mb-0">
+            {{ selectedItem?.firstName }} {{ selectedItem?.lastName }}
+          </h6>
+          <span>{{ selectedItem?.departement }}</span>
+          <span>{{ selectedItem?.status }}</span>
+          <ul class="mt-3 list-unstyled d-flex justify-content-center">
+            <li>
+              <a class="p-3" target="_blank" href="#"
+                ><i class="fa fa-facebook"></i
+              ></a>
+            </li>
+            <li>
+              <a class="p-3" target="_blank" href="#"
+                ><i class="fa fa-slack"></i
+              ></a>
+            </li>
+            <li>
+              <a class="p-3" target="_blank" href="#"
+                ><i class="fa fa-linkedin"></i
+              ></a>
+            </li>
+          </ul>
+          <div class="row">
+            <div class="col-md-6">
+              Check In :
+              <a class="text-muted mb-0">{{ selectedItem?.checkIn }}</a>
+            </div>
+            <div class="col-md-6">
+              Status :
+              <p class="text-muted mb-0">
+                {{ selectedItem?.status }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dialog>
+
+  <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
