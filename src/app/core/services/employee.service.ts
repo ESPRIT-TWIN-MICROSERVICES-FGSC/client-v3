@@ -23,6 +23,14 @@ export class EmployeeService {
     );
   }
 
+  getEmployeeById(id:string) {
+    return this.http.get<Employee>(this.baseUrl + '/employee/'+id).pipe(
+      map((res) => {
+        return res;
+      })
+    );
+  }
+
   addEmployee(values: any) {
     return this.http
       .post(this.baseUrl + '/add', values)

@@ -130,6 +130,22 @@
     <ng-template pTemplate="content">
       <form [formGroup]="itemsFormGroup">
         <div class="row">
+          <div class="col-md-12 mt-4 mb-4 ">
+            <p-dropdown (onChange)="onSelectedEmployee($event)" [options]="employeeList" [(ngModel)]="selectedEmployee" optionLabel="fullName" [filter]="true" filterBy="fullName"
+            [showClear]="true" placeholder="Select an employee">
+            <ng-template pTemplate="selectedItem">
+                <div class="country-item country-item-value" *ngIf="selectedEmployee">
+                    <div>{{selectedEmployee.fullName}}</div>
+                </div>
+            </ng-template>
+            <ng-template let-country pTemplate="item">
+                <div class="country-item">
+                    <div>{{country.fullName}}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+          </div>
+
           <div class="col-md-6 mb-4">
             <input
               type="text"
@@ -140,11 +156,13 @@
                 'is-invalid': checkFormValidationFirstName(),
                 'is-valid': itemsFormGroup.get('firstName').valid
               }"
+              disabled
             />
             <div class="invalid-feedback invalid-feedback-position">
               First Name is required
             </div>
           </div>
+
           <div class="col-md-6 mb-4">
             <input
               type="text"
@@ -155,6 +173,7 @@
                 'is-invalid': checkFormValidationLastName(),
                 'is-valid': itemsFormGroup.get('lastName').valid
               }"
+              disabled
             />
             <div class="invalid-feedback invalid-feedback-position">
               Last Name is required

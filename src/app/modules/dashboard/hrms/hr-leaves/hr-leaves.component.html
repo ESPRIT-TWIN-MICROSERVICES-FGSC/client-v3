@@ -111,13 +111,40 @@
   <p-dialog
     [(visible)]="itemAddDialog"
     [style]="{ width: '450px' }"
-    header="Add  a client"
+    header="Add  Leave"
     [modal]="true"
     styleClass="p-fluid"
   >
     <ng-template pTemplate="content">
       <form [formGroup]="itemsFormGroup">
         <div class="row">
+          <div class="col-md-12 mt-4 mb-4 ">
+            <p-dropdown (onChange)="onSelectedEmployee($event)" [options]="employeeList" [(ngModel)]="selectedEmployee" optionLabel="fullName" [filter]="true" filterBy="fullName"
+            [showClear]="true" placeholder="Select an employee">
+            <ng-template pTemplate="selectedItem">
+                <div class="country-item country-item-value" *ngIf="selectedEmployee">
+                    <div>{{selectedEmployee.fullName}}</div>
+                </div>
+            </ng-template>
+            <ng-template let-country pTemplate="item">
+                <div class="country-item">
+                    <div>{{country.fullName}}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Employee Id"
+              formControlName="employeId"
+              [ngClass]="{
+                'is-valid': itemsFormGroup.get('employeId').valid
+              }"
+              disabled
+            />
+          </div>
           <div class="col-md-6 mb-4">
             <input
               type="text"
@@ -196,6 +223,33 @@
     <ng-template pTemplate="content">
       <form [formGroup]="itemsFormGroup">
         <div class="row">
+          <div class="col-md-12 mt-4 mb-4 ">
+            <p-dropdown (onChange)="onSelectedEmployee($event)" [options]="employeeList" [(ngModel)]="selectedEmployee" optionLabel="fullName" [filter]="true" filterBy="fullName"
+            [showClear]="true" placeholder="Select an employee">
+            <ng-template pTemplate="selectedItem">
+                <div class="country-item country-item-value" *ngIf="selectedEmployee">
+                    <div>{{selectedEmployee.fullName}}</div>
+                </div>
+            </ng-template>
+            <ng-template let-country pTemplate="item">
+                <div class="country-item">
+                    <div>{{country.fullName}}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+          </div>
+          <div class="col-md-6 mb-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Employee Id"
+              formControlName="employeId"
+              [ngClass]="{
+                'is-valid': itemsFormGroup.get('employeId').valid
+              }"
+              disabled
+            />
+          </div>
           <div class="col-md-6 mb-4">
             <input
               type="text"

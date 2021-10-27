@@ -5,6 +5,7 @@ import { LeaveService } from 'src/app/core/services/leave.service';
 import { Leave } from '@shared/_models/Leave';
 
 import 'jspdf-autotable';
+import { EmployeeService } from '@app/core/services/employee.service';
 
 declare var jsPDF: any;
 
@@ -30,16 +31,20 @@ export class HrLeavesComponent implements OnInit {
 
   submitted: boolean;
   itemsFormGroup: FormGroup;
+  employeeList:any[]=[]
+  selectedEmployee:any;
 
   constructor(
     private leaveService: LeaveService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private employeeService: EmployeeService
   ) {}
 
   ngOnInit(): void {
     this.getAllLeaves();
+    this.getAllEmployees();
     this.leaveService.triggerLeaveRefresh$.subscribe(() => {
       this.getAllLeaves();
     });
@@ -60,9 +65,30 @@ export class HrLeavesComponent implements OnInit {
 
   getAllLeaves() {
     this.leaveService.getAllLeaves().subscribe((res) => {
-      this.items = res;
+      res.map(r=>{
+        this.items = res;
+      })
+
       console.log(res);
     });
+  }
+  getAllEmployees() {
+    this.employeeService.getAllEmployees().subscribe((res) => {
+      res.map((r) =>
+        this.employeeList.push({ id:r.id ,fullName:r.firstName+" "+r.lastName})
+
+      );
+    });
+  }
+  getEmployeeById(id:string) {
+    this.employeeService.getEmployeeById(id).subscribe((res) => {
+     console.log(res)
+    });
+  }
+  onSelectedEmployee(event){
+    this.itemsFormGroup?.get("employeId")?.patchValue(event.value.id);
+
+
   }
 
   openNew() {
@@ -97,6 +123,7 @@ export class HrLeavesComponent implements OnInit {
 
   createLeaveForm() {
     this.itemsFormGroup = this.fb.group({
+      employeId: [null, Validators.required],
       start_date: [null, Validators.required],
       end_date: [null, Validators.required],
       type: [null, Validators.required],

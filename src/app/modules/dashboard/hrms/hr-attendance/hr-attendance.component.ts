@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { EmployeeService } from "@app/core/services/employee.service";
 import { Attendance } from "@app/shared/_models/Attendance";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { AttendanceService } from "src/app/core/services/attendance.service";
@@ -26,16 +27,20 @@ export class HrAttendanceComponent implements OnInit {
 
   submitted: boolean;
   itemsFormGroup: FormGroup;
+  employeeList: any[] = [];
+  selectedEmployee:any;
 
   constructor(
     private attendanceService: AttendanceService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private employeeService: EmployeeService
   ) {}
 
   ngOnInit(): void {
     this.getAllAttendances();
+    this.getAllEmployees();
     this.attendanceService.triggerAttendanceRefresh$.subscribe(() => {
       this.getAllAttendances();
     });
@@ -58,6 +63,19 @@ export class HrAttendanceComponent implements OnInit {
     this.attendanceService.getAllAttendances().subscribe((res) => {
       this.items = res;
     });
+  }
+  getAllEmployees() {
+    this.employeeService.getAllEmployees().subscribe((res) => {
+      res.map((r) =>
+        this.employeeList.push({ firstName: r.firstName, lastName: r.lastName ,fullName:r.firstName+" "+r.lastName})
+      );
+    });
+  }
+
+  onSelectedEmployee(event){
+    this.itemsFormGroup?.get("firstName")?.patchValue(event.value.firstName);
+    this.itemsFormGroup?.get("lastName")?.patchValue(event.value.lastName);
+
   }
 
   openNew() {
