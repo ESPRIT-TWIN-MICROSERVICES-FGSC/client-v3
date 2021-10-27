@@ -6,6 +6,7 @@ export const environment = {
   //
   //
   production: false,
+
   authGateway: 'http://localhost:8070/',
   clientUrl: 'http://localhost:4200',
   gateway: 'https://fgsc-gateway.herokuapp.com/api/',
@@ -15,6 +16,8 @@ export const environment = {
   employeeMicroservice: 'https://employee-microservices.herokuapp.com/',
   JobMicroservice: 'https://job-microservices.herokuapp.com/',
   projectMicroservice: 'https://projet-microservice.herokuapp.com/',
+  attendanceMicroservice: 'https://attendance-microservices.herokuapp.com',
+  departementMicroservice: '  https://depratement.herokuapp.com/departements',
 };
 
 /*

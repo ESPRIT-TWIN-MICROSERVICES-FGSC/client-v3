@@ -3,7 +3,7 @@
     <div class="hleft">
       <a
         class="header-brand"
-        [routerLink]="['/dashboard/hr']"
+        [routerLink]="['/dashboard']"
         href="javascript:void(0)"
         ><i class="fe fe-command brand-logo"></i
       ></a>
@@ -502,9 +502,7 @@
         <li class="list-group-item mb-2">
           <p>Horizontal Version</p>
           <a href="../horizontal/index.html"
-            ><img
-              src="assets/images/themes/horizontal.png"
-              class="img-fluid"
+            ><img src="assets/images/themes/horizontal.png" class="img-fluid"
           /></a>
         </li>
       </ul>
@@ -893,10 +891,7 @@
             [routerLinkActive]="['active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a
-              class="submenu"
-              [routerLink]="['jobs']"
-              href="javascript:void(0)"
+            <a class="submenu" [routerLink]="['jobs']" href="javascript:void(0)"
               ><span>Jobs</span></a
             >
           </li>
@@ -909,6 +904,17 @@
               [routerLink]="['leaves']"
               href="javascript:void(0)"
               ><span>Leaves</span></a
+            >
+          </li>
+          <li
+            [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a
+              class="submenu"
+              [routerLink]="['attendance']"
+              href="javascript:void(0)"
+              ><span>Attendance</span></a
             >
           </li>
           <li
@@ -990,273 +996,8 @@
           </li>
         </ul>
       </li>
-      <li
-        [routerLinkActive]="['active']"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <a
-          href="javascript:void(0)"
-          (click)="isProjectCollapsed = !isProjectCollapsed"
-          [attr.aria-expanded]="!isProjectCollapsed"
-          aria-controls="ProjectCollapsed"
-          class="has-arrow arrow-c"
-          ><i class="icon-cup"></i><span>Project</span></a
-        >
-        <ul
-          class="collapse"
-          id="ProjectCollapsed"
-          [collapse]="isProjectCollapsed"
-          [isAnimated]="true"
-        >
-          <li
-            [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a
-              class="submenu"
-              [routerLink]="['project-dashboard']"
-              href="javascript:void(0)"
-              >Dashboard</a
-            >
-          </li>
-          <li
-            [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a
-              class="submenu"
-              [routerLink]="['project-list']"
-              href="javascript:void(0)"
-              >Project list</a
-            >
-          </li>
-          <li
-            [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a
-              class="submenu"
-              [routerLink]="['project-taskboard']"
-              href="javascript:void(0)"
-              >Taskboard</a
-            >
-          </li>
-          <li
-            [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a
-              class="submenu"
-              [routerLink]="['project-ticketlist']"
-              href="javascript:void(0)"
-              >Ticket List</a
-            >
-          </li>
-          <li
-            [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a
-              class="submenu"
-              [routerLink]="['project-ticketdetails']"
-              href="javascript:void(0)"
-              >Ticket Details</a
-            >
-          </li>
-          <li
-            [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a
-              class="submenu"
-              [routerLink]="['project-clients']"
-              href="javascript:void(0)"
-              >Clients</a
-            >
-          </li>
-          <li
-            [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a
-              class="submenu"
-              [routerLink]="['project-todo-list']"
-              href="javascript:void(0)"
-              >Todo List</a
-            >
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a
-          href="javascript:void(0)"
-          (click)="isJobportalCollapsed = !isJobportalCollapsed"
-          [attr.aria-expanded]="!isJobportalCollapsed"
-          aria-controls="JobCollapsed"
-          class="has-arrow arrow-c"
-          ><i class="icon-briefcase"></i><span>Job Portal</span></a
-        >
-        <ul
-          class="submenu"
-          class="collapse"
-          id="JobCollapsed"
-          [collapse]="isJobportalCollapsed"
-          [isAnimated]="true"
-        >
-          <li
-            [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a
-              class="submenu"
-              [routerLink]="['jobportal-job-dashboard']"
-              href="javascript:void(0)"
-              ><span>Job Dashboard</span></a
-            >
-          </li>
-          <li
-            [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a
-              class="submenu"
-              [routerLink]="['jobportal-positions']"
-              href="javascript:void(0)"
-              ><span>Positions</span></a
-            >
-          </li>
-          <li
-            [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a
-              class="submenu"
-              [routerLink]="['jobportal-applicants']"
-              href="javascript:void(0)"
-              ><span>Applicants</span></a
-            >
-          </li>
-          <li
-            [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a
-              class="submenu"
-              [routerLink]="['jobportal-resumes']"
-              href="javascript:void(0)"
-              ><span>Resumes</span></a
-            >
-          </li>
-          <li
-            [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a
-              class="submenu"
-              [routerLink]="['jobportal-settings']"
-              href="javascript:void(0)"
-              ><span>Settings</span></a
-            >
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a
-          href="javascript:void(0)"
-          (click)="isAuthCollapsed = !isAuthCollapsed"
-          [attr.aria-expanded]="!isAuthCollapsed"
-          aria-controls="AuthCollapsed"
-          class="has-arrow arrow-c"
-          ><i class="icon-lock"></i><span>Authentication</span></a
-        >
-        <ul
-          class="submenu"
-          class="collapse"
-          id="AuthCollapsed"
-          [collapse]="isAuthCollapsed"
-          [isAnimated]="true"
-        >
-          <li
-            [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a
-              class="submenu"
-              [routerLink]="['/login']"
-              href="javascript:void(0)"
-              >Login</a
-            >
-          </li>
-          <li
-            [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a
-              class="submenu"
-              [routerLink]="['/forgot-password']"
-              href="javascript:void(0)"
-              >Forgot password</a
-            >
-          </li>
-        </ul>
-      </li>
-      <li class="g_heading">UI Elements</li>
-      <li
-        [routerLinkActive]="['active']"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <a [routerLink]="['/icon-fontawesome']" href="javascript:void(0)"
-          ><i class="icon-tag"></i><span>Icons</span></a
-        >
-      </li>
-      <li
-        [routerLinkActive]="['active']"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <a [routerLink]="['/charts']" href="javascript:void(0)"
-          ><i class="icon-bar-chart"></i><span>Charts</span></a
-        >
-      </li>
-      <li
-        [routerLinkActive]="['active']"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <a [routerLink]="['/formelement']" href="javascript:void(0)"
-          ><i class="icon-layers"></i><span>Forms</span></a
-        >
-      </li>
-      <li
-        [routerLinkActive]="['active']"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <a [routerLink]="['/table']" href="javascript:void(0)"
-          ><i class="icon-tag"></i><span>Tables</span></a
-        >
-      </li>
-      <li
-        [routerLinkActive]="['active']"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <a [routerLink]="['/widgets']" href="javascript:void(0)"
-          ><i class="icon-puzzle"></i><span>Widgets</span></a
-        >
-      </li>
-      <li
-        [routerLinkActive]="['active']"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <a [routerLink]="['/map']" href="javascript:void(0)"
-          ><i class="icon-map"></i><span>Maps</span></a
-        >
-      </li>
-      <li
-        [routerLinkActive]="['active']"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <a [routerLink]="['/gallery']" href="javascript:void(0)"
-          ><i class="icon-picture"></i><span>Gallery</span></a
-        >
-      </li>
+
+
     </ul>
   </nav>
 </div>

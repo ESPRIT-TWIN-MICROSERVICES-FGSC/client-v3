@@ -133,6 +133,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSortModule} from '@angular/material/sort';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import { HrAttendanceComponent } from './hrms/hr-attendance/hr-attendance.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -281,6 +282,7 @@ FullCalendarModule.registerPlugins([
     HrJobsComponent,
     HrProjectsComponent,
     DashboardNavigationComponent,
+    HrAttendanceComponent,
   ],
   providers: [BsDatepickerModule, ConfirmationService, MessageService, NotificationService, RSocketService, UsersService
   ],

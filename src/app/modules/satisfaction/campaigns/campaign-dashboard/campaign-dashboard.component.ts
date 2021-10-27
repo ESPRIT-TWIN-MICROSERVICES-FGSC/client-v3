@@ -163,8 +163,8 @@ export class ConfirmDeleteCampaignDialogComponent {
   campaign: Campaign;
 
   constructor(
-      public dialogRef: MatDialogRef<ConfirmDeleteCampaignDialogComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: Campaign, private compagneService: CampaignService, private snackBar: MatSnackBar) {
+    public dialogRef: MatDialogRef<ConfirmDeleteCampaignDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Campaign, private compagneService: CampaignService, private snackBar: MatSnackBar) {
     this.campaign = data;
   }
 
