@@ -16,7 +16,7 @@ export class ProjectService {
   constructor(private http: HttpClient) {}
 
   getAllProjects() {
-    return this.http.get<Projects[]>(this.baseUrl).pipe(
+    return this.http.get<Projects[]>(this.baseUrl+ '/projets').pipe(
       map((res) => {
         return res;
       })
