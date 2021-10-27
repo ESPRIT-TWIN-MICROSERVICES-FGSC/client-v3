@@ -2,7 +2,7 @@ import { Component, Input, OnInit} from '@angular/core';
 import { Subject } from 'rxjs';
 import { options } from './options';
 import {ActivatedRoute, Router} from '@angular/router';
-import { CompagneService } from '../../shared/_service/compagne.service';
+import { CampaignService } from '../../shared/_service/campaign.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {AbstractControl, FormControl, FormGroup} from '@angular/forms';
 import {Campaign} from '@satisfaction/shared/_models/Campaign';
@@ -17,7 +17,7 @@ export class SurveyBuilderComponent implements  OnInit {
   // TODO : ADD Output
   // TODO : ADD DELETE HANDLE
   @Input() compagne: Campaign;
-  id: number;
+  id: string;
   public options: any;
   public language = 'fr';
   public rebuildEmitter: Subject<object> = new Subject<object>();
@@ -27,7 +27,7 @@ export class SurveyBuilderComponent implements  OnInit {
   });
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private campaignService: CompagneService,
+              private campaignService: CampaignService,
               private snackBar: MatSnackBar,
               private authService: AuthService) {
     this.options = options;

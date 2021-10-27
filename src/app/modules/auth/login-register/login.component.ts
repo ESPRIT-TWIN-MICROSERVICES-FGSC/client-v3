@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CarouselConfig} from 'ngx-bootstrap/carousel';
 import {AuthService} from '@app/modules/auth/shared/_services/auth.service';
 import {EnterTriggerAnimation, SimpleFadeAnimation} from '@animations/animations';
@@ -20,7 +20,7 @@ import {ActivatedRoute, Router} from '@angular/router';
     {provide: CarouselConfig, useValue: {interval: 3000, noPause: true, showIndicators: false}}
   ]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   public CCS = CurrentComponentState;
   toggleForms = CurrentComponentState.LOGIN;
   registerError: string;
@@ -87,17 +87,14 @@ export class LoginComponent implements OnInit {
         async isLogged => {
           isLogged.subscribe(() => {
             this.isVisible = false;
+            Swal.fire('Logged in, redirecting.').then(() => undefined);
+            Swal.getActions().remove();
+            console.log(this.returnUrl ?? '../dashboard');
             setTimeout(() => this.router.navigate([this.returnUrl ?? '../dashboard']).then(() => {
               if (Swal.isVisible()){
                 Swal.close();
               }
             }), 2000);
-            Swal.fire('Logged in, redirecting.').then(result => {
-              if (result.isDismissed){
-                this.isVisible = true;
-              }
-            });
-            Swal.getActions().remove();
           });
         },
         error => {
@@ -127,6 +124,10 @@ export class LoginComponent implements OnInit {
         setTimeout(() => this.registerError = undefined, 3500);
       })
       .add(() => this.isLoading = false);
+  }
+
+  ngOnDestroy(): void {
+
   }
 }
 

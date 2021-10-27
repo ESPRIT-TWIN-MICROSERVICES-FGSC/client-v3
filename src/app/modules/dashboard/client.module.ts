@@ -132,6 +132,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSortModule} from '@angular/material/sort';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -161,6 +162,7 @@ FullCalendarModule.registerPlugins([
     NgApexchartsModule,
     NgMultiSelectDropDownModule.forRoot(),
     CountToModule,
+    MatBottomSheetModule,
     ToastrModule.forRoot({}),
     CalendarModule.forRoot({
       provide: DateAdapter,
@@ -174,7 +176,7 @@ FullCalendarModule.registerPlugins([
       connectMappingData: JSON.parse(localStorage.getItem('currentUser'))?.id,
       builderCustomizer: builder => {
         if (JSON.parse(localStorage.getItem('currentUser'))?.id) {
-          builder.automaticReconnect(4000);
+          builder.automaticReconnect(0);
         }
       }
     }),

@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {CompagneService} from '@satisfaction/shared/_service/compagne.service';
+import {CampaignService} from '@satisfaction/shared/_service/campaign.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {ChartDataSets, ChartOptions} from 'chart.js';
@@ -14,7 +14,7 @@ import {Label} from 'ng2-charts';
 })
 export class CampaignDashboardComponent implements OnInit, AfterViewInit {
   constructor(private route: ActivatedRoute,
-              private campaignService: CompagneService,
+              private campaignService: CampaignService,
               public dialog: MatDialog) {
   }
 
@@ -163,8 +163,8 @@ export class ConfirmDeleteCampaignDialogComponent {
   campaign: Campaign;
 
   constructor(
-    public dialogRef: MatDialogRef<ConfirmDeleteCampaignDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Campaign, private compagneService: CompagneService, private snackBar: MatSnackBar) {
+      public dialogRef: MatDialogRef<ConfirmDeleteCampaignDialogComponent>,
+      @Inject(MAT_DIALOG_DATA) public data: Campaign, private compagneService: CampaignService, private snackBar: MatSnackBar) {
     this.campaign = data;
   }
 

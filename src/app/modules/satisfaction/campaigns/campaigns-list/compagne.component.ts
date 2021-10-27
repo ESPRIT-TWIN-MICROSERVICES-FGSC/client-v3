@@ -6,7 +6,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {Campaign} from '@satisfaction/shared/_models/Campaign';
-import {CompagneService} from '@satisfaction/shared/_service/compagne.service';
+import {CampaignService} from '@satisfaction/shared/_service/campaign.service';
 import {debounceTime} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
 
@@ -25,7 +25,7 @@ export class CompagneComponent implements OnInit, AfterViewInit {
   pagedCampaigns = [];
   searchControl: FormControl = new FormControl('');
 
-  constructor(private campaignService: CompagneService,
+  constructor(private campaignService: CampaignService,
               private snackBar: MatSnackBar,
               public dialog: MatDialog,
               private router: Router) {
@@ -73,10 +73,6 @@ export class CompagneComponent implements OnInit, AfterViewInit {
     if (this.dataSource.data.length < 3) {
       this.page();
     }
-  }
-
-  openDeleteDialog($row: any): void {
-
   }
 
   redirectToEdit(campaignId: number): void {

@@ -12,7 +12,7 @@ export class UsersService {
 
   }
   public fetchPaginatedUsers(page: number, size: number, name: string): Observable<User[]> {
-      return this.httpClient.get<User[]>(`http://localhost:8080/api/auth/users/paginated?page=${page}&size=${size}&name=${name}`);
+      return this.httpClient.get<User[]>(`${environment.gateway}auth/users/paginated?page=${page}&size=${size}&name=${name}`);
   }
   getUserById(id: string){
     return this.httpClient.get<User>(`${environment.gateway}auth/users/?id=${id}`);

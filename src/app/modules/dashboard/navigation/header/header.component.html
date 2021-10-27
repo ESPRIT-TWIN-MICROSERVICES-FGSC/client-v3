@@ -21,14 +21,14 @@
                         <div class="dropdown-menu" id="dropdown-basic" *dropdownMenu role="menu"
                             aria-labelledby="button-basic">
                             <a class="dropdown-item" href="#"><img class="w20 mr-2"
-                                    src="../../../../../assets/images/flags/us.svg">English</a>
+                                    src="assets/images/flags/us.svg">English</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#"><img class="w20 mr-2"
-                                    src="../../../../../assets/images/flags/es.svg">Spanish</a>
+                                    src="assets/images/flags/es.svg">Spanish</a>
                             <a class="dropdown-item" href="#"><img class="w20 mr-2"
-                                    src="../../../../../assets/images/flags/jp.svg">japanese</a>
+                                    src="assets/images/flags/jp.svg">japanese</a>
                             <a class="dropdown-item" href="#"><img class="w20 mr-2"
-                                    src="../../../../../assets/images/flags/bl.svg">France</a>
+                                    src="assets/images/flags/bl.svg">France</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown" dropdown>
@@ -73,7 +73,7 @@
                                 <li class="online">
                                     <a href="javascript:void(0);">
                                         <div class="media">
-                                            <img class="media-object " src="../../../../../assets/images/xs/avatar4.jpg" alt="">
+                                            <img class="media-object " src="assets/images/xs/avatar4.jpg" alt="">
                                             <div class="media-body">
                                                 <span class="name">Donald Gardner</span>
                                                 <span class="message">Designer, Blogger</span>
@@ -85,7 +85,7 @@
                                 <li class="online">
                                     <a href="javascript:void(0);">
                                         <div class="media">
-                                            <img class="media-object " src="../../../../../assets/images/xs/avatar5.jpg" alt="">
+                                            <img class="media-object " src="assets/images/xs/avatar5.jpg" alt="">
                                             <div class="media-body">
                                                 <span class="name">Wendy Keen</span>
                                                 <span class="message">Java Developer</span>
@@ -97,7 +97,7 @@
                                 <li class="offline">
                                     <a href="javascript:void(0);">
                                         <div class="media">
-                                            <img class="media-object " src="../../../../../assets/images/xs/avatar2.jpg" alt="">
+                                            <img class="media-object " src="assets/images/xs/avatar2.jpg" alt="">
                                             <div class="media-body">
                                                 <span class="name">Matt Rosales</span>
                                                 <span class="message">CEO, Epic Theme</span>
@@ -109,7 +109,7 @@
                                 <li class="online">
                                     <a href="javascript:void(0);">
                                         <div class="media">
-                                            <img class="media-object " src="../../../../../assets/images/xs/avatar3.jpg" alt="">
+                                            <img class="media-object " src="assets/images/xs/avatar3.jpg" alt="">
                                             <div class="media-body">
                                                 <span class="name">Phillip Smith</span>
                                                 <span class="message">Writter, Mag Editor</span>
@@ -128,7 +128,7 @@
                         <a class="nav-link icon d-none d-md-flex btn btn-default btn-icon ml-1"
                             href="javascript:void(0);" data-toggle="dropdown" role="button" aria-haspopup="true"
                             aria-expanded="false" id="button-basic" dropdownToggle aria-controls="dropdown-basic"
-                            style="color: #fff;box-shadow: none;"><i class="fa fa-bell"></i><span
+                            style="color: #fff;box-shadow: none;"><i class="fa fa-bell"></i>{{ns.notificationCount | async}}<span
                                 class="badge badge-primary nav-unread"></span></a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" id="dropdown-basic"
                             *dropdownMenu role="menu" aria-labelledby="button-basic">
@@ -144,7 +144,7 @@
                                 </li>
                             </ul>
                           <div
-                            *ngIf="ns.connectionStatus.kind === 'ERROR' || ns.connectionStatus.kind === 'CLOSED' || ns.connectionStatus.kind === 'NOT_CONNECTED'">
+                            *ngIf="(ns.connectionStatus | async ).kind === 'ERROR' || (ns.connectionStatus | async ).kind === 'CLOSED' || (ns.connectionStatus | async ).kind === 'NOT_CONNECTED'">
                             Could not reach notification end point, make sure you are online 🤷‍♂️
                           </div>
                             <div class="dropdown-divider"></div>
@@ -153,8 +153,8 @@
                             <mat-icon>more</mat-icon>
                             <span>Load more</span>
                           </button>
-                            <a  class="dropdown-item text-center text-muted-dark readall">Mark
-                                all as read</a>
+                            <button  class="dropdown-item text-center text-muted-dark readall" (click)="deleteAll()">Mark
+                                all as read</button>
                         </div>
                     </div>
                     <div class="dropdown d-flex" dropdown>
