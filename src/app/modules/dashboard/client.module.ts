@@ -135,6 +135,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { HrAttendanceComponent } from './hrms/hr-attendance/hr-attendance.component';
 import { CalendarModule } from 'primeng/calendar';
+import { HrTodoComponent } from './hrms/hr-todo/hr-todo.component';
 
 
 // FullCalendarModule.registerPlugins([
@@ -286,6 +287,7 @@ import { CalendarModule } from 'primeng/calendar';
     HrProjectsComponent,
     DashboardNavigationComponent,
     HrAttendanceComponent,
+    HrTodoComponent,
   ],
   providers: [BsDatepickerModule, ConfirmationService, MessageService, NotificationService, RSocketService, UsersService
   ],

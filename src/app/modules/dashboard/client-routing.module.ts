@@ -1,285 +1,296 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
 
-import {TablesComponent} from '@app/modules/dashboard/components/ui-elements/tables/tables.component';
-import {PrClientsComponent} from '@app/modules/dashboard/components/project/pr-clients/pr-clients.component';
-import {ProjectComponent} from '@app/modules/dashboard/components/project/project.component';
-import {ChatComponent} from '@app/modules/dashboard/components/chat/chat.component';
-import {JobportalApplicantsComponent} from '@app/modules/dashboard/components/job-portal/jobportal-applicants/jobportal-applicants.component';
-import {ProfileComponent} from '@app/modules/dashboard/components/profile/profile.component';
-import {WStaticsComponent} from '@app/modules/dashboard/components/widgets/w-statics/w-statics.component';
-import {PrTicketlistComponent} from '@app/modules/dashboard/components/project/pr-ticketlist/pr-ticketlist.component';
-import {WidgetsComponent} from '@app/modules/dashboard/components/widgets/widgets.component';
-import {HrClientsComponent} from '@app/modules/dashboard/hrms/hr-clients/hr-clients.component';
-import {HrLeavesComponent} from '@app/modules/dashboard/hrms/hr-leaves/hr-leaves.component';
-import {HrEventsComponent} from '@app/modules/dashboard/hrms/hr-events/hr-events.component';
-import {HrHolidaysComponent} from '@app/modules/dashboard/hrms/hr-holidays/hr-holidays.component';
-import {IconFlagsComponent} from '@app/modules/dashboard/components/ui-elements/icons/icon-flags/icon-flags.component';
-import {FilemanagerComponent} from '@app/modules/dashboard/components/filemanager/filemanager.component';
-import {PrTicketdetailsComponent} from '@app/modules/dashboard/components/project/pr-ticketdetails/pr-ticketdetails.component';
-import {HrActivitiesComponent} from '@app/modules/dashboard/hrms/hr-activities/hr-activities.component';
-import {HrDashboardComponent} from '@app/modules/dashboard/hrms/hr-dashboard/hr-dashboard.component';
-import {CalenderComponent} from '@app/modules/dashboard/components/calender/calender.component';
-import {WDataComponent} from '@app/modules/dashboard/components/widgets/w-data/w-data.component';
-import {HrPayrollComponent} from '@app/modules/dashboard/hrms/hr-payroll/hr-payroll.component';
-import {WCardComponent} from '@app/modules/dashboard/components/widgets/w-card/w-card.component';
-import {WSocialComponent} from '@app/modules/dashboard/components/widgets/w-social/w-social.component';
-import {HrUsersComponent} from '@app/modules/dashboard/hrms/hr-users/hr-users.component';
-import {HrEmployeeComponent} from '@app/modules/dashboard/hrms/hr-employee/hr-employee.component';
-import {PrProjectlistComponent} from '@app/modules/dashboard/components/project/pr-projectlist/pr-projectlist.component';
-import {SearchComponent} from '@app/modules/dashboard/components/search/search.component';
-import {ContactsComponent} from '@app/modules/dashboard/components/contacts/contacts.component';
-import {PrDashboardComponent} from '@app/modules/dashboard/components/project/pr-dashboard/pr-dashboard.component';
-import {IconLinesComponent} from '@app/modules/dashboard/components/ui-elements/icons/icon-lines/icon-lines.component';
-import {MapsComponent} from '@app/modules/dashboard/components/maps/maps.component';
-import {PrTaskboardComponent} from '@app/modules/dashboard/components/project/pr-taskboard/pr-taskboard.component';
-import {PrTodolistComponent} from '@app/modules/dashboard/components/project/pr-todolist/pr-todolist.component';
-import {JobportalDashboardComponent} from '@app/modules/dashboard/components/job-portal/jobportal-dashboard/jobportal-dashboard.component';
-import {HrJobsComponent} from '@app/modules/dashboard/hrms/hr-jobs/hr-jobs.component';
-import {SettingsComponent} from '@app/modules/dashboard/components/settings/settings.component';
-import {IconPaymentsComponent} from '@app/modules/dashboard/components/ui-elements/icons/icon-payments/icon-payments.component';
-import {FormElementComponent} from '@app/modules/dashboard/components/form-element/form-element.component';
-import {HrReportComponent} from '@app/modules/dashboard/hrms/hr-report/hr-report.component';
-import {JobportalSettingsComponent} from '@app/modules/dashboard/components/job-portal/jobportal-settings/jobportal-settings.component';
-import {HrAccountsComponent} from '@app/modules/dashboard/hrms/hr-accounts/hr-accounts.component';
-import {IconFeatherComponent} from '@app/modules/dashboard/components/ui-elements/icons/icon-feather/icon-feather.component';
-import {JobportalPositionsComponent} from '@app/modules/dashboard/components/job-portal/jobportal-positions/jobportal-positions.component';
-import {ChartsComponent} from '@app/modules/dashboard/components/charts/charts.component';
-import {HrProjectsComponent} from '@app/modules/dashboard/hrms/hr-projects/hr-projects.component';
-import {HrDepartmentsComponent} from '@app/modules/dashboard/hrms/hr-departments/hr-departments.component';
-import {JobportalResumesComponent} from '@app/modules/dashboard/components/job-portal/jobportal-resumes/jobportal-resumes.component';
-import {JobPortalComponent} from '@app/modules/dashboard/components/job-portal/job-portal.component';
-import {WOtherComponent} from '@app/modules/dashboard/components/widgets/w-other/w-other.component';
-import {IconFontawesomeComponent} from '@app/modules/dashboard/components/ui-elements/icons/icon-fontawesome/icon-fontawesome.component';
-import {GalleryComponent} from '@app/modules/dashboard/components/ui-elements/gallery/gallery.component';
+import { TablesComponent } from "@app/modules/dashboard/components/ui-elements/tables/tables.component";
+import { PrClientsComponent } from "@app/modules/dashboard/components/project/pr-clients/pr-clients.component";
+import { ProjectComponent } from "@app/modules/dashboard/components/project/project.component";
+import { ChatComponent } from "@app/modules/dashboard/components/chat/chat.component";
+import { JobportalApplicantsComponent } from "@app/modules/dashboard/components/job-portal/jobportal-applicants/jobportal-applicants.component";
+import { ProfileComponent } from "@app/modules/dashboard/components/profile/profile.component";
+import { WStaticsComponent } from "@app/modules/dashboard/components/widgets/w-statics/w-statics.component";
+import { PrTicketlistComponent } from "@app/modules/dashboard/components/project/pr-ticketlist/pr-ticketlist.component";
+import { WidgetsComponent } from "@app/modules/dashboard/components/widgets/widgets.component";
+import { HrClientsComponent } from "@app/modules/dashboard/hrms/hr-clients/hr-clients.component";
+import { HrLeavesComponent } from "@app/modules/dashboard/hrms/hr-leaves/hr-leaves.component";
+import { HrEventsComponent } from "@app/modules/dashboard/hrms/hr-events/hr-events.component";
+import { HrHolidaysComponent } from "@app/modules/dashboard/hrms/hr-holidays/hr-holidays.component";
+import { IconFlagsComponent } from "@app/modules/dashboard/components/ui-elements/icons/icon-flags/icon-flags.component";
+import { FilemanagerComponent } from "@app/modules/dashboard/components/filemanager/filemanager.component";
+import { PrTicketdetailsComponent } from "@app/modules/dashboard/components/project/pr-ticketdetails/pr-ticketdetails.component";
+import { HrActivitiesComponent } from "@app/modules/dashboard/hrms/hr-activities/hr-activities.component";
+import { HrDashboardComponent } from "@app/modules/dashboard/hrms/hr-dashboard/hr-dashboard.component";
+import { CalenderComponent } from "@app/modules/dashboard/components/calender/calender.component";
+import { WDataComponent } from "@app/modules/dashboard/components/widgets/w-data/w-data.component";
+import { HrPayrollComponent } from "@app/modules/dashboard/hrms/hr-payroll/hr-payroll.component";
+import { WCardComponent } from "@app/modules/dashboard/components/widgets/w-card/w-card.component";
+import { WSocialComponent } from "@app/modules/dashboard/components/widgets/w-social/w-social.component";
+import { HrUsersComponent } from "@app/modules/dashboard/hrms/hr-users/hr-users.component";
+import { HrEmployeeComponent } from "@app/modules/dashboard/hrms/hr-employee/hr-employee.component";
+import { PrProjectlistComponent } from "@app/modules/dashboard/components/project/pr-projectlist/pr-projectlist.component";
+import { SearchComponent } from "@app/modules/dashboard/components/search/search.component";
+import { ContactsComponent } from "@app/modules/dashboard/components/contacts/contacts.component";
+import { PrDashboardComponent } from "@app/modules/dashboard/components/project/pr-dashboard/pr-dashboard.component";
+import { IconLinesComponent } from "@app/modules/dashboard/components/ui-elements/icons/icon-lines/icon-lines.component";
+import { MapsComponent } from "@app/modules/dashboard/components/maps/maps.component";
+import { PrTaskboardComponent } from "@app/modules/dashboard/components/project/pr-taskboard/pr-taskboard.component";
+import { PrTodolistComponent } from "@app/modules/dashboard/components/project/pr-todolist/pr-todolist.component";
+import { JobportalDashboardComponent } from "@app/modules/dashboard/components/job-portal/jobportal-dashboard/jobportal-dashboard.component";
+import { HrJobsComponent } from "@app/modules/dashboard/hrms/hr-jobs/hr-jobs.component";
+import { SettingsComponent } from "@app/modules/dashboard/components/settings/settings.component";
+import { IconPaymentsComponent } from "@app/modules/dashboard/components/ui-elements/icons/icon-payments/icon-payments.component";
+import { FormElementComponent } from "@app/modules/dashboard/components/form-element/form-element.component";
+import { HrReportComponent } from "@app/modules/dashboard/hrms/hr-report/hr-report.component";
+import { JobportalSettingsComponent } from "@app/modules/dashboard/components/job-portal/jobportal-settings/jobportal-settings.component";
+import { HrAccountsComponent } from "@app/modules/dashboard/hrms/hr-accounts/hr-accounts.component";
+import { IconFeatherComponent } from "@app/modules/dashboard/components/ui-elements/icons/icon-feather/icon-feather.component";
+import { JobportalPositionsComponent } from "@app/modules/dashboard/components/job-portal/jobportal-positions/jobportal-positions.component";
+import { ChartsComponent } from "@app/modules/dashboard/components/charts/charts.component";
+import { HrProjectsComponent } from "@app/modules/dashboard/hrms/hr-projects/hr-projects.component";
+import { HrDepartmentsComponent } from "@app/modules/dashboard/hrms/hr-departments/hr-departments.component";
+import { JobportalResumesComponent } from "@app/modules/dashboard/components/job-portal/jobportal-resumes/jobportal-resumes.component";
+import { JobPortalComponent } from "@app/modules/dashboard/components/job-portal/job-portal.component";
+import { WOtherComponent } from "@app/modules/dashboard/components/widgets/w-other/w-other.component";
+import { IconFontawesomeComponent } from "@app/modules/dashboard/components/ui-elements/icons/icon-fontawesome/icon-fontawesome.component";
+import { GalleryComponent } from "@app/modules/dashboard/components/ui-elements/gallery/gallery.component";
 
-import {ErrorPageComponent} from '@shared/components/error-page/error-page.component';
-import {DashboardNavigationComponent} from '@dashboard/navigation/dashboard-navigation.component';
-import { HrAttendanceComponent } from './hrms/hr-attendance/hr-attendance.component';
+import { ErrorPageComponent } from "@shared/components/error-page/error-page.component";
+import { DashboardNavigationComponent } from "@dashboard/navigation/dashboard-navigation.component";
+import { HrAttendanceComponent } from "./hrms/hr-attendance/hr-attendance.component";
+import { HrTodoComponent } from "./hrms/hr-todo/hr-todo.component";
 
 const routes: Routes = [
-  { path: '' , redirectTo: 'hr', pathMatch: 'full'},
+  { path: "", redirectTo: "hr", pathMatch: "full" },
   {
-    path: 'hr', component: DashboardNavigationComponent, children: [
+    path: "hr",
+    component: DashboardNavigationComponent,
+    children: [
       {
-        path: '',
+        path: "",
         component: HrDashboardComponent,
-        data: { animation: 'isLeft' }
+        data: { animation: "isLeft" },
       },
       {
-        path: 'users',
+        path: "users",
         component: HrUsersComponent,
-        data: { animation: 'isRight' }
+        data: { animation: "isRight" },
       },
       {
-        path: 'departments',
+        path: "departments",
         component: HrDepartmentsComponent,
       },
       {
-        path: 'employee',
+        path: "employee",
         component: HrEmployeeComponent,
       },
       {
-        path: 'clients',
+        path: "clients",
         component: HrClientsComponent,
       },
       {
-        path: 'projects',
+        path: "projects",
         component: HrProjectsComponent,
       },
       {
-        path: 'jobs',
+        path: "jobs",
         component: HrJobsComponent,
       },
       {
-        path: 'leaves',
+        path: "leaves",
         component: HrLeavesComponent,
       },
       {
-        path: 'attendance',
+        path: "attendance",
         component: HrAttendanceComponent,
       },
       {
-        path: 'activities',
+        path: "todo",
+        component: HrTodoComponent,
+      },
+      {
+        path: "activities",
         component: HrActivitiesComponent,
       },
       {
-        path: 'holidays',
+        path: "holidays",
         component: HrHolidaysComponent,
       },
       {
-        path: 'events',
+        path: "events",
         component: HrEventsComponent,
       },
       {
-        path: 'payroll',
+        path: "payroll",
         component: HrPayrollComponent,
       },
       {
-        path: 'accounts',
+        path: "accounts",
         component: HrAccountsComponent,
       },
       {
-        path: 'reports',
+        path: "reports",
         component: HrReportComponent,
       },
       {
-        path: 'search',
+        path: "search",
         component: SearchComponent,
       },
       {
-        path: 'calender',
+        path: "calender",
         component: CalenderComponent,
       },
       {
-        path: 'contacts',
+        path: "contacts",
         component: ContactsComponent,
       },
       {
-        path: 'chat',
+        path: "chat",
         component: ChatComponent,
       },
       {
-        path: 'filemanager',
+        path: "filemanager",
         component: FilemanagerComponent,
       },
       {
-        path: 'project',
+        path: "project",
         component: ProjectComponent,
       },
       {
-        path: 'project-dashboard',
+        path: "project-dashboard",
         component: PrDashboardComponent,
       },
       {
-        path: 'project-list',
+        path: "project-list",
         component: PrProjectlistComponent,
       },
       {
-        path: 'project-taskboard',
+        path: "project-taskboard",
         component: PrTaskboardComponent,
       },
       {
-        path: 'project-ticketlist',
+        path: "project-ticketlist",
         component: PrTicketlistComponent,
       },
       {
-        path: 'project-ticketdetails',
+        path: "project-ticketdetails",
         component: PrTicketdetailsComponent,
       },
       {
-        path: 'project-clients',
+        path: "project-clients",
         component: PrClientsComponent,
       },
       {
-        path: 'project-todo-list',
+        path: "project-todo-list",
         component: PrTodolistComponent,
       },
       {
-        path: 'jobportal',
+        path: "jobportal",
         component: JobPortalComponent,
       },
       {
-        path: 'jobportal-job-dashboard',
+        path: "jobportal-job-dashboard",
         component: JobportalDashboardComponent,
       },
       {
-        path: 'jobportal-positions',
+        path: "jobportal-positions",
         component: JobportalPositionsComponent,
       },
       {
-        path: 'jobportal-applicants',
+        path: "jobportal-applicants",
         component: JobportalApplicantsComponent,
       },
       {
-        path: 'jobportal-resumes',
+        path: "jobportal-resumes",
         component: JobportalResumesComponent,
       },
       {
-        path: 'jobportal-settings',
+        path: "jobportal-settings",
         component: JobportalSettingsComponent,
       },
       {
-        path: 'icon-fontawesome',
+        path: "icon-fontawesome",
         component: IconFontawesomeComponent,
       },
       {
-        path: 'icon-feather',
+        path: "icon-feather",
         component: IconFeatherComponent,
       },
       {
-        path: 'icon-lines',
+        path: "icon-lines",
         component: IconLinesComponent,
       },
       {
-        path: 'icon-flags',
+        path: "icon-flags",
         component: IconFlagsComponent,
       },
       {
-        path: 'icon-payments',
+        path: "icon-payments",
         component: IconPaymentsComponent,
       },
       {
-        path: 'table',
+        path: "table",
         component: TablesComponent,
       },
       {
-        path: 'map',
+        path: "map",
         component: MapsComponent,
       },
       {
-        path: 'gallery',
+        path: "gallery",
         component: GalleryComponent,
       },
       {
-        path: 'charts',
+        path: "charts",
         component: ChartsComponent,
       },
       {
-        path: 'formelement',
+        path: "formelement",
         component: FormElementComponent,
       },
       {
-        path: 'settings',
+        path: "settings",
         component: SettingsComponent,
       },
       {
-        path: 'profile',
+        path: "profile",
         component: ProfileComponent,
       },
       {
-        path: 'widgets',
+        path: "widgets",
         component: WidgetsComponent,
       },
       {
-        path: 'widgets-card',
+        path: "widgets-card",
         component: WCardComponent,
       },
       {
-        path: 'widgets-statistics',
+        path: "widgets-statistics",
         component: WStaticsComponent,
       },
       {
-        path: 'widgets-data',
+        path: "widgets-data",
         component: WDataComponent,
       },
       {
-        path: 'widgets-social',
+        path: "widgets-social",
         component: WSocialComponent,
       },
       {
-        path: 'widgets-other',
+        path: "widgets-other",
         component: WOtherComponent,
       },
       {
-        path: 'campaigns',
-        loadChildren: () => import('@satisfaction/campaigns.module').then(m => m.CampaignsModule),
+        path: "campaigns",
+        loadChildren: () =>
+          import("@satisfaction/campaigns.module").then(
+            (m) => m.CampaignsModule
+          ),
       },
       {
-        path: '**', component: ErrorPageComponent
-      }
-    ]
-  }
+        path: "**",
+        component: ErrorPageComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({

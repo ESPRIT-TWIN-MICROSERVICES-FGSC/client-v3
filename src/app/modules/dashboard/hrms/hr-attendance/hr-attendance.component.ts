@@ -28,7 +28,10 @@ export class HrAttendanceComponent implements OnInit {
   submitted: boolean;
   itemsFormGroup: FormGroup;
   employeeList: any[] = [];
-  selectedEmployee:any;
+  selectedEmployee: any;
+
+  //Loding variables
+  getAttendancesLoader: boolean;
 
   constructor(
     private attendanceService: AttendanceService,
@@ -46,6 +49,12 @@ export class HrAttendanceComponent implements OnInit {
     });
     this.createAttendanceForm();
 
+    this.attendanceService.triggerGetAllAttendanceLoading$.subscribe(
+      (status) => {
+        this.getAttendancesLoader = status;
+      }
+    );
+
     this.cols = [
       { field: "code", header: "Code" },
       { field: "name", header: "Name" },
@@ -61,21 +70,26 @@ export class HrAttendanceComponent implements OnInit {
 
   getAllAttendances() {
     this.attendanceService.getAllAttendances().subscribe((res) => {
+      this.getAttendancesLoader = false;
       this.items = res;
     });
   }
+
   getAllEmployees() {
     this.employeeService.getAllEmployees().subscribe((res) => {
       res.map((r) =>
-        this.employeeList.push({ firstName: r.firstName, lastName: r.lastName ,fullName:r.firstName+" "+r.lastName})
+        this.employeeList.push({
+          firstName: r.firstName,
+          lastName: r.lastName,
+          fullName: r.firstName + " " + r.lastName,
+        })
       );
     });
   }
 
-  onSelectedEmployee(event){
+  onSelectedEmployee(event) {
     this.itemsFormGroup?.get("firstName")?.patchValue(event.value.firstName);
     this.itemsFormGroup?.get("lastName")?.patchValue(event.value.lastName);
-
   }
 
   openNew() {

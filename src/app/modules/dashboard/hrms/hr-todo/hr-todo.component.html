@@ -1,0 +1,173 @@
+<div class="section-body mt-3">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive todo_list">
+              <table class="table table-hover table-striped table-vcenter mb-0">
+                <thead>
+                  <tr>
+                    <th>
+                      <a
+                        href="javascript:void(0);"
+                        class="btn btn-info btn-sm"
+                        (click)="openNew()"
+                        >Add New</a
+                      >
+                    </th>
+                    <th class="w150 text-right">Due</th>
+                    <th class="w100">Priority</th>
+                    <th class="w80"><i class="icon-user"></i></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of items">
+                    <td>
+                      <label class="custom-control custom-checkbox">
+                        <input
+                          type="checkbox"
+                          class="custom-control-input"
+                          name="example-checkbox1"
+                          value="option1"
+                          [checked]="item.done"
+                          (change)="toggleEditable($event, item.id)"
+                        />
+                        <span class="custom-control-label">{{
+                          item.name
+                        }}</span>
+                      </label>
+                    </td>
+                    <td class="text-right">
+                      {{ item.due | date: "longDate" }}
+                    </td>
+                    <td>
+                      <span class="tag tag-danger ml-0 mr-0">{{
+                        item.priority
+                      }}</span>
+                    </td>
+                    <td>
+                      <span
+                        class="avatar avatar-pink"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title=""
+                        tooltip="Avatar Name"
+                        >NG</span
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <p-dialog
+            [(visible)]="itemAddDialog"
+            [style]="{ width: '450px' }"
+            header="Add  a Todo"
+            [modal]="true"
+            styleClass="p-fluid"
+          >
+            <ng-template pTemplate="content">
+              <form [formGroup]="itemsFormGroup">
+                <div class="row">
+                  <div class="col-md-12 mt-4 mb-4"></div>
+                  <div class="col-md-6 mb-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Connected user Id"
+                      formControlName="connectedUserId"
+                      [ngClass]="{
+                        'is-valid': itemsFormGroup.get('connectedUserId').valid
+                      }"
+                      disabled
+                    />
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Full Name"
+                      formControlName="fullName"
+                      [ngClass]="{
+                        'is-valid': itemsFormGroup.get('fullName').valid
+                      }"
+                      disabled
+                    />
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Name"
+                      formControlName="name"
+                      [ngClass]="{
+                        'is-invalid': checkFormValidationName(),
+                        'is-valid': itemsFormGroup.get('name').valid
+                      }"
+                    />
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Priority"
+                      formControlName="priority"
+                      [ngClass]="{
+                        'is-invalid': checkFormValidationpositionPriority(),
+                        'is-valid': itemsFormGroup.get('priority').valid
+                      }"
+                    />
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <input
+                      type="date"
+                      class="form-control"
+                      placeholder="Due"
+                      formControlName="due"
+                      [ngClass]="{
+                        'is-invalid': checkFormValidationpositionDue(),
+                        'is-valid': itemsFormGroup.get('due').valid
+                      }"
+                    />
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Done"
+                      formControlName="done"
+                      [ngClass]="{
+                        'is-valid': itemsFormGroup.get('done').valid
+                      }"
+                    />
+                  </div>
+                </div></form
+            ></ng-template>
+
+            <ng-template pTemplate="footer">
+              <button
+                pButton
+                pRipple
+                label="Cancel"
+                icon="pi pi-times"
+                class="p-button-text"
+                (click)="hideDialog()"
+              ></button>
+              <button
+                pButton
+                pRipple
+                label="Save"
+                icon="pi pi-check"
+                class="p-button-text"
+                (click)="saveTodo()"
+                [disabled]="itemsFormGroup.invalid"
+              ></button>
+            </ng-template>
+          </p-dialog>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

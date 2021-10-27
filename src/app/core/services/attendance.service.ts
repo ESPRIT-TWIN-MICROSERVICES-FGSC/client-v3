@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Attendance } from "@app/shared/_models/Attendance";
-import { Subject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 import { map, tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import Swal from "sweetalert2";
@@ -13,9 +13,13 @@ export class AttendanceService {
   baseUrl = environment.attendanceMicroservice;
   public triggerAttendanceRefresh$ = new Subject<void>();
 
+  //Loading observables
+  public triggerGetAllAttendanceLoading$ = new BehaviorSubject<boolean>(false);
+
   constructor(private http: HttpClient) {}
 
   getAllAttendances() {
+    this.triggerGetAllAttendanceLoading$.next(true);
     return this.http.get<Attendance[]>(this.baseUrl + "/attendance").pipe(
       map((res) => {
         return res;
