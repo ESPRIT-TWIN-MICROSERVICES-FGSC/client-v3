@@ -1,21 +1,25 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import { Client } from '@shared/_models/Client';
-import { environment } from 'src/environments/environment';
-import Swal from 'sweetalert2';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, Subject } from "rxjs";
+import { map, tap } from "rxjs/operators";
+import { Client } from "@shared/_models/Client";
+import { environment } from "src/environments/environment";
+import Swal from "sweetalert2";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class ClientService {
   baseUrl = environment.clientMicroservice;
   public triggerClientRefresh$ = new Subject<void>();
 
+  //Loading observables
+  public triggerGetAllClientsLoading$ = new BehaviorSubject<boolean>(false);
+
   constructor(private http: HttpClient) {}
 
   getAllClients() {
+    this.triggerGetAllClientsLoading$.next(true);
     return this.http.get<Client[]>(this.baseUrl).pipe(
       map((res) => {
         return res;
@@ -25,7 +29,7 @@ export class ClientService {
 
   addClient(values: any) {
     return this.http
-      .post(this.baseUrl + '/add', values)
+      .post(this.baseUrl + "/add", values)
       .pipe(
         tap(() => {
           this.triggerClientRefresh$.next();
@@ -34,9 +38,9 @@ export class ClientService {
       .subscribe(
         () => {
           Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Client has been added successfully',
+            position: "center",
+            icon: "success",
+            title: "Client has been added successfully",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -44,9 +48,9 @@ export class ClientService {
         (error) => {
           console.log(error);
           Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'An error has been occured',
+            position: "center",
+            icon: "error",
+            title: "An error has been occured",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -56,7 +60,7 @@ export class ClientService {
 
   updateClient(values: any, clientId: any) {
     return this.http
-      .put(this.baseUrl + '/update/' + clientId, values)
+      .put(this.baseUrl + "/update/" + clientId, values)
       .pipe(
         tap(() => {
           this.triggerClientRefresh$.next();
@@ -65,9 +69,9 @@ export class ClientService {
       .subscribe(
         () => {
           Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Client has been updated successfully',
+            position: "center",
+            icon: "success",
+            title: "Client has been updated successfully",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -75,9 +79,9 @@ export class ClientService {
         (error) => {
           console.log(error);
           Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'An error has been occured',
+            position: "center",
+            icon: "error",
+            title: "An error has been occured",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -88,7 +92,7 @@ export class ClientService {
   deleteClient(idClient: any) {
     this.triggerClientRefresh$.next();
     return this.http
-      .delete(this.baseUrl + '/delete-client/' + idClient)
+      .delete(this.baseUrl + "/delete-client/" + idClient)
       .pipe(
         tap(() => {
           this.triggerClientRefresh$.next();
@@ -97,9 +101,9 @@ export class ClientService {
       .subscribe(
         () => {
           Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Client has been deleted successfully',
+            position: "center",
+            icon: "success",
+            title: "Client has been deleted successfully",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -107,9 +111,9 @@ export class ClientService {
         (error) => {
           console.log(error);
           Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'An error has been occured',
+            position: "center",
+            icon: "error",
+            title: "An error has been occured",
             showConfirmButton: false,
             timer: 1500,
           });

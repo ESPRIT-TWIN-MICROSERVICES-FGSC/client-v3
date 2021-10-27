@@ -86,7 +86,6 @@ export class LeaveService {
   }
 
   deleteLeave(idLeave: any) {
-    this.triggerLeaveRefresh$.next();
     return this.http
       .delete(this.baseUrl + '/delete/' + idLeave)
       .pipe(

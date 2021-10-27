@@ -33,7 +33,7 @@ import { HeatmapChartComponent } from './components/charts/heatmap-chart/heatmap
 import { CandlestickChartComponent } from './components/charts/candlestick-chart/candlestick-chart.component';
 import { WidgetsComponent } from './components/widgets/widgets.component';
 import { CalenderComponent } from './components/calender/calender.component';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
+//import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { FilemanagerComponent } from './components/filemanager/filemanager.component';
@@ -94,6 +94,7 @@ import { HrClientsComponent } from './hrms/hr-clients/hr-clients.component';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { SliderModule } from 'primeng/slider';
+import { ProgressSpinnerModule } from "primeng/progressspinner";
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
@@ -133,13 +134,15 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSortModule} from '@angular/material/sort';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { HrAttendanceComponent } from './hrms/hr-attendance/hr-attendance.component';
+import { CalendarModule } from 'primeng/calendar';
 
-FullCalendarModule.registerPlugins([
-  // register FullCalendar plugins
-  dayGridPlugin,
-  timeGridPlugin,
-  interactionPlugin,
-]);
+
+// FullCalendarModule.registerPlugins([
+//   // register FullCalendar plugins
+//   dayGridPlugin,
+//   timeGridPlugin,
+//   interactionPlugin,
+// ]);
 
 @NgModule({
   imports: [
@@ -163,10 +166,10 @@ FullCalendarModule.registerPlugins([
     NgMultiSelectDropDownModule.forRoot(),
     CountToModule,
     ToastrModule.forRoot({}),
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory,
-    }),
+    // CalendarModule.forRoot({
+    //   provide: DateAdapter,
+    //   useFactory: adapterFactory,
+    // }),
     AgmCoreModule.forRoot({
       apiKey: 'GOOGLE_API_KEY',
     }),
@@ -188,6 +191,7 @@ FullCalendarModule.registerPlugins([
     DialogModule,
     ContextMenuModule,
     MultiSelectModule,
+    ProgressSpinnerModule,
     SliderModule,
     ToastModule,
     TableModule,
@@ -202,7 +206,8 @@ FullCalendarModule.registerPlugins([
     MatInputModule,
     MatTooltipModule,
     MatSortModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    CalendarModule
   ],
   declarations: [
     ClientRoutingModule.components,

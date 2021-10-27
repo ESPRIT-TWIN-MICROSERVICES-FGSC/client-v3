@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { LeaveService } from 'src/app/core/services/leave.service';
-import { Leave } from '@shared/_models/Leave';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ConfirmationService, MessageService } from "primeng/api";
+import { LeaveService } from "src/app/core/services/leave.service";
+import { Leave } from "@shared/_models/Leave";
 
-import 'jspdf-autotable';
-import { EmployeeService } from '@app/core/services/employee.service';
+import "jspdf-autotable";
+import { EmployeeService } from "@app/core/services/employee.service";
 
 declare var jsPDF: any;
 
 @Component({
-  selector: 'app-hr-leaves',
-  templateUrl: './hr-leaves.component.html',
-  styleUrls: ['./hr-leaves.component.scss'],
+  selector: "app-hr-leaves",
+  templateUrl: "./hr-leaves.component.html",
+  styleUrls: ["./hr-leaves.component.scss"],
 })
 export class HrLeavesComponent implements OnInit {
   itemAddDialog: boolean;
@@ -31,8 +31,8 @@ export class HrLeavesComponent implements OnInit {
 
   submitted: boolean;
   itemsFormGroup: FormGroup;
-  employeeList:any[]=[]
-  selectedEmployee:any;
+  employeeList: any[] = [];
+  selectedEmployee: any;
 
   constructor(
     private leaveService: LeaveService,
@@ -45,16 +45,18 @@ export class HrLeavesComponent implements OnInit {
   ngOnInit(): void {
     this.getAllLeaves();
     this.getAllEmployees();
+
     this.leaveService.triggerLeaveRefresh$.subscribe(() => {
       this.getAllLeaves();
     });
+
     this.createLeaveForm();
 
     this.cols = [
-      { field: 'code', header: 'Code' },
-      { field: 'name', header: 'Name' },
-      { field: 'category', header: 'Category' },
-      { field: 'quantity', header: 'Quantity' },
+      { field: "code", header: "Code" },
+      { field: "name", header: "Name" },
+      { field: "category", header: "Category" },
+      { field: "quantity", header: "Quantity" },
     ];
 
     this.exportColumns = this.cols.map((col) => ({
@@ -65,30 +67,31 @@ export class HrLeavesComponent implements OnInit {
 
   getAllLeaves() {
     this.leaveService.getAllLeaves().subscribe((res) => {
-      res.map(r=>{
-        this.items = res;
-      })
-
-      console.log(res);
+      this.items = res;
     });
   }
+
   getAllEmployees() {
     this.employeeService.getAllEmployees().subscribe((res) => {
       res.map((r) =>
-        this.employeeList.push({ id:r.id ,fullName:r.firstName+" "+r.lastName})
-
+        this.employeeList.push({
+          id: r.id,
+          fullName: r.firstName + " " + r.lastName,
+          firstName: r.firstName,
+          lastName: r.lastName,
+        })
       );
     });
   }
-  getEmployeeById(id:string) {
+  getEmployeeById(id: string) {
     this.employeeService.getEmployeeById(id).subscribe((res) => {
-     console.log(res)
+      console.log(res);
     });
   }
-  onSelectedEmployee(event){
+  onSelectedEmployee(event) {
     this.itemsFormGroup?.get("employeId")?.patchValue(event.value.id);
-
-
+    this.itemsFormGroup?.get("firstName")?.patchValue(event.value.firstName);
+    this.itemsFormGroup?.get("lastName")?.patchValue(event.value.lastName);
   }
 
   openNew() {
@@ -98,23 +101,23 @@ export class HrLeavesComponent implements OnInit {
   }
 
   exportPdf() {
-    const doc = new jsPDF('l', 'pt');
+    const doc = new jsPDF("l", "pt");
     doc.autoTable(this.exportColumns, this.items); // TypeScript compile time error
-    doc.save('table.pdf');
+    doc.save("table.pdf");
   }
 
   deleteSelectedItems() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected Clients?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
+      message: "Are you sure you want to delete the selected Clients?",
+      header: "Confirm",
+      icon: "pi pi-exclamation-triangle",
       accept: () => {
         this.items = this.items.filter((val) => this.deleteItem(val));
         this.selectedItems = null;
         this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Clients Deleted',
+          severity: "success",
+          summary: "Successful",
+          detail: "Clients Deleted",
           life: 3000,
         });
       },
@@ -124,6 +127,8 @@ export class HrLeavesComponent implements OnInit {
   createLeaveForm() {
     this.itemsFormGroup = this.fb.group({
       employeId: [null, Validators.required],
+      firstName: [null, Validators.required],
+      lastName: [null, Validators.required],
       start_date: [null, Validators.required],
       end_date: [null, Validators.required],
       type: [null, Validators.required],
@@ -143,20 +148,21 @@ export class HrLeavesComponent implements OnInit {
 
   deleteItem(item: any) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete this leave ? ',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
+      message: "Are you sure you want to delete this leave ? ",
+      header: "Confirm",
+      icon: "pi pi-exclamation-triangle",
       accept: () => {
         this.leaveService.deleteLeave(item.id);
-        this.getAllLeaves();
       },
     });
   }
 
   loadData(item: any) {
-    this.itemsFormGroup?.get('start_date')?.patchValue(item.start_date);
-    this.itemsFormGroup?.get('end_date')?.patchValue(item.end_date);
-    this.itemsFormGroup?.get('type')?.patchValue(item.type);
+    this.itemsFormGroup?.get("start_date")?.patchValue(item.start_date);
+    this.itemsFormGroup?.get("end_date")?.patchValue(item.end_date);
+    this.itemsFormGroup?.get("fistName")?.patchValue(item.fistName);
+    this.itemsFormGroup?.get("lastName")?.patchValue(item.lastName);
+    this.itemsFormGroup?.get("type")?.patchValue(item.type);
   }
 
   hideDialog() {
@@ -179,9 +185,9 @@ export class HrLeavesComponent implements OnInit {
 
   checkFormValidationStartDate() {
     if (
-      this.itemsFormGroup.get('start_date').invalid &&
-      this.itemsFormGroup.get('start_date').touched &&
-      this.itemsFormGroup.get('start_date').errors.required
+      this.itemsFormGroup.get("start_date").invalid &&
+      this.itemsFormGroup.get("start_date").touched &&
+      this.itemsFormGroup.get("start_date").errors.required
     ) {
       return true;
     } else {
@@ -191,9 +197,9 @@ export class HrLeavesComponent implements OnInit {
 
   checkFormValidationEndDate() {
     if (
-      this.itemsFormGroup.get('end_date').invalid &&
-      this.itemsFormGroup.get('end_date').touched &&
-      this.itemsFormGroup.get('end_date').errors.required
+      this.itemsFormGroup.get("end_date").invalid &&
+      this.itemsFormGroup.get("end_date").touched &&
+      this.itemsFormGroup.get("end_date").errors.required
     ) {
       return true;
     } else {
@@ -203,9 +209,9 @@ export class HrLeavesComponent implements OnInit {
 
   checkFormValidationType() {
     if (
-      this.itemsFormGroup.get('type').invalid &&
-      this.itemsFormGroup.get('type').touched &&
-      this.itemsFormGroup.get('type').errors.required
+      this.itemsFormGroup.get("type").invalid &&
+      this.itemsFormGroup.get("type").touched &&
+      this.itemsFormGroup.get("type").errors.required
     ) {
       return true;
     } else {

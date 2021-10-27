@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { ClientService } from 'src/app/core/services/client.service';
-import { Client } from '@shared/_models/Client';
+import { ConfirmationService, MessageService } from "primeng/api";
+import { ClientService } from "src/app/core/services/client.service";
+import { Client } from "@shared/_models/Client";
 
-import 'jspdf-autotable';
+import "jspdf-autotable";
 
 declare var jsPDF: any;
 
@@ -14,9 +14,9 @@ declare var jsPDF: any;
 // "node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js"
 
 @Component({
-  selector: 'app-hr-clients',
-  templateUrl: './hr-clients.component.html',
-  styleUrls: ['./hr-clients.component.scss'],
+  selector: "app-hr-clients",
+  templateUrl: "./hr-clients.component.html",
+  styleUrls: ["./hr-clients.component.scss"],
 })
 export class HrClientsComponent implements OnInit {
   itemAddDialog: boolean;
@@ -25,6 +25,7 @@ export class HrClientsComponent implements OnInit {
 
   items: Client[];
   item: any;
+  genders: any[];
 
   selectedItems: any[];
   selectedItem: Client;
@@ -35,6 +36,9 @@ export class HrClientsComponent implements OnInit {
 
   submitted: boolean;
   itemsFormGroup: FormGroup;
+
+  //Loding variables
+  getMyClientsLoader: boolean;
 
   constructor(
     private clientService: ClientService,
@@ -48,13 +52,24 @@ export class HrClientsComponent implements OnInit {
     this.clientService.triggerClientRefresh$.subscribe(() => {
       this.getAllClients();
     });
+
+    this.clientService.triggerGetAllClientsLoading$.subscribe((status) => {
+      this.getMyClientsLoader = status;
+    });
+
     this.createClientForm();
 
     this.cols = [
-      { field: 'code', header: 'Code' },
-      { field: 'name', header: 'Name' },
-      { field: 'category', header: 'Category' },
-      { field: 'quantity', header: 'Quantity' },
+      { field: "code", header: "Code" },
+      { field: "name", header: "Name" },
+      { field: "category", header: "Category" },
+      { field: "quantity", header: "Quantity" },
+    ];
+
+    this.genders = [
+      { name: "Male", code: "M" },
+      { name: "Female", code: "F" },
+      { name: "Non-binary", code: "NB" },
     ];
 
     this.exportColumns = this.cols.map((col) => ({
@@ -65,6 +80,7 @@ export class HrClientsComponent implements OnInit {
 
   getAllClients() {
     this.clientService.getAllClients().subscribe((res) => {
+      this.getMyClientsLoader = false;
       this.items = res;
       console.log(res);
     });
@@ -77,23 +93,23 @@ export class HrClientsComponent implements OnInit {
   }
 
   exportPdf() {
-    const doc = new jsPDF('l', 'pt');
+    const doc = new jsPDF("l", "pt");
     doc.autoTable(this.exportColumns, this.items); // TypeScript compile time error
-    doc.save('table.pdf');
+    doc.save("table.pdf");
   }
 
   deleteSelectedItems() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected Clients?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
+      message: "Are you sure you want to delete the selected Clients?",
+      header: "Confirm",
+      icon: "pi pi-exclamation-triangle",
       accept: () => {
         this.items = this.items.filter((val) => this.deleteItem(val));
         this.selectedItems = null;
         this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Clients Deleted',
+          severity: "success",
+          summary: "Successful",
+          detail: "Clients Deleted",
           life: 3000,
         });
       },
@@ -106,10 +122,10 @@ export class HrClientsComponent implements OnInit {
       lastName: [null, Validators.required],
       address: [null],
       email: [
-        '',
+        "",
         [
           Validators.required,
-          Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$'),
+          Validators.pattern("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"),
         ],
       ],
       tel: [null, Validators.required],
@@ -134,12 +150,12 @@ export class HrClientsComponent implements OnInit {
   deleteItem(item: any) {
     this.confirmationService.confirm({
       message:
-        'Are you sure you want to delete Mr/Mrs ' +
+        "Are you sure you want to delete Mr/Mrs " +
         item.firsttName +
         item.lastName +
-        '?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
+        "?",
+      header: "Confirm",
+      icon: "pi pi-exclamation-triangle",
       accept: () => {
         this.clientService.deleteClient(item.clientId);
         this.getAllClients();
@@ -148,14 +164,14 @@ export class HrClientsComponent implements OnInit {
   }
 
   loadData(client: any) {
-    this.itemsFormGroup?.get('firsttName')?.patchValue(client.firsttName);
-    this.itemsFormGroup?.get('lastName')?.patchValue(client.lastName);
-    this.itemsFormGroup?.get('address')?.patchValue(client.address);
-    this.itemsFormGroup?.get('designation')?.patchValue(client.designation);
-    this.itemsFormGroup?.get('email')?.patchValue(client.email);
-    this.itemsFormGroup?.get('webSite')?.patchValue(client.webSite);
-    this.itemsFormGroup?.get('tel')?.patchValue(client.tel);
-    this.itemsFormGroup?.get('country')?.patchValue(client.country);
+    this.itemsFormGroup?.get("firsttName")?.patchValue(client.firsttName);
+    this.itemsFormGroup?.get("lastName")?.patchValue(client.lastName);
+    this.itemsFormGroup?.get("address")?.patchValue(client.address);
+    this.itemsFormGroup?.get("designation")?.patchValue(client.designation);
+    this.itemsFormGroup?.get("email")?.patchValue(client.email);
+    this.itemsFormGroup?.get("webSite")?.patchValue(client.webSite);
+    this.itemsFormGroup?.get("tel")?.patchValue(client.tel);
+    this.itemsFormGroup?.get("country")?.patchValue(client.country);
   }
 
   hideDialog() {
@@ -178,10 +194,10 @@ export class HrClientsComponent implements OnInit {
 
   checkFormValidationEmail() {
     if (
-      this.itemsFormGroup.get('email').invalid &&
-      this.itemsFormGroup.get('email').touched &&
-      (this.itemsFormGroup.get('email').errors.required !== null ||
-        this.itemsFormGroup.get('email').errors.pattern)
+      this.itemsFormGroup.get("email").invalid &&
+      this.itemsFormGroup.get("email").touched &&
+      (this.itemsFormGroup.get("email").errors.required !== null ||
+        this.itemsFormGroup.get("email").errors.pattern)
     ) {
       return true;
     } else {
@@ -190,20 +206,20 @@ export class HrClientsComponent implements OnInit {
   }
 
   getInvalidMessage() {
-    if (this.itemsFormGroup.get('email').errors !== null) {
-      if (this.itemsFormGroup.get('email').errors.required === true) {
-        return 'required';
+    if (this.itemsFormGroup.get("email").errors !== null) {
+      if (this.itemsFormGroup.get("email").errors.required === true) {
+        return "required";
       } else {
-        return 'invalid';
+        return "invalid";
       }
     }
   }
 
   checkFormValidationFirstName() {
     if (
-      this.itemsFormGroup.get('firsttName').invalid &&
-      this.itemsFormGroup.get('firsttName').touched &&
-      this.itemsFormGroup.get('firsttName').errors.required
+      this.itemsFormGroup.get("firsttName").invalid &&
+      this.itemsFormGroup.get("firsttName").touched &&
+      this.itemsFormGroup.get("firsttName").errors.required
     ) {
       return true;
     } else {
@@ -213,9 +229,9 @@ export class HrClientsComponent implements OnInit {
 
   checkFormValidationLastName() {
     if (
-      this.itemsFormGroup.get('lastName').invalid &&
-      this.itemsFormGroup.get('lastName').touched &&
-      this.itemsFormGroup.get('lastName').errors.required
+      this.itemsFormGroup.get("lastName").invalid &&
+      this.itemsFormGroup.get("lastName").touched &&
+      this.itemsFormGroup.get("lastName").errors.required
     ) {
       return true;
     } else {

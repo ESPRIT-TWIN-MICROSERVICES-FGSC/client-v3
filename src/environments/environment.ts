@@ -10,10 +10,10 @@ export const environment = {
   gateway: "https://fgsc-gateway.herokuapp.com/api/",
   rsocket: "wss://fgsc-rsocket-broker.herokuapp.com/rs",
   clientMicroservice: "https://warm-falls-36309.herokuapp.com/",
-  congeMicroservice: "https://conges-microservice.herokuapp.com/",
+  congeMicroservice: "https://conges-microservice.herokuapp.com",
   employeeMicroservice: "https://employee-microservices.herokuapp.com/",
   JobMicroservice: "https://job-microservices.herokuapp.com/",
-  projectMicroservice: "https://projet-microservice.herokuapp.com/",
+  projectMicroservice: "https://projet-microservice.herokuapp.com",
   attendanceMicroservice: "https://attendance-microservices.herokuapp.com",
   departementMicroservice: '  https://depratement.herokuapp.com/departements',
 };

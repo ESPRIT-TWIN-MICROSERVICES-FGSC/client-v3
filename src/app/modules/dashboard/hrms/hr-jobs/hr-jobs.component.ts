@@ -57,6 +57,7 @@ export class HrJobsComponent implements OnInit {
   getAllJobs() {
     this.jobService.getAllJobs().subscribe((res) => {
       this.items = res;
+      console.log('hani jit')
     });
   }
 
