@@ -102,7 +102,7 @@ export class TodoService {
           Swal.fire({
             position: "center",
             icon: "success",
-            title: "Your Todo is done",
+            title: "Todo is undone",
             showConfirmButton: false,
             timer: 1500,
           });

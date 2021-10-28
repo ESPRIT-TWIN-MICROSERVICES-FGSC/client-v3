@@ -239,6 +239,7 @@
       icon="pi pi-check"
       class="p-button-text"
       (click)="saveProduct()"
+      [disabled]="itemsFormGroup.invalid"
     ></button>
   </ng-template>
 </p-dialog>
@@ -360,6 +361,7 @@
       icon="pi pi-check"
       class="p-button-text"
       (click)="updateProduct()"
+      [disabled]="itemsFormGroup.invalid"
     ></button>
   </ng-template>
 </p-dialog>
