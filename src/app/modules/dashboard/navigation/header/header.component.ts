@@ -147,4 +147,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.contactTab = true;
     }
   }
+
+  deleteAll() {
+    this.ns.deleteNotificationsByClientId();
+  }
 }

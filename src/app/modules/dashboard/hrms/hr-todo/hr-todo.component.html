@@ -18,7 +18,7 @@
                     </th>
                     <th class="w150 text-right">Due</th>
                     <th class="w100">Priority</th>
-                    <th class="w80"><i class="icon-user"></i></th>
+                    <th class="w80"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -31,7 +31,7 @@
                           name="example-checkbox1"
                           value="option1"
                           [checked]="item.done"
-                          (change)="toggleEditable($event, item.id)"
+                          (change)="toggleEditable($event, item._id)"
                         />
                         <span class="custom-control-label">{{
                           item.name
@@ -42,19 +42,24 @@
                       {{ item.due | date: "longDate" }}
                     </td>
                     <td>
-                      <span class="tag tag-danger ml-0 mr-0">{{
-                        item.priority
-                      }}</span>
+                      <span
+                        class="tag ml-0 mr-0"
+                        [ngClass]="{
+                          'tag-danger': item.priority > 70,
+                          'tag-info': item.priority >= 0 && item.priority <= 30,
+                          'tag-primary': item.priority >= 30 && item.priority <= 60
+
+                        }"
+                        >{{ item.priority }}</span
+                      >
                     </td>
                     <td>
-                      <span
-                        class="avatar avatar-pink"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title=""
-                        tooltip="Avatar Name"
-                        >NG</span
+                      <button
+                        class="btn btn-primary btn-sm"
+                        (click)="onDelete(item._id)"
                       >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 </tbody>
@@ -108,18 +113,7 @@
                       }"
                     />
                   </div>
-                  <div class="col-md-6 mb-4">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Priority"
-                      formControlName="priority"
-                      [ngClass]="{
-                        'is-invalid': checkFormValidationpositionPriority(),
-                        'is-valid': itemsFormGroup.get('priority').valid
-                      }"
-                    />
-                  </div>
+
                   <div class="col-md-6 mb-4">
                     <input
                       type="date"
@@ -132,16 +126,9 @@
                       }"
                     />
                   </div>
-                  <div class="col-md-6 mb-4">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Done"
-                      formControlName="done"
-                      [ngClass]="{
-                        'is-valid': itemsFormGroup.get('done').valid
-                      }"
-                    />
+                  <div class="col-md-12 mb-4">
+                    <h5>Priority</h5>
+                    <p-knob formControlName="priority"></p-knob>
                   </div>
                 </div></form
             ></ng-template>

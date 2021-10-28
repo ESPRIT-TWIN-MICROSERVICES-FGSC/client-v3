@@ -25,6 +25,9 @@ export class HrTodoComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllTodos();
+    this.todoService.triggerTodoRefresh$.subscribe(() => {
+      this.getAllTodos();
+    });
 
     this.authService.currentUserSubject.subscribe((user) => {
       this.currentUser = user;
@@ -55,11 +58,11 @@ export class HrTodoComponent implements OnInit {
     this.hideDialog();
   }
 
-  toggleEditable(event) {
+  toggleEditable(event, id) {
     if (event.target.checked) {
-      console.log("yeees");
+      this.todoService.doneTodo(id);
     } else {
-      console.log("nooo");
+      this.todoService.undoneTodo(id);
     }
   }
 
@@ -71,8 +74,6 @@ export class HrTodoComponent implements OnInit {
     this.itemsFormGroup?.get("name")?.patchValue(item.name);
     this.itemsFormGroup?.get("priority")?.patchValue(item.priority);
     this.itemsFormGroup?.get("due")?.patchValue(item.due);
-    this.itemsFormGroup?.get("done")?.patchValue(item.done);
-    this.itemsFormGroup?.get("date")?.patchValue(item.date);
   }
 
   createTodoForm() {
@@ -82,8 +83,12 @@ export class HrTodoComponent implements OnInit {
       name: [null, Validators.required],
       priority: [null, Validators.required],
       due: [null, Validators.required],
-      done: [null, Validators.required],
     });
+  }
+
+  onDelete(id) {
+    console.log('yay')
+    this.todoService.deleteTodo(id);
   }
 
   checkFormValidationName() {

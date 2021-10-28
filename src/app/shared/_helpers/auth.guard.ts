@@ -15,13 +15,14 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const currentUser = this.authService.currentUserValue;
-    if (currentUser) {
+    if (localStorage.getItem('token')) {
       if (route.data.roles) {
         if (!route.data.roles.some((ai: Role) => currentUser.roles.includes(ai))) {
           this.snackBar.open('Not authorised')._dismissAfter(6000);
           this.router.navigate(['/login']).then();
           return false;
         }
+        return true;
       }
       return true;
     }

@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { ProjectService } from 'src/app/core/services/project.service';
-import { Projects } from '@shared/_models/Project';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ConfirmationService, MessageService } from "primeng/api";
+import { ProjectService } from "src/app/core/services/project.service";
+import { Projects } from "@shared/_models/Project";
+import { ClientService } from "@app/core/services/client.service";
 
 @Component({
-  selector: 'app-hr-projects',
-  templateUrl: './hr-projects.component.html',
-  styleUrls: ['./hr-projects.component.scss'],
+  selector: "app-hr-projects",
+  templateUrl: "./hr-projects.component.html",
+  styleUrls: ["./hr-projects.component.scss"],
 })
 export class HrProjectsComponent implements OnInit {
   dpgridTab: boolean;
@@ -33,28 +34,40 @@ export class HrProjectsComponent implements OnInit {
 
   exportColumns: any[];
 
+  clientsList: any[] = [];
+  selectedClient: any;
+
   submitted: boolean;
   itemsFormGroup: FormGroup;
+
+  //Loding variables
+  getMyProjectsLoader: boolean;
 
   constructor(
     private projectService: ProjectService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private clientService: ClientService,
     private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.getAllProjects();
+    this.getAllClients();
     this.projectService.triggerProjectRefresh$.subscribe(() => {
       this.getAllProjects();
     });
     this.createProjectForm();
 
+    this.projectService.triggerGetAllProjectLoading$.subscribe((status) => {
+      this.getMyProjectsLoader = status;
+    });
+
     this.cols = [
-      { field: 'code', header: 'Code' },
-      { field: 'name', header: 'Name' },
-      { field: 'category', header: 'Category' },
-      { field: 'quantity', header: 'Quantity' },
+      { field: "code", header: "Code" },
+      { field: "name", header: "Name" },
+      { field: "category", header: "Category" },
+      { field: "quantity", header: "Quantity" },
     ];
 
     this.exportColumns = this.cols.map((col) => ({
@@ -65,7 +78,20 @@ export class HrProjectsComponent implements OnInit {
 
   getAllProjects() {
     this.projectService.getAllProjects().subscribe((res) => {
+      this.getMyProjectsLoader = false;
       this.items = res;
+    });
+  }
+
+  getAllClients() {
+    this.clientService.getAllClients().subscribe((res) => {
+      console.log("this is the list of clients ", res);
+      res.map((r) =>
+        this.clientsList.push({
+          name: r.fullName,
+          email: r.email,
+        })
+      );
     });
   }
 
@@ -79,20 +105,25 @@ export class HrProjectsComponent implements OnInit {
 
   deleteSelectedItems() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected project?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
+      message: "Are you sure you want to delete the selected project?",
+      header: "Confirm",
+      icon: "pi pi-exclamation-triangle",
       accept: () => {
         this.items = this.items.filter((val) => this.deleteItem(val));
         this.selectedItems = null;
         this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Projects Deleted',
+          severity: "success",
+          summary: "Successful",
+          detail: "Projects Deleted",
           life: 3000,
         });
       },
     });
+  }
+
+  onSelectedClient(event) {
+    this.itemsFormGroup?.get("clientName")?.patchValue(event.value.name);
+    this.itemsFormGroup?.get("clientEmail")?.patchValue(event.value.email);
   }
 
   createProjectForm() {
@@ -100,10 +131,10 @@ export class HrProjectsComponent implements OnInit {
       projectName: [null, Validators.required],
       clientName: [null, Validators.required],
       clientEmail: [
-        '',
+        "",
         [
           Validators.required,
-          Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$'),
+          Validators.pattern("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"),
         ],
       ],
       startDate: [null, Validators.required],
@@ -127,9 +158,9 @@ export class HrProjectsComponent implements OnInit {
   deleteItem(item: any) {
     this.confirmationService.confirm({
       message:
-        'Are you sure you want to delete Mr/Mrs ' + item.projectName + '?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
+        "Are you sure you want to delete Mr/Mrs " + item.projectName + "?",
+      header: "Confirm",
+      icon: "pi pi-exclamation-triangle",
       accept: () => {
         this.projectService.deleteProject(item.id);
         this.getAllProjects();
@@ -138,23 +169,23 @@ export class HrProjectsComponent implements OnInit {
   }
 
   loadData(item: any) {
-    this.itemsFormGroup?.get('projectName')?.patchValue(item.projectName);
-    this.itemsFormGroup?.get('clientName')?.patchValue(item.clientName);
-    this.itemsFormGroup?.get('clientEmail')?.patchValue(item.clientEmail);
-    this.itemsFormGroup?.get('startDate')?.patchValue(item.startDate);
-    this.itemsFormGroup?.get('endDate')?.patchValue(item.endDate);
-    this.itemsFormGroup?.get('teamSize')?.patchValue(item.teamSize);
-    this.itemsFormGroup?.get('projectDetails')?.patchValue(item.projectDetails);
+    this.itemsFormGroup?.get("projectName")?.patchValue(item.projectName);
+    this.itemsFormGroup?.get("clientName")?.patchValue(item.clientName);
+    this.itemsFormGroup?.get("clientEmail")?.patchValue(item.clientEmail);
+    this.itemsFormGroup?.get("startDate")?.patchValue(item.startDate);
+    this.itemsFormGroup?.get("endDate")?.patchValue(item.endDate);
+    this.itemsFormGroup?.get("teamSize")?.patchValue(item.teamSize);
+    this.itemsFormGroup?.get("projectDetails")?.patchValue(item.projectDetails);
   }
 
   clearForm() {
-    this.itemsFormGroup?.get('projectName')?.patchValue('');
-    this.itemsFormGroup?.get('clientName')?.patchValue('');
-    this.itemsFormGroup?.get('clientEmail')?.patchValue('');
-    this.itemsFormGroup?.get('startDate')?.patchValue('');
-    this.itemsFormGroup?.get('endDate')?.patchValue('');
-    this.itemsFormGroup?.get('teamSize')?.patchValue('');
-    this.itemsFormGroup?.get('projectDetails')?.patchValue('');
+    this.itemsFormGroup?.get("projectName")?.patchValue("");
+    this.itemsFormGroup?.get("clientName")?.patchValue("");
+    this.itemsFormGroup?.get("clientEmail")?.patchValue("");
+    this.itemsFormGroup?.get("startDate")?.patchValue("");
+    this.itemsFormGroup?.get("endDate")?.patchValue("");
+    this.itemsFormGroup?.get("teamSize")?.patchValue("");
+    this.itemsFormGroup?.get("projectDetails")?.patchValue("");
   }
 
   hideDialog() {
@@ -179,10 +210,10 @@ export class HrProjectsComponent implements OnInit {
 
   checkFormValidationEmail() {
     if (
-      this.itemsFormGroup.get('clientEmail').invalid &&
-      this.itemsFormGroup.get('clientEmail').touched &&
-      (this.itemsFormGroup.get('clientEmail').errors.required !== null ||
-        this.itemsFormGroup.get('clientEmail').errors.pattern)
+      this.itemsFormGroup.get("clientEmail").invalid &&
+      this.itemsFormGroup.get("clientEmail").touched &&
+      (this.itemsFormGroup.get("clientEmail").errors.required !== null ||
+        this.itemsFormGroup.get("clientEmail").errors.pattern)
     ) {
       return true;
     } else {
@@ -191,20 +222,20 @@ export class HrProjectsComponent implements OnInit {
   }
 
   getInvalidMessage() {
-    if (this.itemsFormGroup.get('clientEmail').errors !== null) {
-      if (this.itemsFormGroup.get('clientEmail').errors.required === true) {
-        return 'required';
+    if (this.itemsFormGroup.get("clientEmail").errors !== null) {
+      if (this.itemsFormGroup.get("clientEmail").errors.required === true) {
+        return "required";
       } else {
-        return 'invalid';
+        return "invalid";
       }
     }
   }
 
   checkFormValidationProjectName() {
     if (
-      this.itemsFormGroup.get('projectName').invalid &&
-      this.itemsFormGroup.get('projectName').touched &&
-      this.itemsFormGroup.get('projectName').errors.required
+      this.itemsFormGroup.get("projectName").invalid &&
+      this.itemsFormGroup.get("projectName").touched &&
+      this.itemsFormGroup.get("projectName").errors.required
     ) {
       return true;
     } else {
@@ -214,9 +245,9 @@ export class HrProjectsComponent implements OnInit {
 
   checkFormValidationClientName() {
     if (
-      this.itemsFormGroup.get('clientName').invalid &&
-      this.itemsFormGroup.get('clientName').touched &&
-      this.itemsFormGroup.get('clientName').errors.required
+      this.itemsFormGroup.get("clientName").invalid &&
+      this.itemsFormGroup.get("clientName").touched &&
+      this.itemsFormGroup.get("clientName").errors.required
     ) {
       return true;
     } else {
@@ -226,9 +257,9 @@ export class HrProjectsComponent implements OnInit {
 
   checkFormValidationStartDate() {
     if (
-      this.itemsFormGroup.get('startDate').invalid &&
-      this.itemsFormGroup.get('startDate').touched &&
-      this.itemsFormGroup.get('startDate').errors.required
+      this.itemsFormGroup.get("startDate").invalid &&
+      this.itemsFormGroup.get("startDate").touched &&
+      this.itemsFormGroup.get("startDate").errors.required
     ) {
       return true;
     } else {
@@ -237,9 +268,9 @@ export class HrProjectsComponent implements OnInit {
   }
   checkFormValidationEndDate() {
     if (
-      this.itemsFormGroup.get('endDate').invalid &&
-      this.itemsFormGroup.get('endDate').touched &&
-      this.itemsFormGroup.get('endDate').errors.required
+      this.itemsFormGroup.get("endDate").invalid &&
+      this.itemsFormGroup.get("endDate").touched &&
+      this.itemsFormGroup.get("endDate").errors.required
     ) {
       return true;
     } else {
@@ -248,9 +279,9 @@ export class HrProjectsComponent implements OnInit {
   }
   checkFormValidationTeamSize() {
     if (
-      this.itemsFormGroup.get('teamSize').invalid &&
-      this.itemsFormGroup.get('teamSize').touched &&
-      this.itemsFormGroup.get('teamSize').errors.required
+      this.itemsFormGroup.get("teamSize").invalid &&
+      this.itemsFormGroup.get("teamSize").touched &&
+      this.itemsFormGroup.get("teamSize").errors.required
     ) {
       return true;
     } else {
@@ -259,9 +290,9 @@ export class HrProjectsComponent implements OnInit {
   }
   checkFormValidationProjectDetails() {
     if (
-      this.itemsFormGroup.get('projectDetails').invalid &&
-      this.itemsFormGroup.get('projectDetails').touched &&
-      this.itemsFormGroup.get('projectDetails').errors.required
+      this.itemsFormGroup.get("projectDetails").invalid &&
+      this.itemsFormGroup.get("projectDetails").touched &&
+      this.itemsFormGroup.get("projectDetails").errors.required
     ) {
       return true;
     } else {
@@ -272,9 +303,9 @@ export class HrProjectsComponent implements OnInit {
   onTab(number) {
     this.dplistTab = false;
     this.dpgridTab = false;
-    if (number == '1') {
+    if (number == "1") {
       this.dplistTab = true;
-    } else if (number == '2') {
+    } else if (number == "2") {
       this.dpgridTab = true;
     }
   }

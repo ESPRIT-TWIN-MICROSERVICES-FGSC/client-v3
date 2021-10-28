@@ -118,8 +118,7 @@ export class HrClientsComponent implements OnInit {
 
   createClientForm() {
     this.itemsFormGroup = this.fb.group({
-      firsttName: [null, Validators.required],
-      lastName: [null, Validators.required],
+      fullName: [null, Validators.required],
       address: [null],
       email: [
         "",
@@ -149,11 +148,7 @@ export class HrClientsComponent implements OnInit {
 
   deleteItem(item: any) {
     this.confirmationService.confirm({
-      message:
-        "Are you sure you want to delete Mr/Mrs " +
-        item.firsttName +
-        item.lastName +
-        "?",
+      message: "Are you sure you want to delete Mr/Mrs " + item.fullName + "?",
       header: "Confirm",
       icon: "pi pi-exclamation-triangle",
       accept: () => {
@@ -164,8 +159,7 @@ export class HrClientsComponent implements OnInit {
   }
 
   loadData(client: any) {
-    this.itemsFormGroup?.get("firsttName")?.patchValue(client.firsttName);
-    this.itemsFormGroup?.get("lastName")?.patchValue(client.lastName);
+    this.itemsFormGroup?.get("fullName")?.patchValue(client.fullName);
     this.itemsFormGroup?.get("address")?.patchValue(client.address);
     this.itemsFormGroup?.get("designation")?.patchValue(client.designation);
     this.itemsFormGroup?.get("email")?.patchValue(client.email);
@@ -217,21 +211,9 @@ export class HrClientsComponent implements OnInit {
 
   checkFormValidationFirstName() {
     if (
-      this.itemsFormGroup.get("firsttName").invalid &&
-      this.itemsFormGroup.get("firsttName").touched &&
-      this.itemsFormGroup.get("firsttName").errors.required
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  checkFormValidationLastName() {
-    if (
-      this.itemsFormGroup.get("lastName").invalid &&
-      this.itemsFormGroup.get("lastName").touched &&
-      this.itemsFormGroup.get("lastName").errors.required
+      this.itemsFormGroup.get("fullName").invalid &&
+      this.itemsFormGroup.get("fullName").touched &&
+      this.itemsFormGroup.get("fullName").errors.required
     ) {
       return true;
     } else {

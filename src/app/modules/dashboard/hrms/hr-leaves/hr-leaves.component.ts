@@ -34,12 +34,15 @@ export class HrLeavesComponent implements OnInit {
   employeeList: any[] = [];
   selectedEmployee: any;
 
+  //Loding variables
+  getLeaveLoader: boolean;
+
   constructor(
     private leaveService: LeaveService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private fb: FormBuilder,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +54,10 @@ export class HrLeavesComponent implements OnInit {
     });
 
     this.createLeaveForm();
+
+    this.leaveService.triggerGetAllLeaveLoading$.subscribe((status) => {
+      this.getLeaveLoader = status;
+    });
 
     this.cols = [
       { field: "code", header: "Code" },
@@ -67,6 +74,8 @@ export class HrLeavesComponent implements OnInit {
 
   getAllLeaves() {
     this.leaveService.getAllLeaves().subscribe((res) => {
+      this.getLeaveLoader = false;
+
       this.items = res;
     });
   }
@@ -83,11 +92,7 @@ export class HrLeavesComponent implements OnInit {
       );
     });
   }
-  getEmployeeById(id: string) {
-    this.employeeService.getEmployeeById(id).subscribe((res) => {
-      console.log(res);
-    });
-  }
+
   onSelectedEmployee(event) {
     this.itemsFormGroup?.get("employeId")?.patchValue(event.value.id);
     this.itemsFormGroup?.get("firstName")?.patchValue(event.value.firstName);

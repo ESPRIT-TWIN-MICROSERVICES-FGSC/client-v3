@@ -10,6 +10,10 @@ export class JwtInterceptor implements HttpInterceptor {
     if (token) {
       request = request.clone({
         setHeaders: {
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+          // 'Access-Control-Allow-Origin': '*',
+          // 'Access-Control-Allow-Methods': 'DELETE, POST, GET, PUT, OPTIONS',
+          // 'Access-Control-Allow-Headers': '*',
           Authorization: `${localStorage.getItem('bearer')} ${token}`,
         }
       });
@@ -17,6 +21,4 @@ export class JwtInterceptor implements HttpInterceptor {
     return next.handle(request);
   }
 }
-//          'Access-Control-Allow-Origin': '*',
-//           'Access-Control-Allow-Methods': 'DELETE, POST, GET, PUT, OPTIONS',
-//           // 'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization',
+

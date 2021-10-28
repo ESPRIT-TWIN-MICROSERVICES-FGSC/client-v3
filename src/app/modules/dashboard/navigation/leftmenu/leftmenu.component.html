@@ -849,6 +849,17 @@
           >
             <a
               class="submenu"
+              [routerLink]="['campaigns']"
+              href="javascript:void(0)"
+            ><span>Satisfaction campaigns</span></a
+            >
+          </li>
+          <li
+            [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a
+              class="submenu"
               [routerLink]="['departments']"
               href="javascript:void(0)"
               ><span>Departments</span></a

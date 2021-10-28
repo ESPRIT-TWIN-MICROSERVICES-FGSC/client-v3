@@ -3,18 +3,20 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  //
+  //
   production: false,
 
   authGateway: "http://localhost:8070/",
   clientUrl: "http://localhost:4200",
   gateway: "https://fgsc-gateway.herokuapp.com/api/",
   rsocket: "wss://fgsc-rsocket-broker.herokuapp.com/rs",
-  clientMicroservice: "https://warm-falls-36309.herokuapp.com/",
+  clientMicroservice: "https://fgsc-gateway.herokuapp.com/api/client",
   congeMicroservice: "https://fgsc-gateway.herokuapp.com/api/conges",
-  employeeMicroservice: "https://employee-microservices.herokuapp.com/",
-  JobMicroservice: "https://job-microservices.herokuapp.com/",
-  projectMicroservice: "https://projet-microservice.herokuapp.com",
-  attendanceMicroservice: "https://attendance-microservices.herokuapp.com",
+  employeeMicroservice: "https://fgsc-gateway.herokuapp.com/api/employee",
+  JobMicroservice: "https://fgsc-gateway.herokuapp.com/api/job",
+  projectMicroservice: "https://fgsc-gateway.herokuapp.com/api/projet",
+  attendanceMicroservice: "https://fgsc-gateway.herokuapp.com/api/attendance",
   departementMicroservice: "  https://depratement.herokuapp.com/departements",
   todoMicroservice: "http://localhost:5000/todo",
 };

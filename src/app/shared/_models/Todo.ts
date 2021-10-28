@@ -4,7 +4,7 @@ export interface Todo {
   fullName: string;
   lastName: string;
   name: string;
-  priority: string;
+  priority: number;
   due: Date;
   done: boolean;
   date: Date;

@@ -21,7 +21,12 @@
     </ng-template>
   </p-toolbar>
 
+  <div class="progress-spinner text-center" *ngIf="getLeaveLoader">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+
   <p-table
+    *ngIf="!getLeaveLoader"
     #dt
     [value]="items"
     [rows]="10"

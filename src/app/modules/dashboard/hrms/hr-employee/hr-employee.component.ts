@@ -1,14 +1,14 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import Swal from 'sweetalert2';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Employee } from '@shared/_models/Employee';
-import { EmployeeService } from 'src/app/core/services/employee.service';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { Component, OnInit, TemplateRef } from "@angular/core";
+import Swal from "sweetalert2";
+import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Employee } from "@shared/_models/Employee";
+import { EmployeeService } from "src/app/core/services/employee.service";
+import { ConfirmationService, MessageService } from "primeng/api";
 @Component({
-  selector: 'app-hr-employee',
-  templateUrl: './hr-employee.component.html',
-  styleUrls: ['./hr-employee.component.scss'],
+  selector: "app-hr-employee",
+  templateUrl: "./hr-employee.component.html",
+  styleUrls: ["./hr-employee.component.scss"],
 })
 export class HrEmployeeComponent implements OnInit {
   EmpViewTab: boolean;
@@ -35,6 +35,9 @@ export class HrEmployeeComponent implements OnInit {
   submitted: boolean;
   itemsFormGroup: FormGroup;
 
+  //Loding variables
+  getMyEmployeesLoader: boolean;
+
   constructor(
     private modalService: BsModalService,
     private employeeService: EmployeeService,
@@ -50,11 +53,15 @@ export class HrEmployeeComponent implements OnInit {
     });
     this.createEmployeeForm();
 
+    this.employeeService.triggerGetAllEmployeesLoading$.subscribe((status) => {
+      this.getMyEmployeesLoader = status;
+    });
+
     this.cols = [
-      { field: 'code', header: 'Code' },
-      { field: 'name', header: 'Name' },
-      { field: 'category', header: 'Category' },
-      { field: 'quantity', header: 'Quantity' },
+      { field: "code", header: "Code" },
+      { field: "name", header: "Name" },
+      { field: "category", header: "Category" },
+      { field: "quantity", header: "Quantity" },
     ];
 
     this.exportColumns = this.cols.map((col) => ({
@@ -65,6 +72,7 @@ export class HrEmployeeComponent implements OnInit {
 
   getAllEmployees() {
     this.employeeService.getAllEmployees().subscribe((res) => {
+      this.getMyEmployeesLoader = false;
       this.items = res;
       console.log(res);
     });
@@ -80,16 +88,16 @@ export class HrEmployeeComponent implements OnInit {
 
   deleteSelectedItems() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected Employee?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
+      message: "Are you sure you want to delete the selected Employee?",
+      header: "Confirm",
+      icon: "pi pi-exclamation-triangle",
       accept: () => {
         this.items = this.items.filter((val) => this.deleteItem(val));
         this.selectedItems = null;
         this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Employee Deleted',
+          severity: "success",
+          summary: "Successful",
+          detail: "Employee Deleted",
           life: 3000,
         });
       },
@@ -101,10 +109,10 @@ export class HrEmployeeComponent implements OnInit {
       firstName: [null, Validators.required],
       lastName: [null, Validators.required],
       email: [
-        '',
+        "",
         [
           Validators.required,
-          Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$'),
+          Validators.pattern("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"),
         ],
       ],
       address: [null],
@@ -130,12 +138,12 @@ export class HrEmployeeComponent implements OnInit {
   deleteItem(item: any) {
     this.confirmationService.confirm({
       message:
-        'Are you sure you want to delete Mr/Mrs ' +
+        "Are you sure you want to delete Mr/Mrs " +
         item.firstName +
         item.lastName +
-        '?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
+        "?",
+      header: "Confirm",
+      icon: "pi pi-exclamation-triangle",
       accept: () => {
         this.employeeService.deleteEmployee(item.id);
         this.getAllEmployees();
@@ -144,15 +152,15 @@ export class HrEmployeeComponent implements OnInit {
   }
 
   loadData(item: any) {
-    this.itemsFormGroup?.get('firstName')?.patchValue(item.firstName);
-    this.itemsFormGroup?.get('lastName')?.patchValue(item.lastName);
-    this.itemsFormGroup?.get('email')?.patchValue(item.email);
-    this.itemsFormGroup?.get('webSite')?.patchValue(item.joinDate);
-    this.itemsFormGroup?.get('designation')?.patchValue(item.designation);
-    this.itemsFormGroup?.get('gender')?.patchValue(item.gender);
-    this.itemsFormGroup?.get('tel')?.patchValue(item.tel);
-    this.itemsFormGroup?.get('birthDate')?.patchValue(item.birthDate);
-    this.itemsFormGroup?.get('address')?.patchValue(item.address);
+    this.itemsFormGroup?.get("firstName")?.patchValue(item.firstName);
+    this.itemsFormGroup?.get("lastName")?.patchValue(item.lastName);
+    this.itemsFormGroup?.get("email")?.patchValue(item.email);
+    this.itemsFormGroup?.get("webSite")?.patchValue(item.joinDate);
+    this.itemsFormGroup?.get("designation")?.patchValue(item.designation);
+    this.itemsFormGroup?.get("gender")?.patchValue(item.gender);
+    this.itemsFormGroup?.get("tel")?.patchValue(item.tel);
+    this.itemsFormGroup?.get("birthDate")?.patchValue(item.birthDate);
+    this.itemsFormGroup?.get("address")?.patchValue(item.address);
   }
 
   hideDialog() {
@@ -175,10 +183,10 @@ export class HrEmployeeComponent implements OnInit {
 
   checkFormValidationEmail() {
     if (
-      this.itemsFormGroup.get('email').invalid &&
-      this.itemsFormGroup.get('email').touched &&
-      (this.itemsFormGroup.get('email').errors.required !== null ||
-        this.itemsFormGroup.get('email').errors.pattern)
+      this.itemsFormGroup.get("email").invalid &&
+      this.itemsFormGroup.get("email").touched &&
+      (this.itemsFormGroup.get("email").errors.required !== null ||
+        this.itemsFormGroup.get("email").errors.pattern)
     ) {
       return true;
     } else {
@@ -187,20 +195,20 @@ export class HrEmployeeComponent implements OnInit {
   }
 
   getInvalidMessage() {
-    if (this.itemsFormGroup.get('email').errors !== null) {
-      if (this.itemsFormGroup.get('email').errors.required === true) {
-        return 'required';
+    if (this.itemsFormGroup.get("email").errors !== null) {
+      if (this.itemsFormGroup.get("email").errors.required === true) {
+        return "required";
       } else {
-        return 'invalid';
+        return "invalid";
       }
     }
   }
 
   checkFormValidationFirstName() {
     if (
-      this.itemsFormGroup.get('firstName').invalid &&
-      this.itemsFormGroup.get('firstName').touched &&
-      this.itemsFormGroup.get('firstName').errors.required
+      this.itemsFormGroup.get("firstName").invalid &&
+      this.itemsFormGroup.get("firstName").touched &&
+      this.itemsFormGroup.get("firstName").errors.required
     ) {
       return true;
     } else {
@@ -210,9 +218,9 @@ export class HrEmployeeComponent implements OnInit {
 
   checkFormValidationLastName() {
     if (
-      this.itemsFormGroup.get('lastName').invalid &&
-      this.itemsFormGroup.get('lastName').touched &&
-      this.itemsFormGroup.get('lastName').errors.required
+      this.itemsFormGroup.get("lastName").invalid &&
+      this.itemsFormGroup.get("lastName").touched &&
+      this.itemsFormGroup.get("lastName").errors.required
     ) {
       return true;
     } else {
@@ -225,33 +233,33 @@ export class HrEmployeeComponent implements OnInit {
     this.EmpViewTab = false;
     this.EmpLeaveTab = false;
 
-    if (number == '1') {
+    if (number == "1") {
       this.EmpAllTab = true;
-    } else if (number == '2') {
+    } else if (number == "2") {
       this.EmpViewTab = true;
-    } else if (number == '3') {
+    } else if (number == "3") {
       this.EmpLeaveTab = true;
     }
   }
 
   sweettalert7() {
     Swal.fire({
-      title: 'Are you sure?',
-      text: 'You will not be able to recover this imaginary file!',
-      icon: 'warning',
+      title: "Are you sure?",
+      text: "You will not be able to recover this imaginary file!",
+      icon: "warning",
       showCancelButton: true,
-      cancelButtonText: 'Cancel',
-      confirmButtonColor: 'rgb(220, 53, 69)',
-      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "rgb(220, 53, 69)",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.value) {
         Swal.fire(
-          'Deleted!',
-          'Your imaginary file has been deleted.',
-          'success'
+          "Deleted!",
+          "Your imaginary file has been deleted.",
+          "success"
         );
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelled', 'Your imaginary file is safe :)', 'error');
+        Swal.fire("Cancelled", "Your imaginary file is safe :)", "error");
       }
     });
   }
@@ -263,7 +271,7 @@ export class HrEmployeeComponent implements OnInit {
   AddModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(
       template,
-      Object.assign({}, { class: 'gray modal-md' })
+      Object.assign({}, { class: "gray modal-md" })
     );
   }
 }

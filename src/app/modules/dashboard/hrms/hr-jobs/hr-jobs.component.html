@@ -21,7 +21,12 @@
     </ng-template>
   </p-toolbar>
 
+  <div class="progress-spinner text-center" *ngIf="getMyJobLoader">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+
   <p-table
+    *ngIf="!getMyJobLoader"
     #dt
     [value]="items"
     [rows]="10"
@@ -251,6 +256,7 @@
       icon="pi pi-check"
       class="p-button-text"
       (click)="saveProduct()"
+      [disabled]="itemsFormGroup.invalid"
     ></button>
   </ng-template>
 </p-dialog>
@@ -359,6 +365,7 @@
       icon="pi pi-check"
       class="p-button-text"
       (click)="updateProduct()"
+      [disabled]="itemsFormGroup.invalid"
     ></button>
   </ng-template>
 </p-dialog>

@@ -1,22 +1,26 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import { Leave } from '@shared/_models/Leave';
-import { environment } from 'src/environments/environment';
-import Swal from 'sweetalert2';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, Subject } from "rxjs";
+import { map, tap } from "rxjs/operators";
+import { Leave } from "@shared/_models/Leave";
+import { environment } from "src/environments/environment";
+import Swal from "sweetalert2";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class LeaveService {
   baseUrl = environment.congeMicroservice;
   public triggerLeaveRefresh$ = new Subject<void>();
 
+  //Loading observables
+  public triggerGetAllLeaveLoading$ = new BehaviorSubject<boolean>(false);
+
   constructor(private http: HttpClient) {}
 
   getAllLeaves() {
-    return this.http.get<Leave[]>(this.baseUrl + '/conges' ).pipe(
+    this.triggerGetAllLeaveLoading$.next(true);
+    return this.http.get<Leave[]>(this.baseUrl + "/conges").pipe(
       map((res) => {
         return res;
       })
@@ -25,7 +29,7 @@ export class LeaveService {
 
   addLeave(values: any) {
     return this.http
-      .post(this.baseUrl + '/add', values)
+      .post(this.baseUrl + "/add", values)
       .pipe(
         tap(() => {
           this.triggerLeaveRefresh$.next();
@@ -34,9 +38,9 @@ export class LeaveService {
       .subscribe(
         () => {
           Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Leave has been added successfully',
+            position: "center",
+            icon: "success",
+            title: "Leave has been added successfully",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -44,9 +48,9 @@ export class LeaveService {
         (error) => {
           console.log(error);
           Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'An error has been occured',
+            position: "center",
+            icon: "error",
+            title: "An error has been occured",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -56,7 +60,7 @@ export class LeaveService {
 
   updateLeave(values: any, leaveId: any) {
     return this.http
-      .put(this.baseUrl + '/update/' + leaveId, values)
+      .put(this.baseUrl + "/update/" + leaveId, values)
       .pipe(
         tap(() => {
           this.triggerLeaveRefresh$.next();
@@ -65,9 +69,9 @@ export class LeaveService {
       .subscribe(
         () => {
           Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Leave has been updated successfully',
+            position: "center",
+            icon: "success",
+            title: "Leave has been updated successfully",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -75,9 +79,9 @@ export class LeaveService {
         (error) => {
           console.log(error);
           Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'An error has been occured',
+            position: "center",
+            icon: "error",
+            title: "An error has been occured",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -87,7 +91,7 @@ export class LeaveService {
 
   deleteLeave(idLeave: any) {
     return this.http
-      .delete(this.baseUrl + '/delete/' + idLeave)
+      .delete(this.baseUrl + "/delete/" + idLeave)
       .pipe(
         tap(() => {
           this.triggerLeaveRefresh$.next();
@@ -96,9 +100,9 @@ export class LeaveService {
       .subscribe(
         () => {
           Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Leave has been deleted successfully',
+            position: "center",
+            icon: "success",
+            title: "Leave has been deleted successfully",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -106,9 +110,9 @@ export class LeaveService {
         (error) => {
           console.log(error);
           Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'An error has been occured',
+            position: "center",
+            icon: "error",
+            title: "An error has been occured",
             showConfirmButton: false,
             timer: 1500,
           });

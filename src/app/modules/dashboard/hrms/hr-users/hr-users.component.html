@@ -12,6 +12,9 @@
         <button mat-fab color="accent" aria-label="Add users an from EXCEL file"  matTooltip="Import from EXCEL file*">
           <mat-icon>upload</mat-icon>
         </button>
+        <button mat-fab color="warn" aria-label="User statistics"  matTooltip="user statistics" (click)="openCharts()">
+          <mat-icon>analytics</mat-icon>
+        </button>
       </div>
     </div>
     <div class="mat-elevation-z8">
@@ -19,7 +22,7 @@
         <ng-container matColumnDef="avatar">
           <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
           <td mat-cell *matCellDef="let row" class="">
-            <img  loading="lazy" [src]="'https://avatars.dicebear.com/api/initials/{{row.firstName}} {{row.lastName}}.svg'" [alt]="'{{row.firstName}} {{row.lastName}} initials logo'">
+            <img  loading="lazy" [src]="'https://avatars.dicebear.com/api/initials/{{row.name}}.svg'" [tooltip]="row.name" [alt]="'{{row.email}} initials logo'">
           </td>
         </ng-container>
         <ng-container matColumnDef="email">
@@ -51,7 +54,7 @@
         </div>
       </div>
       <mat-paginator #paginator
-                     [length]="dataSource.data.length % dataSource.paginator?.pageSize "
+                     [length]="dataSource.data.length"
                      [pageIndex]="0"
                      [pageSize]="5"
                      [pageSizeOptions]="[1, 10, 20]"

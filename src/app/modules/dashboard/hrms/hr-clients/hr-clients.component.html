@@ -33,7 +33,7 @@
       [rows]="10"
       [rowsPerPageOptions]="[10, 25, 50]"
       [paginator]="true"
-      [globalFilterFields]="['firsttName', 'lastName']"
+      [globalFilterFields]="['fullName']"
       [(selection)]="selectedItems"
       [rowHover]="true"
       dataKey="id"
@@ -58,13 +58,9 @@
           <th style="width: 3rem">
             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           </th>
-          <th pSortableColumn="firsttName">
-            First Name
-            <p-sortIcon field="firsttName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="lastName">
-            Last Name
-            <p-sortIcon field="lastName"></p-sortIcon>
+          <th pSortableColumn="fullName">
+            Full Name
+            <p-sortIcon field="fullName"></p-sortIcon>
           </th>
           <th pSortableColumn="address">
             Address
@@ -87,8 +83,7 @@
           <td>
             <p-tableCheckbox [value]="item"></p-tableCheckbox>
           </td>
-          <td>{{ item.firsttName }}</td>
-          <td>{{ item.lastName }}</td>
+          <td>{{ item.fullName }}</td>
           <td>{{ item.address }}</td>
           <td>{{ item.email }}</td>
           <td>{{ item.tel }}</td>
@@ -143,30 +138,15 @@
           <input
             type="text"
             class="form-control"
-            placeholder="First name"
-            formControlName="firsttName"
+            placeholder="Full name"
+            formControlName="fullName"
             [ngClass]="{
               'is-invalid': checkFormValidationFirstName(),
-              'is-valid': itemsFormGroup.get('firsttName').valid
+              'is-valid': itemsFormGroup.get('fullName').valid
             }"
           />
           <div class="invalid-feedback invalid-feedback-position">
-            First Name is required
-          </div>
-        </div>
-        <div class="col-md-6 mb-4">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Last name"
-            formControlName="lastName"
-            [ngClass]="{
-              'is-invalid': checkFormValidationLastName(),
-              'is-valid': itemsFormGroup.get('lastName').valid
-            }"
-          />
-          <div class="invalid-feedback invalid-feedback-position">
-            Last Name is required
+            Full Name is required
           </div>
         </div>
         <div class="col-md-6 mb-4">
@@ -183,9 +163,6 @@
           <div class="invalid-feedback invalid-feedback-position">
             Email is {{ getInvalidMessage() }}
           </div>
-        </div>
-        <div class="col-md-6 mb-4">
-          <input type="text" class="form-control" placeholder="Client Id" />
         </div>
         <div class="col-md-6 mb-4">
           <input
@@ -279,30 +256,15 @@
           <input
             type="text"
             class="form-control"
-            placeholder="First name"
-            formControlName="firsttName"
+            placeholder="Full name"
+            formControlName="fullName"
             [ngClass]="{
               'is-invalid': checkFormValidationFirstName(),
-              'is-valid': itemsFormGroup.get('firsttName').valid
+              'is-valid': itemsFormGroup.get('fullName').valid
             }"
           />
           <div class="invalid-feedback invalid-feedback-position">
             First Name is required
-          </div>
-        </div>
-        <div class="col-md-6 mb-4">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Last name"
-            formControlName="lastName"
-            [ngClass]="{
-              'is-invalid': checkFormValidationLastName(),
-              'is-valid': itemsFormGroup.get('lastName').valid
-            }"
-          />
-          <div class="invalid-feedback invalid-feedback-position">
-            Last Name is required
           </div>
         </div>
         <div class="col-md-6 mb-4">
@@ -419,7 +381,7 @@
           />
         </div>
         <h6 class="mt-3 mb-0">
-          {{ selectedItem?.firsttName }} {{ selectedItem?.lastName }}
+          {{ selectedItem?.fullName }}
         </h6>
         <span>{{ selectedItem?.tel }}</span>
         <span>{{ selectedItem?.address }}</span>

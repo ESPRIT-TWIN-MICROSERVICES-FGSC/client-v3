@@ -9,6 +9,7 @@ import {FadeOutAnimation} from '@animations/animations';
 import {FormControl} from '@angular/forms';
 import {debounceTime, finalize} from 'rxjs/operators';
 import {BehaviorSubject} from 'rxjs';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-hr-users',
@@ -27,7 +28,7 @@ export class HrUsersComponent implements OnInit, AfterViewInit {
   searchControl: FormControl = new FormControl('');
   displayedColumns = ['avatar', 'email', 'name', 'joinDate'];
   loading$ = new BehaviorSubject<boolean>(true);
-  constructor(public us: UsersService) {
+  constructor(public us: UsersService, private bottomSheet: MatBottomSheet) {
     DashboardNavigationComponent.activeTitle.next('Vodoo - users');
   }
 
@@ -50,8 +51,19 @@ export class HrUsersComponent implements OnInit, AfterViewInit {
         this.dataSource.data = res;
       });
   }
+
+  openCharts() {
+    this.bottomSheet.open(UserStatisticsComponent);
+  }
 }
 
+@Component({
+  selector: 'app-user-statistics',
+  template: '<iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="640" height="480" src="https://charts.mongodb.com/charts-project-0-vhubd/embed/charts?id=20213a74-e088-4512-9906-c53b08fac1e1&theme=light"></iframe>'
+})
+export class UserStatisticsComponent {
+
+}
 //   firstName?: string;
 //   lastName?: string;
 //   roles: Array<Role>;

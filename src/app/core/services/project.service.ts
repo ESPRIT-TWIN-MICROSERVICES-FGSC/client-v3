@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 import { map, tap } from "rxjs/operators";
 import { Projects } from "@shared/_models/Project";
 import { environment } from "src/environments/environment";
@@ -13,9 +13,13 @@ export class ProjectService {
   baseUrl = environment.projectMicroservice;
   public triggerProjectRefresh$ = new Subject<void>();
 
+  //Loading observables
+  public triggerGetAllProjectLoading$ = new BehaviorSubject<boolean>(false);
+
   constructor(private http: HttpClient) {}
 
   getAllProjects() {
+    this.triggerGetAllProjectLoading$.next(true);
     return this.http.get<Projects[]>(this.baseUrl + "/projets").pipe(
       map((res) => {
         return res;

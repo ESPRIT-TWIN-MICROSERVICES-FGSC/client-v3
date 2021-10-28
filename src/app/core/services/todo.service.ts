@@ -58,34 +58,96 @@ export class TodoService {
       );
   }
 
-  // doneTodo(id: any) {
-  //   return this.http
-  //     .post(this.baseUrl + "", values)
-  //     .pipe(
-  //       tap(() => {
-  //         this.triggerTodoRefresh$.next();
-  //       })
-  //     )
-  //     .subscribe(
-  //       () => {
-  //         Swal.fire({
-  //           position: "center",
-  //           icon: "success",
-  //           title: "Todo has been added successfully",
-  //           showConfirmButton: false,
-  //           timer: 1500,
-  //         });
-  //       },
-  //       (error) => {
-  //         console.log(error);
-  //         Swal.fire({
-  //           position: "center",
-  //           icon: "error",
-  //           title: "An error has been occured",
-  //           showConfirmButton: false,
-  //           timer: 1500,
-  //         });
-  //       }
-  //     );
-  // }
+  doneTodo(id: any) {
+    return this.http
+      .post(this.baseUrl + "/done/" + id, {})
+      .pipe(
+        tap(() => {
+          this.triggerTodoRefresh$.next();
+        })
+      )
+      .subscribe(
+        () => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your Todo is done",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        },
+        (error) => {
+          console.log(error);
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "An error has been occured",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      );
+  }
+
+  undoneTodo(id: any) {
+    return this.http
+      .post(this.baseUrl + "/undone/" + id, {})
+      .pipe(
+        tap(() => {
+          this.triggerTodoRefresh$.next();
+        })
+      )
+      .subscribe(
+        () => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your Todo is done",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        },
+        (error) => {
+          console.log(error);
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "An error has been occured",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      );
+  }
+
+  deleteTodo(id: any) {
+    return this.http
+      .delete(this.baseUrl + "/" + id)
+      .pipe(
+        tap(() => {
+          this.triggerTodoRefresh$.next();
+        })
+      )
+      .subscribe(
+        () => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Todo has been deleted successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        },
+        (error) => {
+          console.log(error);
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "An error has been occured",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      );
+  }
 }

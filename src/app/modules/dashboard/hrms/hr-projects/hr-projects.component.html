@@ -1,564 +1,594 @@
-  <div class="section-body">
-    <div class="container-fluid">
-      <div class="d-flex justify-content-between align-items-center">
-        <ul class="nav nav-tabs page-header-tab">
-          <li class="nav-item">
-            <a
-              class="nav-link active"
-              id="Project-tab"
-              data-toggle="tab"
-              href="javascript:void(0)"
-              (click)="onTab('1')"
-              [ngClass]="{ active: dplistTab }"
-              >OnGoing</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              id="Project-tab"
-              data-toggle="tab"
-              href="javascript:void(0)"
-              (click)="onTab('2')"
-              [ngClass]="{ active: dpgridTab }"
-              >Details</a
-            >
-          </li>
-        </ul>
-        <div class="header-action d-md-flex">
-          <div class="input-group mr-2">
-            <input type="text" class="form-control" placeholder="Search..." />
-          </div>
-          <button type="button" class="btn btn-primary">
-            <i class="fe fe-plus mr-2"></i>Add
-          </button>
+<div class="section-body">
+  <div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center">
+      <ul class="nav nav-tabs page-header-tab">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            id="Project-tab"
+            data-toggle="tab"
+            href="javascript:void(0)"
+            (click)="onTab('1')"
+            [ngClass]="{ active: dplistTab }"
+            >OnGoing</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="Project-tab"
+            data-toggle="tab"
+            href="javascript:void(0)"
+            (click)="onTab('2')"
+            [ngClass]="{ active: dpgridTab }"
+            >Details</a
+          >
+        </li>
+      </ul>
+      <div class="header-action d-md-flex">
+        <div class="input-group mr-2">
+          <input type="text" class="form-control" placeholder="Search..." />
         </div>
+        <button type="button" class="btn btn-primary">
+          <i class="fe fe-plus mr-2"></i>Add
+        </button>
       </div>
     </div>
   </div>
-  <div class="section-body mt-3">
-    <div class="container-fluid">
-      <div class="tab-content">
-        <div
-          class="tab-pane fade"
-          [ngClass]="{ 'show active': dplistTab }"
-          id="Project-OnGoing"
-          role="tabpanel"
-        >
-          <div class="row">
-            <div class="col-lg-4 col-md-12" *ngFor="let item of items">
+</div>
+<div class="section-body mt-3">
+  <div class="container-fluid">
+    <div class="tab-content">
+      <div
+        class="tab-pane fade"
+        [ngClass]="{ 'show active': dplistTab }"
+        id="Project-OnGoing"
+        role="tabpanel"
+      >
+        <div class="progress-spinner text-center" *ngIf="getMyProjectsLoader">
+          <p-progressSpinner></p-progressSpinner>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4 col-md-12" *ngFor="let item of items">
+            <div
+              class="card"
+              [ngClass]="{
+                'card-collapsed': isCollapsed1,
+                '': !isCollapsed1
+              }"
+            >
+              <div class="card-header">
+                <h3 class="card-title">{{ item.clientName }}</h3>
+                <div class="card-options">
+                  <label class="custom-switch m-0">
+                    <input
+                      type="checkbox"
+                      value="1"
+                      class="custom-switch-input"
+                      checked
+                    />
+                    <span class="custom-switch-indicator"></span>
+                  </label>
+                  <a
+                    (click)="isCollapsed1 = !isCollapsed1"
+                    [attr.aria-expanded]="!isCollapsed1"
+                    class="card-options-collapse"
+                    data-toggle="card-collapse"
+                    ><i class="fe fe-chevron-up"></i
+                  ></a>
+                </div>
+              </div>
               <div
-                class="card"
-                [ngClass]="{
-                  'card-collapsed': isCollapsed1,
-                  '': !isCollapsed1
-                }"
+                class="card-body"
+                id="collapseBasic"
+                [collapse]="isCollapsed1"
               >
-                <div class="card-header">
-                  <h3 class="card-title">{{ item.clientName }}</h3>
-                  <div class="card-options">
-                    <label class="custom-switch m-0">
-                      <input
-                        type="checkbox"
-                        value="1"
-                        class="custom-switch-input"
-                        checked
+                <span class="tag tag-blue mb-3">{{ item.id }}</span>
+                <p>
+                  {{ item.projectDetails }}
+                </p>
+                <div class="row">
+                  <div class="col-5 py-1"><strong>Start date:</strong></div>
+                  <div class="col-7 py-1">{{ item.startDate }}</div>
+                  <div class="col-5 py-1"><strong>End date:</strong></div>
+                  <div class="col-7 py-1">{{ item.endDate }}</div>
+                  <div class="col-5 py-1"><strong>Team size:</strong></div>
+                  <div class="col-7 py-1">
+                    <strong>{{ item.teamSize }}</strong>
+                  </div>
+                  <div class="col-5 py-1"><strong>Client name:</strong></div>
+                  <div class="col-7 py-1">
+                    <strong>{{ item.clientName }}</strong>
+                  </div>
+                  <div class="col-5 py-1"><strong>Client email:</strong></div>
+                  <div class="col-7 py-1">
+                    <strong>{{ item.clientEmail }}</strong>
+                  </div>
+                  <div class="col-5 py-1"><strong>Team:</strong></div>
+                  <div class="col-7 py-1">
+                    <div class="avatar-list avatar-list-stacked">
+                      <img
+                        class="avatar avatar-sm"
+                        src="../assets/images/xs/avatar1.jpg"
+                        data-toggle="tooltip"
+                        tooltip="Avatar Name"
+                        title=""
+                        data-original-title="Avatar Name"
                       />
-                      <span class="custom-switch-indicator"></span>
-                    </label>
-                    <a
-                      (click)="isCollapsed1 = !isCollapsed1"
-                      [attr.aria-expanded]="!isCollapsed1"
-                      class="card-options-collapse"
-                      data-toggle="card-collapse"
-                      ><i class="fe fe-chevron-up"></i
-                    ></a>
+                      <img
+                        class="avatar avatar-sm"
+                        src="../assets/images/xs/avatar2.jpg"
+                        data-toggle="tooltip"
+                        tooltip="Avatar Name"
+                        title=""
+                        data-original-title="Avatar Name"
+                      />
+                      <img
+                        class="avatar avatar-sm"
+                        src="../assets/images/xs/avatar3.jpg"
+                        data-toggle="tooltip"
+                        tooltip="Avatar Name"
+                        title=""
+                        data-original-title="Avatar Name"
+                      />
+                      <img
+                        class="avatar avatar-sm"
+                        src="../assets/images/xs/avatar4.jpg"
+                        data-toggle="tooltip"
+                        tooltip="Avatar Name"
+                        title=""
+                        data-original-title="Avatar Name"
+                      />
+                      <img
+                        class="avatar avatar-sm"
+                        src="../assets/images/xs/avatar5.jpg"
+                        data-toggle="tooltip"
+                        tooltip="Avatar Name"
+                        title=""
+                        data-original-title="Avatar Name"
+                      />
+                      <span class="avatar avatar-sm">+8</span>
+                    </div>
                   </div>
                 </div>
-                <div
-                  class="card-body"
-                  id="collapseBasic"
-                  [collapse]="isCollapsed1"
-                >
-
-                  <p>
-                    {{ item.projectDetails }}
-                  </p>
-                  <div class="row">
-                    <div class="col-5 py-1"><strong>Start date:</strong></div>
-                    <div class="col-7 py-1">{{ item.startDate }}</div>
-                    <div class="col-5 py-1"><strong>End date:</strong></div>
-                    <div class="col-7 py-1">{{ item.endDate }}</div>
-                    <div class="col-5 py-1"><strong>Team size:</strong></div>
-                    <div class="col-7 py-1">
-                      <strong>{{ item.teamSize }}</strong>
-                    </div>
-                    <div class="col-5 py-1"><strong>Client name:</strong></div>
-                    <div class="col-7 py-1">
-                      <strong>{{ item.clientName }}</strong>
-                    </div>
-                    <div class="col-5 py-1"><strong>Client email:</strong></div>
-                    <div class="col-7 py-1">
-                      <strong>{{ item.clientEmail }}</strong>
-                    </div>
-                    <div class="col-5 py-1"><strong>Team:</strong></div>
-                    <div class="col-7 py-1">
-                      <div class="avatar-list avatar-list-stacked">
-                        <img
-                          class="avatar avatar-sm"
-                          src="../assets/images/xs/avatar1.jpg"
-                          data-toggle="tooltip"
-                          tooltip="Avatar Name"
-                          title=""
-                          data-original-title="Avatar Name"
-                        />
-                        <img
-                          class="avatar avatar-sm"
-                          src="../assets/images/xs/avatar2.jpg"
-                          data-toggle="tooltip"
-                          tooltip="Avatar Name"
-                          title=""
-                          data-original-title="Avatar Name"
-                        />
-                        <img
-                          class="avatar avatar-sm"
-                          src="../assets/images/xs/avatar3.jpg"
-                          data-toggle="tooltip"
-                          tooltip="Avatar Name"
-                          title=""
-                          data-original-title="Avatar Name"
-                        />
-                        <img
-                          class="avatar avatar-sm"
-                          src="../assets/images/xs/avatar4.jpg"
-                          data-toggle="tooltip"
-                          tooltip="Avatar Name"
-                          title=""
-                          data-original-title="Avatar Name"
-                        />
-                        <img
-                          class="avatar avatar-sm"
-                          src="../assets/images/xs/avatar5.jpg"
-                          data-toggle="tooltip"
-                          tooltip="Avatar Name"
-                          title=""
-                          data-original-title="Avatar Name"
-                        />
-                        <span class="avatar avatar-sm">+8</span>
-                      </div>
+                <div class="card-footer">
+                  <div class="clearfix">
+                    <div class="float-left"><strong>15%</strong></div>
+                    <div class="float-right">
+                      <small class="text-muted">Progress</small>
                     </div>
                   </div>
-                  <div class="card-footer">
-                    <div class="clearfix">
-                      <div class="float-left"><strong>15%</strong></div>
-                      <div class="float-right">
-                        <small class="text-muted">Progress</small>
-                      </div>
-                    </div>
-                    <div class="progress progress-xs">
-                      <div
-                        class="progress-bar bg-red"
-                        role="progressbar"
-                        style="width: 15%"
-                        aria-valuenow="36"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
+                  <div class="progress progress-xs">
+                    <div
+                      class="progress-bar bg-red"
+                      role="progressbar"
+                      style="width: 15%"
+                      aria-valuenow="36"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div
-          class="tab-pane fade"
-          [ngClass]="{ 'show active': dpgridTab }"
-          id="Project-UpComing"
-          role="tabpanel"
-        >
-          <div class="card">
-            <p-toolbar styleClass="p-mb-4">
-              <ng-template pTemplate="left">
-                <button
-                  type="button"
-                  class="btn btn-primary mr-2"
-                  (click)="openNew()"
-                >
-                  New
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  (click)="deleteSelectedItems()"
-                  [disabled]="!selectedItems || !selectedItems.length"
-                >
-                  Delete
-                </button>
-              </ng-template>
-              <ng-template pTemplate="right">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  (click)="exportPdf()"
-                >
-                  Export
-                </button>
-              </ng-template>
-            </p-toolbar>
+      </div>
+      <div
+        class="tab-pane fade"
+        [ngClass]="{ 'show active': dpgridTab }"
+        id="Project-UpComing"
+        role="tabpanel"
+      >
+        <div class="card">
+          <p-toolbar styleClass="p-mb-4">
+            <ng-template pTemplate="left">
+              <button
+                type="button"
+                class="btn btn-primary mr-2"
+                (click)="openNew()"
+              >
+                New
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="deleteSelectedItems()"
+                [disabled]="!selectedItems || !selectedItems.length"
+              >
+                Delete
+              </button>
+            </ng-template>
+            <ng-template pTemplate="right">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="exportPdf()"
+              >
+                Export
+              </button>
+            </ng-template>
+          </p-toolbar>
 
-            <p-table
-              #dt
-              [value]="items"
-              [rows]="10"
-              [rowsPerPageOptions]="[10, 25, 50]"
-              [paginator]="true"
-              [globalFilterFields]="['projectName', 'clientName']"
-              [(selection)]="selectedItems"
-              [rowHover]="true"
-              dataKey="id"
-              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-              [showCurrentPageReport]="true"
-            >
-              <ng-template pTemplate="caption">
-                <div class="p-d-flex p-ai-center p-jc-between">
-                  <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input
-                      pInputText
-                      type="text"
-                      (input)="dt.filterGlobal($event.target.value, 'contains')"
-                      placeholder="Search..."
-                    />
-                  </span>
-                </div>
-              </ng-template>
-              <ng-template pTemplate="header">
-                <tr>
-                  <th style="width: 3rem">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                  </th>
-                  <th pSortableColumn="projectName">
-                    Project name <p-sortIcon field="projectName"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="clientName">
-                    Client name <p-sortIcon field="clientName"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="clientEmail">
-                    Client address <p-sortIcon field="clientEmail"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="startDate">
-                    Start date <p-sortIcon field="startDate"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="endDate">
-                    End date <p-sortIcon field="endDate"></p-sortIcon>
-                  </th>
-                  <th></th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-item>
-                <tr>
-                  <td>
-                    <p-tableCheckbox [value]="item"></p-tableCheckbox>
-                  </td>
-                  <td>{{ item.projectName }}</td>
-                  <td>{{ item.clientName }}</td>
-                  <td>{{ item.clientEmail }}</td>
-                  <td>{{ item.startDate }}</td>
-                  <td>{{ item.endDate }}</td>
-                  <td>
-                    <button
-                      type="button"
-                      class="btn btn-icon"
-                      title="Edit"
-                      (click)="deleteItem(item)"
-                    >
-                      <i class="fa fa-trash"></i>
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-icon"
-                      title="Edit"
-                      (click)="editItem(item)"
-                    >
-                      <i class="fa fa-edit"></i>
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-icon"
-                      title="Edit"
-                      (click)="viewItemDetailed(item)"
-                    >
-                      <i class="fa fa-eye"></i>
-                    </button>
-                  </td>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="summary">
-                <div class="p-d-flex p-ai-center p-jc-between">
-                  In total there are {{ items ? items.length : 0 }} projects.
-                </div>
-              </ng-template>
-            </p-table>
-          </div>
-
-          <p-dialog
-            [(visible)]="itemAddDialog"
-            [style]="{ width: '450px' }"
-            header="Add  a project"
-            [modal]="true"
-            styleClass="p-fluid"
+          <p-table
+            *ngIf="!getMyProjectsLoader"
+            #dt
+            [value]="items"
+            [rows]="10"
+            [rowsPerPageOptions]="[10, 25, 50]"
+            [paginator]="true"
+            [globalFilterFields]="['projectName', 'clientName']"
+            [(selection)]="selectedItems"
+            [rowHover]="true"
+            dataKey="id"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true"
           >
-            <ng-template pTemplate="content">
-              <form [formGroup]="itemsFormGroup">
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Project name"
-                      formControlName="projectName"
-                      [ngClass]="{
-                        'is-invalid': checkFormValidationProjectName(),
-                        'is-valid': itemsFormGroup.get('projectName').valid
-                      }"
-                    />
-                    <div class="invalid-feedback invalid-feedback-position">
-                      Project name is required
-                    </div>
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Client name"
-                      formControlName="clientName"
-                      [ngClass]="{
-                        'is-invalid': checkFormValidationClientName(),
-                        'is-valid': itemsFormGroup.get('clientName').valid
-                      }"
-                    />
-                    <div class="invalid-feedback invalid-feedback-position">
-                      Client name is required
-                    </div>
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Client email"
-                      formControlName="clientEmail"
-                      [ngClass]="{
-                        'is-invalid': checkFormValidationEmail(),
-                        'is-valid': itemsFormGroup.get('clientEmail').valid
-                      }"
-                    />
-                    <div class="invalid-feedback invalid-feedback-position">
-                      Email is {{ getInvalidMessage() }}
-                    </div>
-                  </div>
-
-                  <div class="col-md-6 mb-4">
-                    <input
-                      type="date"
-                      class="form-control"
-                      placeholder="Start date"
-                      formControlName="startDate"
-                      [ngClass]="{
-                        'is-invalid': checkFormValidationStartDate(),
-                        'is-valid': itemsFormGroup.get('startDate').valid
-                      }"
-                    />
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <input
-                      type="date"
-                      class="form-control"
-                      placeholder="End date"
-                      formControlName="endDate"
-                      [ngClass]="{
-                        'is-invalid': checkFormValidationEndDate(),
-                        'is-valid': itemsFormGroup.get('endDate').valid
-                      }"
-                    />
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Team size"
-                      formControlName="teamSize"
-                      [ngClass]="{
-                        'is-invalid': checkFormValidationTeamSize(),
-                        'is-valid': itemsFormGroup.get('teamSize').valid
-                      }"
-                    />
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <textarea
-                      type="text"
-                      class="form-control"
-                      placeholder="Project details"
-                      formControlName="projectDetails"
-                      [ngClass]="{
-                        'is-invalid': checkFormValidationProjectDetails(),
-                        'is-valid': itemsFormGroup.get('projectDetails').valid
-                      }"
-                    ></textarea>
-                  </div>
-                </div>
-              </form>
+            <ng-template pTemplate="caption">
+              <div class="p-d-flex p-ai-center p-jc-between">
+                <span class="p-input-icon-left">
+                  <i class="pi pi-search"></i>
+                  <input
+                    pInputText
+                    type="text"
+                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                    placeholder="Search..."
+                  />
+                </span>
+              </div>
             </ng-template>
-
-            <ng-template pTemplate="footer">
-              <button
-                pButton
-                pRipple
-                label="Cancel"
-                icon="pi pi-times"
-                class="p-button-text"
-                (click)="hideDialog()"
-              ></button>
-              <button
-                pButton
-                pRipple
-                label="Save"
-                icon="pi pi-check"
-                class="p-button-text"
-                (click)="saveProduct()"
-              ></button>
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 3rem">
+                  <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="projectName">
+                  Project name <p-sortIcon field="projectName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="clientName">
+                  Client name <p-sortIcon field="clientName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="clientEmail">
+                  Client address <p-sortIcon field="clientEmail"></p-sortIcon>
+                </th>
+                <th pSortableColumn="startDate">
+                  Start date <p-sortIcon field="startDate"></p-sortIcon>
+                </th>
+                <th pSortableColumn="endDate">
+                  End date <p-sortIcon field="endDate"></p-sortIcon>
+                </th>
+                <th></th>
+              </tr>
             </ng-template>
-          </p-dialog>
-          <p-dialog
-            [(visible)]="itemUpdateDialog"
-            [style]="{ width: '450px' }"
-            header="Update a client"
-            [modal]="true"
-            styleClass="p-fluid"
-          >
-            <ng-template pTemplate="content">
-              <form [formGroup]="itemsFormGroup">
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Project name"
-                      formControlName="projectName"
-                      [ngClass]="{
-                        'is-invalid': checkFormValidationProjectName(),
-                        'is-valid': itemsFormGroup.get('projectName').valid
-                      }"
-                    />
-                    <div class="invalid-feedback invalid-feedback-position">
-                      Project name is required
-                    </div>
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Client name"
-                      formControlName="clientName"
-                      [ngClass]="{
-                        'is-invalid': checkFormValidationClientName(),
-                        'is-valid': itemsFormGroup.get('clientName').valid
-                      }"
-                    />
-                    <div class="invalid-feedback invalid-feedback-position">
-                      Client name is required
-                    </div>
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Client email"
-                      formControlName="clientEmail"
-                      [ngClass]="{
-                        'is-invalid': checkFormValidationEmail(),
-                        'is-valid': itemsFormGroup.get('clientEmail').valid
-                      }"
-                    />
-                    <div class="invalid-feedback invalid-feedback-position">
-                      Email is {{ getInvalidMessage() }}
-                    </div>
-                  </div>
-
-                  <div class="col-md-6 mb-4">
-                    <input
-                      type="date"
-                      class="form-control"
-                      placeholder="Start date"
-                      formControlName="startDate"
-                      [ngClass]="{
-                        'is-invalid': checkFormValidationStartDate(),
-                        'is-valid': itemsFormGroup.get('startDate').valid
-                      }"
-                    />
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <input
-                      type="date"
-                      class="form-control"
-                      placeholder="End date"
-                      formControlName="endDate"
-                      [ngClass]="{
-                        'is-invalid': checkFormValidationEndDate(),
-                        'is-valid': itemsFormGroup.get('endDate').valid
-                      }"
-                    />
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Team size"
-                      formControlName="teamSize"
-                      [ngClass]="{
-                        'is-invalid': checkFormValidationTeamSize(),
-                        'is-valid': itemsFormGroup.get('teamSize').valid
-                      }"
-                    />
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <textarea
-                      type="text"
-                      class="form-control"
-                      placeholder="Project details"
-                      formControlName="projectDetails"
-                      [ngClass]="{
-                        'is-invalid': checkFormValidationProjectDetails(),
-                        'is-valid': itemsFormGroup.get('projectDetails').valid
-                      }"
-                    ></textarea>
-                  </div>
-                </div>
-              </form>
+            <ng-template pTemplate="body" let-item>
+              <tr>
+                <td>
+                  <p-tableCheckbox [value]="item"></p-tableCheckbox>
+                </td>
+                <td>{{ item.projectName }}</td>
+                <td>{{ item.clientName }}</td>
+                <td>{{ item.clientEmail }}</td>
+                <td>{{ item.startDate }}</td>
+                <td>{{ item.endDate }}</td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-icon"
+                    title="Edit"
+                    (click)="deleteItem(item)"
+                  >
+                    <i class="fa fa-trash"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-icon"
+                    title="Edit"
+                    (click)="editItem(item)"
+                  >
+                    <i class="fa fa-edit"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-icon"
+                    title="Edit"
+                    (click)="viewItemDetailed(item)"
+                  >
+                    <i class="fa fa-eye"></i>
+                  </button>
+                </td>
+              </tr>
             </ng-template>
-
-            <ng-template pTemplate="footer">
-              <button
-                pButton
-                pRipple
-                label="Cancel"
-                icon="pi pi-times"
-                class="p-button-text"
-                (click)="hideDialog()"
-              ></button>
-              <button
-                pButton
-                pRipple
-                label="Save"
-                icon="pi pi-check"
-                class="p-button-text"
-                (click)="updateProduct()"
-              ></button>
+            <ng-template pTemplate="summary">
+              <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{ items ? items.length : 0 }} projects.
+              </div>
             </ng-template>
-          </p-dialog>
-          <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+          </p-table>
         </div>
+
+        <p-dialog
+          [(visible)]="itemAddDialog"
+          [style]="{ width: '450px' }"
+          header="Add  a project"
+          [modal]="true"
+          styleClass="p-fluid"
+        >
+          <ng-template pTemplate="content">
+            <form [formGroup]="itemsFormGroup">
+              <div class="row">
+                <div class="col-md-12 mt-4 mb-4">
+                  <p-dropdown
+                    (onChange)="onSelectedClient($event)"
+                    [options]="clientsList"
+                    [(ngModel)]="selectedClient"
+                    optionLabel="name"
+                    [filter]="true"
+                    filterBy="name"
+                    [showClear]="true"
+                    placeholder="Select an employee"
+                  >
+                    <ng-template pTemplate="selectedItem">
+                      <div
+                        class="country-item country-item-value"
+                        *ngIf="selectedClient"
+                      >
+                        <div>{{ selectedClient.name }}</div>
+                      </div>
+                    </ng-template>
+                    <ng-template let-country pTemplate="item">
+                      <div class="country-item">
+                        <div>{{ country.name }}</div>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+                <div class="col-md-6 mb-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Project name"
+                    formControlName="projectName"
+                    [ngClass]="{
+                      'is-invalid': checkFormValidationProjectName(),
+                      'is-valid': itemsFormGroup.get('projectName').valid
+                    }"
+                  />
+                  <div class="invalid-feedback invalid-feedback-position">
+                    Project name is required
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Client name"
+                    formControlName="clientName"
+                    [ngClass]="{
+                      'is-invalid': checkFormValidationClientName(),
+                      'is-valid': itemsFormGroup.get('clientName').valid
+                    }"
+                  />
+                  <div class="invalid-feedback invalid-feedback-position">
+                    Client name is required
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Client email"
+                    formControlName="clientEmail"
+                    [ngClass]="{
+                      'is-invalid': checkFormValidationEmail(),
+                      'is-valid': itemsFormGroup.get('clientEmail').valid
+                    }"
+                  />
+                  <div class="invalid-feedback invalid-feedback-position">
+                    Email is {{ getInvalidMessage() }}
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                  <input
+                    type="date"
+                    class="form-control"
+                    placeholder="Start date"
+                    formControlName="startDate"
+                    [ngClass]="{
+                      'is-invalid': checkFormValidationStartDate(),
+                      'is-valid': itemsFormGroup.get('startDate').valid
+                    }"
+                  />
+                </div>
+                <div class="col-md-6 mb-4">
+                  <input
+                    type="date"
+                    class="form-control"
+                    placeholder="End date"
+                    formControlName="endDate"
+                    [ngClass]="{
+                      'is-invalid': checkFormValidationEndDate(),
+                      'is-valid': itemsFormGroup.get('endDate').valid
+                    }"
+                  />
+                </div>
+                <div class="col-md-6 mb-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Team size"
+                    formControlName="teamSize"
+                    [ngClass]="{
+                      'is-invalid': checkFormValidationTeamSize(),
+                      'is-valid': itemsFormGroup.get('teamSize').valid
+                    }"
+                  />
+                </div>
+                <div class="col-md-12 mb-4">
+                  <textarea
+                    type="text"
+                    class="form-control"
+                    placeholder="Project details"
+                    formControlName="projectDetails"
+                    [ngClass]="{
+                      'is-invalid': checkFormValidationProjectDetails(),
+                      'is-valid': itemsFormGroup.get('projectDetails').valid
+                    }"
+                  ></textarea>
+                </div>
+              </div>
+            </form>
+          </ng-template>
+
+          <ng-template pTemplate="footer">
+            <button
+              pButton
+              pRipple
+              label="Cancel"
+              icon="pi pi-times"
+              class="p-button-text"
+              (click)="hideDialog()"
+            ></button>
+            <button
+              pButton
+              pRipple
+              label="Save"
+              icon="pi pi-check"
+              class="p-button-text"
+              (click)="saveProduct()"
+            ></button>
+          </ng-template>
+        </p-dialog>
+        <p-dialog
+          [(visible)]="itemUpdateDialog"
+          [style]="{ width: '450px' }"
+          header="Update a client"
+          [modal]="true"
+          styleClass="p-fluid"
+        >
+          <ng-template pTemplate="content">
+            <form [formGroup]="itemsFormGroup">
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Project name"
+                    formControlName="projectName"
+                    [ngClass]="{
+                      'is-invalid': checkFormValidationProjectName(),
+                      'is-valid': itemsFormGroup.get('projectName').valid
+                    }"
+                  />
+                  <div class="invalid-feedback invalid-feedback-position">
+                    Project name is required
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Client name"
+                    formControlName="clientName"
+                    [ngClass]="{
+                      'is-invalid': checkFormValidationClientName(),
+                      'is-valid': itemsFormGroup.get('clientName').valid
+                    }"
+                  />
+                  <div class="invalid-feedback invalid-feedback-position">
+                    Client name is required
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Client email"
+                    formControlName="clientEmail"
+                    [ngClass]="{
+                      'is-invalid': checkFormValidationEmail(),
+                      'is-valid': itemsFormGroup.get('clientEmail').valid
+                    }"
+                  />
+                  <div class="invalid-feedback invalid-feedback-position">
+                    Email is {{ getInvalidMessage() }}
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                  <input
+                    type="date"
+                    class="form-control"
+                    placeholder="Start date"
+                    formControlName="startDate"
+                    [ngClass]="{
+                      'is-invalid': checkFormValidationStartDate(),
+                      'is-valid': itemsFormGroup.get('startDate').valid
+                    }"
+                  />
+                </div>
+                <div class="col-md-6 mb-4">
+                  <input
+                    type="date"
+                    class="form-control"
+                    placeholder="End date"
+                    formControlName="endDate"
+                    [ngClass]="{
+                      'is-invalid': checkFormValidationEndDate(),
+                      'is-valid': itemsFormGroup.get('endDate').valid
+                    }"
+                  />
+                </div>
+                <div class="col-md-6 mb-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Team size"
+                    formControlName="teamSize"
+                    [ngClass]="{
+                      'is-invalid': checkFormValidationTeamSize(),
+                      'is-valid': itemsFormGroup.get('teamSize').valid
+                    }"
+                  />
+                </div>
+                <div class="col-md-6 mb-4">
+                  <textarea
+                    type="text"
+                    class="form-control"
+                    placeholder="Project details"
+                    formControlName="projectDetails"
+                    [ngClass]="{
+                      'is-invalid': checkFormValidationProjectDetails(),
+                      'is-valid': itemsFormGroup.get('projectDetails').valid
+                    }"
+                  ></textarea>
+                </div>
+              </div>
+            </form>
+          </ng-template>
+
+          <ng-template pTemplate="footer">
+            <button
+              pButton
+              pRipple
+              label="Cancel"
+              icon="pi pi-times"
+              class="p-button-text"
+              (click)="hideDialog()"
+            ></button>
+            <button
+              pButton
+              pRipple
+              label="Save"
+              icon="pi pi-check"
+              class="p-button-text"
+              (click)="updateProduct()"
+            ></button>
+          </ng-template>
+        </p-dialog>
+        <p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
       </div>
     </div>
   </div>
-
+</div>
