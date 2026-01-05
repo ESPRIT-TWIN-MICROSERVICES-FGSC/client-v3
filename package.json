@@ -41,7 +41,7 @@
     "document-register-element": "^1.7.2",
     "font-awesome": "^4.7.0",
     "formiojs": "^4.13.8",
-    "jspdf-autotable": "^3.5.20",
+    "jspdf-autotable": "^5.0.7",
     "ng-apexcharts": "^1.5.1",
     "ng-multiselect-dropdown": "^0.2.10",
     "ng-rsocket-rxjs": "^0.0.12",
